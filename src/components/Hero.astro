@@ -16,9 +16,9 @@
     <span class="label hero__label">Diseño de Interiores · Lima, Perú</span>
 
     <h1 class="hero__title">
-  Espacios que<br />
-  <em class="hero__typewriter" id="heroTypewriter"></em>
-</h1>
+      Espacios que<br />
+      <em class="hero__typewriter" id="heroTypewriter"></em>
+    </h1>
 
     <p class="hero__subtitle">
       Transformamos ambientes en experiencias. Cada proyecto es
@@ -26,9 +26,7 @@
     </p>
 
     <div class="hero__actions">
-      <a href="#portafolio" class="hero__btn">
-        Ver portafolio
-      </a>
+      <a href="#portafolio" class="hero__btn">Ver portafolio</a>
     </div>
   </div>
 
@@ -56,21 +54,6 @@
     z-index: 0;
   }
 
-    /* Cursor parpadeante del typewriter */
-  .hero__typewriter::after {
-    content: '|';
-    display: inline-block;
-    margin-left: 2px;
-    color: var(--secondary-fixed-dim);
-    animation: blink 0.9s step-end infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-  }
-
-
   .hero__image {
     width: 100%;
     height: 100%;
@@ -80,22 +63,20 @@
     transition: transform 8s ease;
   }
 
-  .hero:hover .hero__image {
-    transform: scale(1.0);
-  }
+  .hero:hover .hero__image { transform: scale(1.0); }
 
   .hero__overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
       to right,
-      rgba(12, 14, 13, 0.80) 0%,
-      rgba(12, 14, 13, 0.40) 60%,
-      rgba(12, 14, 13, 0.10) 100%
+      rgba(12, 14, 13, 0.82) 0%,
+      rgba(12, 14, 13, 0.45) 60%,
+      rgba(12, 14, 13, 0.15) 100%
     );
   }
 
-  /* Contenido centrado verticalmente, empujado un poco arriba */
+  /* ── CONTENIDO ── */
   .hero__content {
     position: relative;
     z-index: 2;
@@ -126,6 +107,22 @@
   .hero__title em {
     font-style: italic;
     font-weight: 300;
+    min-height: 1.2em;
+    display: inline-block;
+  }
+
+  /* Cursor parpadeante */
+  .hero__typewriter::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--secondary-fixed-dim);
+    animation: blink 0.9s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
   }
 
   .hero__subtitle {
@@ -137,11 +134,8 @@
     max-width: 440px;
   }
 
-  .hero__actions {
-    margin-top: var(--space-4);
-  }
+  .hero__actions { margin-top: var(--space-4); }
 
-  /* Botón fino elegante — mismo estilo que header */
   .hero__btn {
     display: inline-block;
     font-family: var(--font-sans);
@@ -183,11 +177,7 @@
   .hero__scroll-line {
     width: 1px;
     height: 60px;
-    background: linear-gradient(
-      to bottom,
-      rgba(240, 237, 232, 0.45),
-      rgba(240, 237, 232, 0)
-    );
+    background: linear-gradient(to bottom, rgba(240, 237, 232, 0.45), rgba(240, 237, 232, 0));
     animation: scrollPulse 2s ease-in-out infinite;
   }
 
@@ -196,19 +186,128 @@
     50%       { opacity: 1;   transform: scaleY(1.15); }
   }
 
+  /* ── RESPONSIVE MOBILE ── */
   @media (max-width: 768px) {
+    .hero {
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Overlay más oscuro para mejor legibilidad en mobile */
+    .hero__overlay {
+      background: rgba(12, 14, 13, 0.65);
+    }
+
     .hero__content {
       padding: 0 var(--space-6);
-      margin-top: -6vh;
+      margin-top: -4vh;
+      align-items: center;
+      text-align: center;
     }
+
+    /* Label en esquina superior izquierda */
+    .hero__label {
+      position: absolute;
+      top: 100px;
+      left: var(--space-6);
+      text-align: left;
+      font-size: 0.65rem;
+    }
+
+    .hero__title {
+      font-size: clamp(2.2rem, 8vw, 3rem);
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .hero__subtitle {
+      max-width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .hero__actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     .hero__scroll { display: none; }
   }
 
   @media (max-width: 480px) {
-    .hero__content { margin-top: -4vh; }
+    .hero__title { font-size: clamp(1.9rem, 7vw, 2.5rem); }
+    .hero__subtitle { font-size: 0.85rem; }
   }
 </style>
 
 <script>
-  // animations.js se encarga — ver Layout
+  import gsap from 'gsap'
+
+  // Animaciones entrada — con delay del preloader
+  gsap.from('.hero__label', {
+    opacity: 0, y: 20, duration: 1, delay: 2.4, ease: 'power2.out'
+  })
+  gsap.from('.hero__title', {
+    opacity: 0, y: 40, duration: 1.2, delay: 2.6, ease: 'power3.out'
+  })
+  gsap.from('.hero__subtitle', {
+    opacity: 0, y: 30, duration: 1, delay: 2.9, ease: 'power2.out'
+  })
+  gsap.from('.hero__actions', {
+    opacity: 0, y: 20, duration: 1, delay: 3.1, ease: 'power2.out'
+  })
+
+  // ── TYPEWRITER ──
+  const words   = ['cuentan tu historia.', 'transforman tu vida.', 'definen tu estilo.']
+  const target  = document.getElementById('heroTypewriter')
+  let wordIndex = 0
+  let charIndex = 0
+  let deleting  = false
+  let running   = false
+
+  if (target) {
+    // Arranca después del preloader + animaciones
+    setTimeout(startTypewriter, 3800)
+  }
+
+  function startTypewriter() {
+    if (running) return
+    running = true
+    // Texto inicial vacío
+    if (target) target.textContent = ''
+    typeLoop()
+  }
+
+  function typeLoop() {
+    if (!target) return
+    const current = words[wordIndex]
+
+    if (!deleting) {
+      charIndex++
+      target.textContent = current.slice(0, charIndex)
+
+      if (charIndex === current.length) {
+        // Pausa larga al terminar la palabra
+        setTimeout(() => {
+          deleting = true
+          typeLoop()
+        }, 2800)
+        return
+      }
+      setTimeout(typeLoop, 95)
+    } else {
+      charIndex--
+      target.textContent = current.slice(0, charIndex)
+
+      if (charIndex === 0) {
+        deleting  = false
+        wordIndex = (wordIndex + 1) % words.length
+        // Pausa antes de escribir la siguiente
+        setTimeout(typeLoop, 400)
+        return
+      }
+      setTimeout(typeLoop, 50)
+    }
+  }
 </script>
