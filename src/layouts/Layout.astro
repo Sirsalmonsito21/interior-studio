@@ -11,9 +11,14 @@ const { title } = Astro.props
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/styles/global.css" />
-    
   </head>
   <body>
     <slot />
+    <script is:inline>
+      if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual'
+      }
+      window.scrollTo(0, 0)
+    </script>
   </body>
 </html>
