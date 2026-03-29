@@ -278,14 +278,14 @@ const categorias = [
   .port__card:hover .port__card-overlay { opacity: 1; }
 
   .port__card-ver {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #f0ede8;
-    border: 1px solid rgba(240, 237, 232, 0.6);
-    padding: 0.6rem 1.4rem;
-  }
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f0ede8;
+  border: 1px solid rgba(240, 237, 232, 0.6);
+  padding: 0.6rem 1.4rem;
+}
 
   /* Info debajo de la imagen */
   .port__card-info {
@@ -305,18 +305,20 @@ const categorias = [
   .port__card:hover .port__card-info { transform: translateY(0); }
 
   .port__card-tipo {
-    font-size: 0.6rem;
-    color: var(--secondary-fixed-dim);
-    letter-spacing: 0.15em;
-  }
+  font-size: 0.6rem;
+  color: var(--secondary-fixed-dim);
+  letter-spacing: 0.18em;
+  font-family: var(--font-sans);
+}
 
   .port__card-nombre {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 300;
-    color: #f0ede8;
-    letter-spacing: 0.02em;
-  }
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #f0ede8;
+  letter-spacing: 0.02em;
+}
 
   /* Card oculta por filtro */
   .port__card.is-hidden {
@@ -548,6 +550,59 @@ const categorias = [
     .port__card:nth-child(n) { grid-column: span 1; }
     .port__card:nth-child(1) { grid-column: span 1; }
   }
+
+   @media (max-width: 768px) {
+  .port {
+    padding: var(--space-20) 0;
+  }
+
+  .port__header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .port__header-inner {
+    align-items: center;
+  }
+
+  .port__filtros {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .port__grid {
+    padding: 0 var(--space-6);
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 200px;
+    gap: 8px;
+  }
+
+  .port__card:nth-child(n) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .port__card:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .port__grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px;
+  }
+
+  .port__card:nth-child(n) { grid-column: span 1; }
+  .port__card:nth-child(1) { grid-column: span 1; }
+}
+
+
+
 </style>
 
 <script>
