@@ -1,0 +1,427 @@
+---
+---
+
+<section class="contact" id="contacto">
+  <div class="contact__inner">
+
+    <!-- Columna izquierda: texto -->
+    <div class="contact__info">
+      <span class="label contact__label">Contacto</span>
+      <h2 class="contact__title">
+        Hablemos de<br />
+        <em>tu proyecto</em>
+      </h2>
+      <p class="contact__desc">
+        Cuéntanos tu visión. Nos pondremos en contacto
+        en menos de 24 horas para agendar una primera conversación.
+      </p>
+
+      <div class="contact__datos">
+        <div class="contact__dato">
+          <span class="label">Email</span>
+          <a href="mailto:hola@studio2810.com" class="contact__dato-val">
+            hola@studio2810.com
+          </a>
+        </div>
+        <div class="contact__dato">
+          <span class="label">Ubicación</span>
+          <span class="contact__dato-val">Lima, Perú</span>
+        </div>
+        <div class="contact__dato">
+          <span class="label">Instagram</span>
+          <a href="https://instagram.com/studio2810" target="_blank" class="contact__dato-val">
+            @studio2810
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna derecha: formulario -->
+    <div class="contact__form-wrap">
+      <form class="contact__form" id="contactForm" novalidate>
+
+        <div class="contact__row">
+          <div class="contact__field">
+            <label class="contact__field-label" for="nombre">Nombre</label>
+            <input
+              class="contact__input"
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Tu nombre completo"
+              required
+            />
+          </div>
+          <div class="contact__field">
+            <label class="contact__field-label" for="email">Email</label>
+            <input
+              class="contact__input"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="tu@email.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="contact__field">
+          <label class="contact__field-label" for="servicio">Servicio de interés</label>
+          <select class="contact__input contact__select" id="servicio" name="servicio">
+            <option value="" disabled selected>Selecciona un servicio</option>
+            <option value="Diseño de Interiores">Diseño de Interiores</option>
+            <option value="Remodelación">Remodelación</option>
+            <option value="Mobiliario a Medida">Mobiliario a Medida</option>
+            <option value="Consultoría">Consultoría</option>
+          </select>
+        </div>
+
+        <div class="contact__field">
+          <label class="contact__field-label" for="mensaje">Mensaje</label>
+          <textarea
+            class="contact__input contact__textarea"
+            id="mensaje"
+            name="mensaje"
+            placeholder="Cuéntanos sobre tu espacio, tus ideas, tu visión..."
+            rows="5"
+            required
+          ></textarea>
+        </div>
+
+        <!-- Estado del envío -->
+        <div class="contact__feedback" id="contactFeedback" aria-live="polite"></div>
+
+        <button class="contact__submit" type="submit" id="contactSubmit">
+          <span class="contact__submit-text">Enviar mensaje</span>
+          <span class="contact__submit-icon">→</span>
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: #0a0d0b;
+    padding: var(--space-24) var(--space-8);
+  }
+
+  .contact__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-24);
+    align-items: start;
+  }
+
+  /* ── INFO ── */
+  .contact__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    position: sticky;
+    top: 120px;
+  }
+
+  .contact__label { color: var(--secondary-fixed-dim); }
+
+  .contact__title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #f0ede8;
+  }
+
+  .contact__title em { font-style: italic; }
+
+  .contact__desc {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240, 237, 232, 0.5);
+    max-width: 340px;
+  }
+
+  .contact__datos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: 1px solid rgba(240, 237, 232, 0.07);
+  }
+
+  .contact__dato {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .contact__dato-val {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(240, 237, 232, 0.75);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  a.contact__dato-val:hover { color: #f0ede8; }
+
+  /* ── FORMULARIO ── */
+  .contact__form-wrap {
+    background: #0e1110;
+    padding: var(--space-8);
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .contact__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  .contact__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .contact__field-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 232, 0.35);
+  }
+
+  /* Input base — solo underline */
+  .contact__input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(240, 237, 232, 0.15);
+    border-radius: 0;
+    padding: 0.75rem 0;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: #f0ede8;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .contact__input::placeholder {
+    color: rgba(240, 237, 232, 0.2);
+    font-weight: 300;
+  }
+
+  .contact__input:focus {
+    border-bottom-color: var(--secondary-fixed-dim);
+  }
+
+  /* Select */
+  .contact__select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(240,237,232,0.3)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 24px;
+  }
+
+  .contact__select option {
+    background: #0e1110;
+    color: #f0ede8;
+  }
+
+  /* Textarea */
+  .contact__textarea {
+    resize: none;
+    line-height: 1.6;
+  }
+
+  /* Feedback */
+  .contact__feedback {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 300;
+    min-height: 1.2rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .contact__feedback.is-success { color: #7daa8a; }
+  .contact__feedback.is-error   { color: var(--error); }
+
+  /* Submit */
+  .contact__submit {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    align-self: flex-start;
+    background: none;
+    border: 1px solid rgba(240, 237, 232, 0.2);
+    color: rgba(240, 237, 232, 0.75);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease,
+                background 0.3s ease, gap 0.3s ease;
+  }
+
+  .contact__submit:hover {
+    border-color: rgba(240, 237, 232, 0.6);
+    color: #f0ede8;
+    background: rgba(240, 237, 232, 0.05);
+    gap: var(--space-6);
+  }
+
+  .contact__submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .contact__submit-icon {
+    font-style: normal;
+    transition: transform 0.3s ease;
+  }
+
+  .contact__submit:hover .contact__submit-icon {
+    transform: translateX(4px);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .contact__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .contact__info {
+      position: static;
+    }
+
+    .contact__desc { max-width: 100%; }
+  }
+
+  @media (max-width: 768px) {
+    .contact {
+      padding: var(--space-20) var(--space-6);
+    }
+
+    .contact__form-wrap {
+      padding: var(--space-6);
+    }
+
+    .contact__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+  gsap.registerPlugin(ScrollTrigger)
+
+  // Animaciones entrada
+  gsap.from('.contact__info > *', {
+    scrollTrigger: { trigger: '.contact', start: 'top 75%' },
+    opacity: 0,
+    x: -24,
+    duration: 0.9,
+    stagger: 0.12,
+    ease: 'power2.out'
+  })
+
+  gsap.from('.contact__form-wrap', {
+    scrollTrigger: { trigger: '.contact', start: 'top 75%' },
+    opacity: 0,
+    y: 30,
+    duration: 0.9,
+    delay: 0.2,
+    ease: 'power2.out'
+  })
+
+  // ── EMAILJS ──
+  // 1. Ve a https://www.emailjs.com y crea una cuenta gratis
+  // 2. Crea un "Email Service" conectando tu Gmail o correo
+  // 3. Crea un "Email Template" con estas variables:
+  //    {{nombre}}, {{email}}, {{servicio}}, {{mensaje}}
+  // 4. Reemplaza las 3 constantes de abajo con tus claves reales
+
+  const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY'   // Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID'   // Email Services > Service ID
+  const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID'  // Email Templates > Template ID
+
+  // Carga EmailJS desde CDN
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'
+  script.onload = () => {
+    // @ts-ignore
+    emailjs.init(EMAILJS_PUBLIC_KEY)
+  }
+  document.head.appendChild(script)
+
+  // Manejo del formulario
+  const form     = document.getElementById('contactForm') as HTMLFormElement
+  const feedback = document.getElementById('contactFeedback')
+  const submitBtn = document.getElementById('contactSubmit') as HTMLButtonElement
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    // Validación básica
+    const nombre  = (form.elements.namedItem('nombre')  as HTMLInputElement).value.trim()
+    const email   = (form.elements.namedItem('email')   as HTMLInputElement).value.trim()
+    const mensaje = (form.elements.namedItem('mensaje') as HTMLTextAreaElement).value.trim()
+
+    if (!nombre || !email || !mensaje) {
+      setFeedback('Por favor completa todos los campos requeridos.', 'error')
+      return
+    }
+
+    // Envío
+    submitBtn.disabled = true
+    submitBtn.querySelector('.contact__submit-text')!.textContent = 'Enviando...'
+
+    try {
+      // @ts-ignore
+      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      setFeedback('Mensaje enviado. Te contactaremos pronto.', 'success')
+      form.reset()
+    } catch (err) {
+      setFeedback('Hubo un error al enviar. Intenta de nuevo.', 'error')
+      console.error(err)
+    } finally {
+      submitBtn.disabled = false
+      submitBtn.querySelector('.contact__submit-text')!.textContent = 'Enviar mensaje'
+    }
+  })
+
+  function setFeedback(msg: string, type: 'success' | 'error') {
+    if (!feedback) return
+    feedback.textContent = msg
+    feedback.className = `contact__feedback is-${type}`
+    setTimeout(() => {
+      feedback.textContent = ''
+      feedback.className = 'contact__feedback'
+    }, 5000)
+  }
+</script>

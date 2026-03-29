@@ -1,0 +1,184 @@
+---
+---
+
+<div class="cursor" id="cursor">
+  <div class="cursor__dot" id="cursorDot"></div>
+  <div class="cursor__ring" id="cursorRing"></div>
+</div>
+
+<style is:global>
+  /* Oculta cursor nativo en desktop */
+  @media (pointer: fine) {
+    *, *::before, *::after { cursor: none !important; }
+  }
+
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    pointer-events: none;
+  }
+
+  /* Punto central */
+  .cursor__dot {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background: #f0ede8;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    will-change: transform;
+  }
+
+  /* Anillo exterior */
+  .cursor__ring {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(240, 237, 232, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.3s ease,
+                background 0.3s ease;
+    will-change: transform;
+  }
+
+  /* Estado hover en links y botones */
+  .cursor--hovering .cursor__dot {
+    width: 8px;
+    height: 8px;
+    background: var(--secondary-fixed-dim);
+  }
+
+  .cursor--hovering .cursor__ring {
+    width: 56px;
+    height: 56px;
+    border-color: rgba(184, 154, 120, 0.6);
+    background: rgba(184, 154, 120, 0.05);
+  }
+
+  /* Estado sobre imágenes — se convierte en "Ver" */
+  .cursor--image .cursor__dot {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  .cursor--image .cursor__ring {
+    width: 72px;
+    height: 72px;
+    border-color: rgba(240, 237, 232, 0.7);
+    background: rgba(240, 237, 232, 0.08);
+  }
+
+  .cursor--image .cursor__ring::after {
+    content: 'VER';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(240, 237, 232, 0.9);
+  }
+
+  /* Estado clicking */
+  .cursor--clicking .cursor__dot {
+    width: 10px;
+    height: 10px;
+    background: var(--secondary-fixed-dim);
+  }
+
+  .cursor--clicking .cursor__ring {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Solo en desktop */
+  @media (pointer: coarse) {
+    .cursor { display: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const dot  = document.getElementById('cursorDot')
+    const ring = document.getElementById('cursorRing')
+    const root = document.getElementById('cursor')
+
+    if (!dot || !ring || !root) return
+
+    // Solo desktop
+    if (!window.matchMedia('(pointer: fine)').matches) return
+
+    let mouseX = 0, mouseY = 0
+    let ringX  = 0, ringY  = 0
+    let raf
+
+    // Mueve el punto exacto al mouse
+    document.addEventListener('mousemove', function (e) {
+      mouseX = e.clientX
+      mouseY = e.clientY
+      dot.style.left = mouseX + 'px'
+      dot.style.top  = mouseY + 'px'
+    })
+
+    // Anillo sigue con lag suave
+    function lerp(a, b, t) { return a + (b - a) * t }
+
+    function animateRing() {
+      ringX = lerp(ringX, mouseX, 0.12)
+      ringY = lerp(ringY, mouseY, 0.12)
+      ring.style.left = ringX + 'px'
+      ring.style.top  = ringY + 'px'
+      raf = requestAnimationFrame(animateRing)
+    }
+    animateRing()
+
+    // Hover en elementos interactivos
+    const hoverTargets = 'a, button, [data-id], .port__card, .srv__card, input, textarea, select'
+
+    document.addEventListener('mouseover', function (e) {
+      const target = e.target.closest(hoverTargets)
+      if (!target) return
+
+      const isImage = target.classList.contains('port__card') ||
+                      target.classList.contains('srv__card')
+
+      root.classList.remove('cursor--hovering', 'cursor--image')
+
+      if (isImage) {
+        root.classList.add('cursor--image')
+      } else {
+        root.classList.add('cursor--hovering')
+      }
+    })
+
+    document.addEventListener('mouseout', function (e) {
+      const target = e.target.closest(hoverTargets)
+      if (!target) return
+      root.classList.remove('cursor--hovering', 'cursor--image')
+    })
+
+    // Click
+    document.addEventListener('mousedown', function () {
+      root.classList.add('cursor--clicking')
+    })
+    document.addEventListener('mouseup', function () {
+      root.classList.remove('cursor--clicking')
+    })
+
+    // Ocultar al salir de la ventana
+    document.addEventListener('mouseleave', function () {
+      root.style.opacity = '0'
+    })
+    document.addEventListener('mouseenter', function () {
+      root.style.opacity = '1'
+    })
+  })()
+</script>

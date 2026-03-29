@@ -1,0 +1,234 @@
+---
+const servicios = [
+  {
+    numero: "01",
+    titulo: "Diseño de Interiores",
+    descripcion: "Desde la concepción hasta el detalle final. Creamos espacios que equilibran estética y funcionalidad con intención en cada decisión.",
+    tag: "Servicio Principal",
+    imagen: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=85",
+  },
+  {
+    numero: "02",
+    titulo: "Remodelación",
+    descripcion: "Transformamos ambientes existentes respetando su esencia y elevando su potencial.",
+    tag: "Transformación",
+    imagen: "https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=900&q=85",
+  },
+  {
+    numero: "03",
+    titulo: "Mobiliario a Medida",
+    descripcion: "Piezas únicas que se integran perfectamente al espacio. Cada mueble es una extensión del ambiente.",
+    tag: "Exclusivo",
+    imagen: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&q=85",
+  },
+  {
+    numero: "04",
+    titulo: "Consultoría",
+    descripcion: "Una mirada experta para decisiones clave: paletas, materiales, distribución y estilo.",
+    tag: "Asesoría",
+    imagen: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85",
+  },
+]
+---
+
+<section class="srv" id="servicios">
+  <div class="srv__inner">
+
+    <!-- Título arriba -->
+    <div class="srv__header">
+      <span class="label srv__label">Lo Que Hacemos</span>
+      <h2 class="srv__title">Nuestros <em>Servicios</em></h2>
+    </div>
+
+    <!-- 4 cards apiladas, full width -->
+    <div class="srv__cards">
+      {servicios.map((s) => (
+        <div class="srv__card">
+
+          <!-- Imagen izquierda -->
+          <div class="srv__card-img-wrap">
+            <img
+              class="srv__card-img"
+              src={s.imagen}
+              alt={s.titulo}
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Info derecha -->
+          <div class="srv__card-body">
+            <div class="srv__card-top">
+              <span class="label srv__card-tag">{s.tag}</span>
+              <span class="srv__card-num">{s.numero}</span>
+            </div>
+            <h3 class="srv__card-title">{s.titulo}</h3>
+            <p class="srv__card-desc">{s.descripcion}</p>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .srv {
+    background: #111614;
+    padding: var(--space-24) var(--space-8);
+  }
+
+  .srv__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-20);
+  }
+
+  /* ── HEADER ── */
+  .srv__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .srv__label { color: var(--secondary-fixed-dim); }
+
+  .srv__title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #f0ede8;
+  }
+
+  .srv__title em { font-style: italic; }
+
+  /* ── CARDS ── */
+  .srv__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .srv__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    background: #0e1110;
+    transition: background 0.4s ease;
+  }
+
+  .srv__card:hover { background: #161b18; }
+
+  /* Imagen */
+  .srv__card-img-wrap {
+    overflow: hidden;
+    height: 340px;
+  }
+
+  .srv__card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: brightness(0.85);
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                filter 0.4s ease;
+  }
+
+  .srv__card:hover .srv__card-img {
+    transform: scale(1.05);
+    filter: brightness(0.95);
+  }
+
+  /* Body */
+  .srv__card-body {
+    padding: var(--space-8) var(--space-8) var(--space-8) var(--space-8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+    border-left: 1px solid rgba(240, 237, 232, 0.06);
+  }
+
+  .srv__card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .srv__card-tag {
+    color: var(--secondary-fixed-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+  }
+
+  .srv__card-num {
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    color: rgba(240, 237, 232, 0.12);
+    letter-spacing: 0.1em;
+  }
+
+  .srv__card-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
+    font-weight: 300;
+    color: #f0ede8;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .srv__card-desc {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240, 237, 232, 0.45);
+    max-width: 420px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .srv {
+      padding: var(--space-20) var(--space-6);
+    }
+
+    .srv__card {
+      grid-template-columns: 1fr;
+    }
+
+    
+     .srv__card-img-wrap { height: 260px; }
+
+    .srv__card-body {
+      padding: var(--space-6);
+      border-left: none;
+      border-top: 1px solid rgba(240, 237, 232, 0.06);
+    }
+
+    .srv__card-desc { max-width: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    .srv__card-img-wrap { height: 180px; }
+  }
+</style>
+<script>
+  import gsap from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+  gsap.registerPlugin(ScrollTrigger)
+
+  gsap.from('.srv__header > *', {
+    scrollTrigger: { trigger: '.srv', start: 'top 75%' },
+    opacity: 0, y: 20, duration: 0.8, stagger: 0.12, ease: 'power2.out'
+  })
+  gsap.from('.srv__card', {
+    scrollTrigger: { trigger: '.srv__cards', start: 'top 85%' },
+    opacity: 0, y: 40, duration: 0.7, stagger: 0.1, ease: 'power2.out'
+  })
+</script>

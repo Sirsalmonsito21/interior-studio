@@ -1,0 +1,409 @@
+---
+const navLinks = [
+  { label: "Nosotros", href: "#esencia" },
+  { label: "Servicios", href: "#servicios" },
+  { label: "Portafolio", href: "#portafolio" },
+  { label: "Contacto", href: "#contacto" },
+]
+
+const redes = [
+  {
+    nombre: "Instagram",
+    handle: "@studio2810",
+    href: "https://instagram.com/studio2810",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>`
+  },
+  {
+    nombre: "TikTok",
+    handle: "@studio2810",
+    href: "https://tiktok.com/@studio2810",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>`
+  },
+  {
+    nombre: "WhatsApp",
+    handle: "+51 999 999 999",
+    href: "https://wa.me/51999999999",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`
+  },
+]
+---
+
+<footer class="footer">
+
+  <!-- Banda superior — redes -->
+  <div class="footer__redes">
+    <div class="footer__redes-inner">
+      <span class="label footer__redes-label">Síguenos</span>
+      <div class="footer__redes-list">
+        {redes.map(r => (
+          <a href={r.href} target="_blank" rel="noopener noreferrer" class="footer__red">
+            <span class="footer__red-icon" set:html={r.icon} />
+            <div class="footer__red-info">
+              <span class="footer__red-nombre">{r.nombre}</span>
+              <span class="footer__red-handle">{r.handle}</span>
+            </div>
+            <span class="footer__red-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Cuerpo principal -->
+  <div class="footer__body">
+    <div class="footer__body-inner">
+
+      <!-- Logo + tagline -->
+      <div class="footer__brand">
+        <a href="/" class="footer__logo">
+          <span class="footer__logo-main">STUDIO</span>
+          <span class="footer__logo-sub">2810</span>
+        </a>
+        <p class="footer__tagline">
+          Espacios que cuentan<br />tu historia.
+        </p>
+      </div>
+
+      <!-- Nav -->
+      <nav class="footer__nav">
+        <span class="label footer__nav-label">Navegación</span>
+        <ul class="footer__nav-list">
+          {navLinks.map(link => (
+            <li>
+              <a href={link.href} class="footer__nav-link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Contacto directo -->
+      <div class="footer__contact">
+        <span class="label footer__contact-label">Contacto</span>
+        <div class="footer__contact-list">
+          <a href="mailto:hola@studio2810.com" class="footer__contact-item">
+            hola@studio2810.com
+          </a>
+          <a href="https://wa.me/51999999999" target="_blank" class="footer__contact-item">
+            +51 999 999 999
+          </a>
+          <span class="footer__contact-item">Lima, Perú</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="footer__bar">
+    <div class="footer__bar-inner">
+      <span class="footer__copy">
+        © 2025 Studio2810. Todos los derechos reservados.
+      </span>
+      <a href="#inicio" class="footer__top">
+        Volver arriba
+        <span>↑</span>
+      </a>
+    </div>
+  </div>
+
+</footer>
+
+<style>
+  .footer {
+    background: #070908;
+  }
+
+  /* ── REDES ── */
+  .footer__redes {
+  border-bottom: 1px solid rgba(240, 237, 232, 0.06);
+  background: #111614;
+}
+
+  .footer__redes-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-8);
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .footer__redes-label {
+    color: rgba(240, 237, 232, 0.25);
+    flex-shrink: 0;
+  }
+
+  .footer__redes-list {
+    display: flex;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .footer__red {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  text-decoration: none;
+  background: rgba(240, 237, 232, 0.03);
+  border: 1px solid rgba(240, 237, 232, 0.06);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.footer__red:hover {
+  background: rgba(240, 237, 232, 0.07);
+  border-color: rgba(240, 237, 232, 0.12);
+}
+
+  .footer__red:hover {
+    background: rgba(240, 237, 232, 0.05);
+    border-color: rgba(240, 237, 232, 0.08);
+  }
+
+  .footer__red-icon {
+  color: rgba(240, 237, 232, 0.5);   /* antes 0.35 */
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+  .footer__red:hover .footer__red-icon {
+    color: var(--secondary-fixed-dim);
+  }
+
+  .footer__red-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  .footer__red-nombre {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(240, 237, 232, 0.7);
+    transition: color 0.3s ease;
+  }
+
+  .footer__red:hover .footer__red-nombre { color: #f0ede8; }
+
+  .footer__red-handle {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 300;
+  color: rgba(240, 237, 232, 0.4);   /* antes 0.25 */
+  letter-spacing: 0.05em;
+}
+
+  .footer__red-arrow {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: rgba(240, 237, 232, 0.15);
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .footer__red:hover .footer__red-arrow {
+    color: rgba(240, 237, 232, 0.5);
+    transform: translateX(4px);
+  }
+
+  /* ── BODY ── */
+  .footer__body {
+    border-bottom: 1px solid rgba(240, 237, 232, 0.06);
+  }
+
+  .footer__body-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-20) var(--space-8);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: var(--space-20);
+    align-items: start;
+  }
+
+  /* Brand */
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .footer__logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    gap: 4px;
+  }
+
+  .footer__logo-main {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #f0ede8;
+  }
+
+  .footer__logo-sub {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 232, 0.3);
+  }
+
+  .footer__tagline {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: rgba(240, 237, 232, 0.35);
+  }
+
+  /* Nav */
+  .footer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .footer__nav-label { color: rgba(240, 237, 232, 0.25); }
+
+  .footer__nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer__nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(240, 237, 232, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 1px;
+  }
+
+  .footer__nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--secondary-fixed-dim);
+    transition: width 0.35s ease;
+  }
+
+  .footer__nav-link:hover { color: #f0ede8; }
+  .footer__nav-link:hover::after { width: 100%; }
+
+  /* Contacto */
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .footer__contact-label { color: rgba(240, 237, 232, 0.25); }
+
+  .footer__contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer__contact-item {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(240, 237, 232, 0.5);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  a.footer__contact-item:hover { color: #f0ede8; }
+
+  /* ── BARRA ── */
+  .footer__bar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-8);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer__copy {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(240, 237, 232, 0.2);
+    letter-spacing: 0.05em;
+  }
+
+  .footer__top {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 232, 0.25);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+  }
+
+  .footer__top:hover { color: rgba(240, 237, 232, 0.7); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .footer__body-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+    }
+
+    .footer__brand {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer__redes-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: var(--space-6);
+      gap: var(--space-4);
+    }
+
+    .footer__redes-list {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .footer__body-inner {
+      grid-template-columns: 1fr;
+      padding: var(--space-8) var(--space-6);
+      gap: var(--space-8);
+    }
+
+    .footer__brand { grid-column: span 1; }
+
+    .footer__bar-inner {
+      padding: var(--space-6);
+      flex-direction: column;
+      gap: var(--space-4);
+      text-align: center;
+    }
+  }
+</style>

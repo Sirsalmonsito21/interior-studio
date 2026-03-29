@@ -1,0 +1,120 @@
+---
+---
+
+<div class="preloader" id="preloader">
+  <div class="preloader__inner">
+    <div class="preloader__logo" id="preloaderLogo">
+      <span class="preloader__logo-main">STUDIO</span>
+      <span class="preloader__logo-sub">2810</span>
+    </div>
+    <div class="preloader__bar-wrap">
+      <div class="preloader__bar" id="preloaderBar"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #070908;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preloader.is-done {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .preloader__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .preloader__logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .preloader__logo-main {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    color: #f0ede8;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .preloader__logo-sub {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 232, 0.35);
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  .preloader__logo.is-visible .preloader__logo-main,
+  .preloader__logo.is-visible .preloader__logo-sub {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .preloader__bar-wrap {
+    width: 100px;
+    height: 1px;
+    background: rgba(240, 237, 232, 0.1);
+    overflow: hidden;
+  }
+
+  .preloader__bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, #b89a78, rgba(240,237,232,0.6));
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    const preloader = document.getElementById('preloader')
+    const bar       = document.getElementById('preloaderBar')
+    const logo      = document.getElementById('preloaderLogo')
+
+    if (!preloader || !bar || !logo) return
+
+    document.body.style.overflow = 'hidden'
+
+    // Logo entra suave
+    setTimeout(function() {
+      logo.classList.add('is-visible')
+    }, 80)
+
+    // Barra fluida con CSS transition
+    bar.style.transition = 'width 1.8s cubic-bezier(0.4, 0, 0.2, 1)'
+
+    setTimeout(function() {
+      bar.style.width = '100%'
+    }, 150)
+
+    // Sale cuando termina la barra
+    setTimeout(function() {
+      preloader.classList.add('is-done')
+      document.body.style.overflow = ''
+      setTimeout(function() {
+        preloader.style.display = 'none'
+      }, 900)
+    }, 2200)
+  })()
+</script>

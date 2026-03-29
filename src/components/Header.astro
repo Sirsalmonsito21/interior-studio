@@ -1,0 +1,256 @@
+---
+const navLinks = [
+  { label: "Nosotros", href: "#esencia" },
+  { label: "Servicios", href: "#servicios" },
+  { label: "Portafolio", href: "#portafolio" },
+  { label: "Contacto", href: "#contacto" },
+]
+---
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo">
+      <span class="header__logo-main">STUDIO</span>
+      <span class="header__logo-sub">2810</span>
+    </a>
+
+    <nav class="header__nav">
+      {navLinks.map(link => (
+        <a href={link.href} class="header__nav-link">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href="#contacto" class="header__cta">
+      Conversemos
+    </a>
+
+    <button class="header__burger" id="burger" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="header__mobile" id="mobileMenu">
+    {navLinks.map(link => (
+      <a href={link.href} class="header__mobile-link">
+        {link.label}
+      </a>
+    ))}
+    <a href="#contacto" class="header__cta" style="align-self: flex-start; margin-top: 1rem;">
+      Conversemos
+    </a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 var(--space-8);
+    background: rgba(18, 20, 19, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    transform: translateY(0);
+    transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .header.is-hidden {
+    transform: translateY(-110%);
+  }
+
+  .header__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+
+  /* Logo */
+  .header__logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    gap: 3px;
+  }
+
+  .header__logo-main {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #f0ede8;
+  }
+
+  .header__logo-sub {
+    font-family: var(--font-sans);
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 232, 0.45);
+  }
+
+  /* Nav */
+  .header__nav {
+    display: flex;
+    gap: var(--space-8);
+    align-items: center;
+  }
+
+  .header__nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(240, 237, 232, 0.7);
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+  }
+
+  .header__nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: var(--secondary-fixed-dim);
+    transition: width 0.35s ease;
+  }
+
+  .header__nav-link:hover {
+    color: #f0ede8;
+  }
+
+  .header__nav-link:hover::after { width: 100%; }
+
+  /* Botón fino elegante */
+  .header__cta {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(240, 237, 232, 0.85);
+    border: 1px solid rgba(240, 237, 232, 0.25);
+    padding: 0.55rem 1.4rem;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .header__cta:hover {
+    border-color: rgba(240, 237, 232, 0.7);
+    color: #f0ede8;
+    background: rgba(240, 237, 232, 0.06);
+  }
+
+  /* Burger */
+  .header__burger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .header__burger span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: rgba(240, 237, 232, 0.8);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .header__burger.is-open span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+  .header__burger.is-open span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .header__mobile {
+    display: none;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+
+  .header__mobile.is-open {
+    max-height: 400px;
+    padding: var(--space-6) 0;
+  }
+
+  .header__mobile-link {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(240, 237, 232, 0.75);
+    padding: 0.6rem 0;
+    transition: color 0.3s ease;
+  }
+
+  .header__mobile-link:hover { color: #f0ede8; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header { padding: 0 var(--space-6); }
+    .header__nav, .header__cta { display: none; }
+    .header__burger { display: flex; }
+    .header__mobile { display: flex; }
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('burger')
+  const mobileMenu = document.getElementById('mobileMenu')
+  const header = document.getElementById('header')
+
+  // Burger
+  burger?.addEventListener('click', () => {
+    burger.classList.toggle('is-open')
+    mobileMenu?.classList.toggle('is-open')
+  })
+
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger?.classList.remove('is-open')
+      mobileMenu?.classList.remove('is-open')
+    })
+  })
+
+  // Hide on scroll down / show on scroll up
+  let lastScroll = 0
+
+  window.addEventListener('scroll', () => {
+    const current = window.scrollY
+
+    if (current <= 60) {
+      header?.classList.remove('is-hidden')
+    } else if (current > lastScroll + 8) {
+      // Scrolleando hacia abajo
+      header?.classList.add('is-hidden')
+    } else if (current < lastScroll - 8) {
+      // Scrolleando hacia arriba
+      header?.classList.remove('is-hidden')
+    }
+
+    lastScroll = current
+  })
+</script>
