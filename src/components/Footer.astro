@@ -30,15 +30,12 @@ const redes = [
 
 <footer class="footer">
 
-  <!-- ── SÍGUENOS — rediseñado ── -->
   <div class="footer__redes">
     <div class="footer__redes-inner">
-
       <div class="footer__redes-header">
         <span class="label footer__redes-label">Síguenos</span>
         <p class="footer__redes-desc">Seguí nuestros proyectos y el proceso creativo día a día.</p>
       </div>
-
       <div class="footer__redes-list">
         {redes.map(r => (
           <a href={r.href} target="_blank" rel="noopener noreferrer" class="footer__red">
@@ -51,14 +48,11 @@ const redes = [
           </a>
         ))}
       </div>
-
     </div>
   </div>
 
-  <!-- ── CUERPO ── -->
   <div class="footer__body">
     <div class="footer__body-inner">
-
       <div class="footer__brand">
         <a href="/" class="footer__logo">
           <span class="footer__logo-main">STUDIO</span>
@@ -88,11 +82,9 @@ const redes = [
           <span class="footer__contact-item">Lima, Perú</span>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- ── BARRA ── -->
   <div class="footer__bar">
     <div class="footer__bar-inner">
       <span class="footer__copy">© 2025 Studio2810. Todos los derechos reservados.</span>
@@ -148,11 +140,11 @@ const redes = [
     display: flex;
     align-items: center;
     gap: var(--space-6);
-    padding: var(--space-6) var(--space-6);
+    padding: var(--space-6);
     text-decoration: none;
     background: rgba(240, 237, 232, 0.02);
     border: 1px solid rgba(240, 237, 232, 0.05);
-    transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease, padding-left 0.3s ease;
   }
 
   .footer__red:hover {
@@ -356,34 +348,63 @@ const redes = [
 
   .footer__top:hover { color: rgba(240, 237, 232, 0.7); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1024px) {
+  /* ── TABLET ── */
+  @media (min-width: 769px) and (max-width: 1024px) {
     .footer__redes-inner {
       grid-template-columns: 1fr;
       gap: var(--space-8);
+      text-align: center;
+      align-items: center;
     }
+
+    .footer__redes-header { align-items: center; }
 
     .footer__body-inner {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-8);
+      padding: var(--space-8);
     }
 
-    .footer__brand { grid-column: span 2; }
+    .footer__brand {
+      grid-column: span 2;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer__tagline { text-align: center; }
+
+    .footer__nav { align-items: flex-start; }
+    .footer__nav-list { align-items: flex-start; }
+    .footer__contact { align-items: flex-start; }
+    .footer__contact-list { align-items: flex-start; }
+
+    .footer__bar-inner {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 
+  /* ── MOBILE ── */
   @media (max-width: 768px) {
     .footer__redes-inner {
       padding: var(--space-8) var(--space-6);
       grid-template-columns: 1fr;
       gap: var(--space-6);
+      text-align: center;
+      align-items: center;
     }
 
-    .footer__redes-desc { font-size: 1rem; }
-
-    .footer__red {
-      padding: var(--space-4) var(--space-4);
+    .footer__redes-header {
+      align-items: center;
+      text-align: center;
     }
 
+    .footer__redes-desc {
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .footer__red { padding: var(--space-4); }
     .footer__red:hover { padding-left: var(--space-6); }
 
     .footer__body-inner {
@@ -392,7 +413,18 @@ const redes = [
       gap: var(--space-8);
     }
 
-    .footer__brand { grid-column: span 1; }
+    .footer__brand {
+      grid-column: span 1;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer__tagline { text-align: center; }
+    .footer__nav { align-items: center; }
+    .footer__nav-list { align-items: center; }
+    .footer__contact { align-items: center; }
+    .footer__contact-list { align-items: center; }
+    .footer__contact-item { text-align: center; }
 
     .footer__bar-inner {
       padding: var(--space-6);
@@ -401,36 +433,10 @@ const redes = [
       text-align: center;
     }
 
-    .footer__redes-header {
-    text-align: center;
-    align-items: center;
-  }
-
-  .footer__redes-desc { text-align: center; }
-
-  /* Footer body centrado */
-  .footer__brand {
-    text-align: center;
-    align-items: center;
-  }
-
-  .footer__tagline { text-align: center; }
-
-  .footer__nav { align-items: center; }
-  .footer__nav-list { align-items: center; }
-
-  .footer__contact { align-items: center; }
-  .footer__contact-list { align-items: center; }
-  .footer__contact-item { text-align: center; }
-
-  .footer__copy { text-align: center; }
-
-
+    .footer__copy { text-align: center; }
   }
 
   @media (max-width: 480px) {
-    .footer__redes-inner {
-      padding: var(--space-6) var(--space-6);
-    }
+    .footer__redes-inner { padding: var(--space-6); }
   }
 </style>
