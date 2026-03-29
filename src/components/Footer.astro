@@ -1,9 +1,9 @@
 ---
 const navLinks = [
-  { label: "Nosotros", href: "#esencia" },
-  { label: "Servicios", href: "#servicios" },
+  { label: "Nosotros",   href: "#esencia"   },
+  { label: "Servicios",  href: "#servicios"  },
   { label: "Portafolio", href: "#portafolio" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Contacto",   href: "#contacto"   },
 ]
 
 const redes = [
@@ -11,29 +11,34 @@ const redes = [
     nombre: "Instagram",
     handle: "@studio2810",
     href: "https://instagram.com/studio2810",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>`
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>`
   },
   {
     nombre: "TikTok",
     handle: "@studio2810",
     href: "https://tiktok.com/@studio2810",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>`
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>`
   },
   {
     nombre: "WhatsApp",
     handle: "+51 999 999 999",
     href: "https://wa.me/51999999999",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`
   },
 ]
 ---
 
 <footer class="footer">
 
-  <!-- Banda superior — redes -->
+  <!-- ── SÍGUENOS — rediseñado ── -->
   <div class="footer__redes">
     <div class="footer__redes-inner">
-      <span class="label footer__redes-label">Síguenos</span>
+
+      <div class="footer__redes-header">
+        <span class="label footer__redes-label">Síguenos</span>
+        <p class="footer__redes-desc">Seguí nuestros proyectos y el proceso creativo día a día.</p>
+      </div>
+
       <div class="footer__redes-list">
         {redes.map(r => (
           <a href={r.href} target="_blank" rel="noopener noreferrer" class="footer__red">
@@ -46,14 +51,14 @@ const redes = [
           </a>
         ))}
       </div>
+
     </div>
   </div>
 
-  <!-- Cuerpo principal -->
+  <!-- ── CUERPO ── -->
   <div class="footer__body">
     <div class="footer__body-inner">
 
-      <!-- Logo + tagline -->
       <div class="footer__brand">
         <a href="/" class="footer__logo">
           <span class="footer__logo-main">STUDIO</span>
@@ -64,7 +69,6 @@ const redes = [
         </p>
       </div>
 
-      <!-- Nav -->
       <nav class="footer__nav">
         <span class="label footer__nav-label">Navegación</span>
         <ul class="footer__nav-list">
@@ -76,16 +80,11 @@ const redes = [
         </ul>
       </nav>
 
-      <!-- Contacto directo -->
       <div class="footer__contact">
         <span class="label footer__contact-label">Contacto</span>
         <div class="footer__contact-list">
-          <a href="mailto:hola@studio2810.com" class="footer__contact-item">
-            hola@studio2810.com
-          </a>
-          <a href="https://wa.me/51999999999" target="_blank" class="footer__contact-item">
-            +51 999 999 999
-          </a>
+          <a href="mailto:hola@studio2810.com" class="footer__contact-item">hola@studio2810.com</a>
+          <a href="https://wa.me/51999999999" target="_blank" class="footer__contact-item">+51 999 999 999</a>
           <span class="footer__contact-item">Lima, Perú</span>
         </div>
       </div>
@@ -93,84 +92,80 @@ const redes = [
     </div>
   </div>
 
-  <!-- Barra inferior -->
+  <!-- ── BARRA ── -->
   <div class="footer__bar">
     <div class="footer__bar-inner">
-      <span class="footer__copy">
-        © 2025 Studio2810. Todos los derechos reservados.
-      </span>
-      <a href="#inicio" class="footer__top">
-        Volver arriba
-        <span>↑</span>
-      </a>
+      <span class="footer__copy">© 2025 Studio2810. Todos los derechos reservados.</span>
+      <a href="#inicio" class="footer__top">Volver arriba <span>↑</span></a>
     </div>
   </div>
 
 </footer>
 
 <style>
-  .footer {
-    background: #070908;
-  }
+  .footer { background: #070908; }
 
-  /* ── REDES ── */
+  /* ── SÍGUENOS ── */
   .footer__redes {
-  border-bottom: 1px solid rgba(240, 237, 232, 0.06);
-  background: #111614;
-}
+    background: #0e1110;
+    border-bottom: 1px solid rgba(240, 237, 232, 0.06);
+  }
 
   .footer__redes-inner {
     max-width: 1400px;
     margin: 0 auto;
-    padding: var(--space-8);
-    display: flex;
+    padding: var(--space-20) var(--space-8);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-20);
     align-items: center;
-    gap: var(--space-8);
   }
 
-  .footer__redes-label {
-    color: rgba(240, 237, 232, 0.25);
-    flex-shrink: 0;
+  .footer__redes-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer__redes-label { color: var(--secondary-fixed-dim); }
+
+  .footer__redes-desc {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: rgba(240, 237, 232, 0.4);
   }
 
   .footer__redes-list {
     display: flex;
-    gap: 2px;
-    flex: 1;
+    flex-direction: column;
+    gap: 1px;
   }
 
   .footer__red {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  padding: var(--space-4) var(--space-6);
-  text-decoration: none;
-  background: rgba(240, 237, 232, 0.03);
-  border: 1px solid rgba(240, 237, 232, 0.06);
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.footer__red:hover {
-  background: rgba(240, 237, 232, 0.07);
-  border-color: rgba(240, 237, 232, 0.12);
-}
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-6);
+    text-decoration: none;
+    background: rgba(240, 237, 232, 0.02);
+    border: 1px solid rgba(240, 237, 232, 0.05);
+    transition: background 0.3s ease, border-color 0.3s ease, padding 0.3s ease;
+  }
 
   .footer__red:hover {
     background: rgba(240, 237, 232, 0.05);
-    border-color: rgba(240, 237, 232, 0.08);
+    border-color: rgba(240, 237, 232, 0.1);
+    padding-left: var(--space-8);
   }
 
   .footer__red-icon {
-  color: rgba(240, 237, 232, 0.5);   /* antes 0.35 */
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  transition: color 0.3s ease;
-}
-
-  .footer__red:hover .footer__red-icon {
     color: var(--secondary-fixed-dim);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
   }
 
   .footer__red-info {
@@ -182,7 +177,7 @@ const redes = [
 
   .footer__red-nombre {
     font-family: var(--font-sans);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 400;
     color: rgba(240, 237, 232, 0.7);
     transition: color 0.3s ease;
@@ -191,26 +186,25 @@ const redes = [
   .footer__red:hover .footer__red-nombre { color: #f0ede8; }
 
   .footer__red-handle {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 300;
-  color: rgba(240, 237, 232, 0.4);   /* antes 0.25 */
-  letter-spacing: 0.05em;
-}
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: rgba(240, 237, 232, 0.3);
+    letter-spacing: 0.05em;
+  }
 
   .footer__red-arrow {
-    font-family: var(--font-sans);
     font-size: 0.85rem;
-    color: rgba(240, 237, 232, 0.15);
+    color: rgba(240, 237, 232, 0.2);
     transition: color 0.3s ease, transform 0.3s ease;
   }
 
   .footer__red:hover .footer__red-arrow {
-    color: rgba(240, 237, 232, 0.5);
+    color: rgba(240, 237, 232, 0.6);
     transform: translateX(4px);
   }
 
-  /* ── BODY ── */
+  /* ── CUERPO ── */
   .footer__body {
     border-bottom: 1px solid rgba(240, 237, 232, 0.06);
   }
@@ -225,7 +219,6 @@ const redes = [
     align-items: start;
   }
 
-  /* Brand */
   .footer__brand {
     display: flex;
     flex-direction: column;
@@ -258,14 +251,13 @@ const redes = [
 
   .footer__tagline {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 300;
     font-style: italic;
     line-height: 1.5;
-    color: rgba(240, 237, 232, 0.35);
+    color: rgba(240, 237, 232, 0.3);
   }
 
-  /* Nav */
   .footer__nav {
     display: flex;
     flex-direction: column;
@@ -307,7 +299,6 @@ const redes = [
   .footer__nav-link:hover { color: #f0ede8; }
   .footer__nav-link:hover::after { width: 100%; }
 
-  /* Contacto */
   .footer__contact {
     display: flex;
     flex-direction: column;
@@ -348,7 +339,6 @@ const redes = [
     font-size: 0.75rem;
     font-weight: 300;
     color: rgba(240, 237, 232, 0.2);
-    letter-spacing: 0.05em;
   }
 
   .footer__top {
@@ -368,28 +358,33 @@ const redes = [
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .footer__body-inner {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-12);
+    .footer__redes-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
     }
 
-    .footer__brand {
-      grid-column: span 2;
+    .footer__body-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
     }
+
+    .footer__brand { grid-column: span 2; }
   }
 
   @media (max-width: 768px) {
     .footer__redes-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: var(--space-6);
-      gap: var(--space-4);
+      padding: var(--space-8) var(--space-6);
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
     }
 
-    .footer__redes-list {
-      flex-direction: column;
-      width: 100%;
+    .footer__redes-desc { font-size: 1rem; }
+
+    .footer__red {
+      padding: var(--space-4) var(--space-4);
     }
+
+    .footer__red:hover { padding-left: var(--space-6); }
 
     .footer__body-inner {
       grid-template-columns: 1fr;
@@ -404,6 +399,12 @@ const redes = [
       flex-direction: column;
       gap: var(--space-4);
       text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer__redes-inner {
+      padding: var(--space-6) var(--space-6);
     }
   }
 </style>

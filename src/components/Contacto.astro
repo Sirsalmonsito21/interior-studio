@@ -319,20 +319,65 @@
     .contact__desc { max-width: 100%; }
   }
 
-  @media (max-width: 768px) {
-    .contact {
-      padding: var(--space-20) var(--space-6);
-    }
-
-    .contact__form-wrap {
-      padding: var(--space-6);
-    }
-
-    .contact__row {
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
-    }
+  @media (max-width: 1024px) {
+  .contact__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
   }
+
+  .contact__info {
+    position: static;
+    text-align: center;
+    align-items: center;
+  }
+
+  .contact__desc {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .contact__datos {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact {
+    padding: var(--space-20) var(--space-6);
+  }
+
+  .contact__info {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact__datos {
+    width: 100%;
+    align-items: center;
+  }
+
+  .contact__dato {
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact__form-wrap {
+    padding: var(--space-6);
+  }
+
+  .contact__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  .contact__submit {
+    width: 100%;
+    justify-content: center;
+  }
+}
 </style>
 
 <script>
