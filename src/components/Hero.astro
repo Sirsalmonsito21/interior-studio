@@ -1,273 +1,60 @@
 ---
 ---
-
 <section class="hero" id="inicio">
-
   <div class="hero__image-wrap">
-    <img
-      class="hero__image"
-      src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800&q=85"
-      alt="Interior Studio2810"
-    />
+    <img class="hero__image" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800&q=85" alt="Interior Studio2810" />
     <div class="hero__overlay"></div>
   </div>
-
   <div class="hero__content">
-    <span class="label hero__label">Diseño de Interiores · Lima, Perú</span>
-
-    <h1 class="hero__title">
-      Espacios que<br />
-      <em class="hero__typewriter" id="heroTypewriter"></em>
-    </h1>
-
-    <p class="hero__subtitle">
-      Transformamos ambientes en experiencias. Cada proyecto es
-      una conversación entre quien lo habita y el espacio que lo contiene.
-    </p>
-
+    <span class="hero__label">Diseño de Interiores · Lima, Perú</span>
+    <h1 class="hero__title">Espacios que<br /><em id="heroTypewriter"></em></h1>
+    <p class="hero__subtitle">Transformamos ambientes en experiencias. Cada proyecto es una conversación entre quien lo habita y el espacio que lo contiene.</p>
     <div class="hero__actions">
       <a href="#portafolio" class="hero__btn">Ver portafolio</a>
     </div>
   </div>
-
   <div class="hero__scroll">
-    <span class="label">Scroll</span>
+    <span class="hero__scroll-label">Scroll</span>
     <div class="hero__scroll-line"></div>
   </div>
-
 </section>
-
 <style>
-  .hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 680px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  .hero__image-wrap {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .hero__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.05);
-    transition: transform 8s ease;
-  }
-
-  .hero:hover .hero__image { transform: scale(1.0); }
-
-  .hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to right,
-      rgba(250, 249, 246, 0.88) 0%,
-      rgba(250, 249, 246, 0.55) 55%,
-      rgba(250, 249, 246, 0.10) 100%
-    );
-  }
-
-  .hero__content {
-    position: relative;
-    z-index: 2;
-    max-width: 1400px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 var(--space-8);
-    margin-top: -8vh;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    /* Visible siempre — sin opacity 0 */
-    opacity: 1;
-  }
-
-  .hero__label {
-    color: var(--ink-muted);
-    opacity: 1;
-  }
-
-  .hero__title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: var(--ink);
-    max-width: 680px;
-    opacity: 1;
-  }
-
-  .hero__title em {
-    font-style: italic;
-    font-weight: 300;
-    min-height: 1.2em;
-    display: inline-block;
-    color: var(--desert);
-  }
-
-  .hero__typewriter::after {
-    content: '|';
-    display: inline-block;
-    margin-left: 2px;
-    color: var(--sandstone);
-    animation: blink 0.9s step-end infinite;
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-  }
-
-  .hero__subtitle {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    max-width: 440px;
-    opacity: 1;
-  }
-
-  .hero__actions {
-    margin-top: var(--space-4);
-    opacity: 1;
-  }
-
-  .hero__btn {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ink);
-    border: 1px solid rgba(44, 36, 32, 0.3);
-    padding: 0.9rem 2.2rem;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
-  }
-
-  .hero__btn:hover {
-    border-color: var(--desert);
-    color: var(--desert);
-    background: rgba(164, 141, 120, 0.06);
-  }
-
-  .hero__scroll {
-    position: absolute;
-    right: var(--space-8);
-    bottom: var(--space-8);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .hero__scroll .label {
-    color: var(--ink-muted);
-    writing-mode: vertical-rl;
-    letter-spacing: 0.15em;
-    font-size: 0.6rem;
-  }
-
-  .hero__scroll-line {
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, var(--sandstone), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50%       { opacity: 1;   transform: scaleY(1.15); }
-  }
-
-  @media (max-width: 768px) {
-    .hero { align-items: center; justify-content: center; }
-
-    .hero__overlay {
-      background: rgba(250, 249, 246, 0.80);
-    }
-
-    .hero__content {
-      padding: 0 var(--space-6);
-      margin-top: -4vh;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero__label { display: none; }
-
-    .hero__title {
-      font-size: clamp(2.2rem, 8vw, 3rem);
-      max-width: 100%;
-      text-align: center;
-    }
-
-    .hero__subtitle {
-      max-width: 100%;
-      text-align: center;
-    }
-
-    .hero__actions {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .hero__scroll { display: none; }
-  }
-
-  @media (max-width: 480px) {
-    .hero__title { font-size: clamp(1.9rem, 7vw, 2.5rem); }
-  }
+.hero{position:relative;width:100%;height:100vh;min-height:680px;display:flex;align-items:center;overflow:hidden;}
+.hero__image-wrap{position:absolute;inset:0;z-index:0;}
+.hero__image{width:100%;height:100%;object-fit:cover;object-position:center;}
+.hero__overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(250,249,246,0.88) 0%,rgba(250,249,246,0.50) 55%,rgba(250,249,246,0.05) 100%);}
+.hero__content{position:relative;z-index:2;max-width:1400px;width:100%;margin:0 auto;padding:0 2rem;margin-top:-8vh;display:flex;flex-direction:column;gap:1.5rem;}
+.hero__label{font-size:0.75rem;font-family:'Manrope',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:#9C8E86;}
+.hero__title{font-family:'Noto Serif',Georgia,serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:300;letter-spacing:-0.02em;line-height:1.1;color:#2C2420;max-width:680px;}
+.hero__title em{font-style:italic;font-weight:300;color:#A48D78;min-height:1.2em;display:inline-block;}
+#heroTypewriter::after{content:'|';margin-left:2px;color:#CBB9A4;animation:blink 0.9s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero__subtitle{font-family:'Manrope',sans-serif;font-size:1rem;font-weight:300;line-height:1.6;color:#5C4F47;max-width:440px;}
+.hero__actions{margin-top:1rem;}
+.hero__btn{display:inline-block;font-family:'Manrope',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;color:#2C2420;border:1px solid rgba(44,36,32,0.3);padding:0.9rem 2.2rem;transition:all 0.3s ease;}
+.hero__btn:hover{border-color:#A48D78;color:#A48D78;}
+.hero__scroll{position:absolute;right:2rem;bottom:2rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+.hero__scroll-label{font-size:0.6rem;font-family:'Manrope',sans-serif;letter-spacing:0.15em;text-transform:uppercase;color:#9C8E86;writing-mode:vertical-rl;}
+.hero__scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,#CBB9A4,transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:0.4}50%{opacity:1}}
+@media(max-width:768px){
+  .hero__content{padding:0 1.5rem;margin-top:-4vh;align-items:center;text-align:center;}
+  .hero__label{display:none;}
+  .hero__title{font-size:clamp(2.2rem,8vw,3rem);max-width:100%;}
+  .hero__subtitle{max-width:100%;}
+  .hero__actions{display:flex;justify-content:center;}
+  .hero__scroll{display:none;}
+}
 </style>
-
 <script>
-  // Typewriter — sin GSAP para evitar opacity: 0 en producción
-  const words   = ['cuentan tu historia.', 'transforman tu vida.', 'definen tu estilo.']
-  const target  = document.getElementById('heroTypewriter')
-  let wordIndex = 0
-  let charIndex = 0
-  let deleting  = false
-
-  if (target) {
-    target.textContent = ''
-    setTimeout(typeLoop, 1200)
-  }
-
-  function typeLoop() {
-    if (!target) return
-    const current = words[wordIndex]
-
-    if (!deleting) {
-      charIndex++
-      target.textContent = current.slice(0, charIndex)
-      if (charIndex === current.length) {
-        setTimeout(() => { deleting = true; typeLoop() }, 2800)
-        return
-      }
-      setTimeout(typeLoop, 95)
-    } else {
-      charIndex--
-      target.textContent = current.slice(0, charIndex)
-      if (charIndex === 0) {
-        deleting  = false
-        wordIndex = (wordIndex + 1) % words.length
-        setTimeout(typeLoop, 400)
-        return
-      }
-      setTimeout(typeLoop, 50)
-    }
-  }
+const words=['cuentan tu historia.','transforman tu vida.','definen tu estilo.']
+const target=document.getElementById('heroTypewriter')
+let wi=0,ci=0,del=false
+if(target){target.textContent='';setTimeout(loop,1200)}
+function loop(){
+  if(!target)return
+  const w=words[wi]
+  if(!del){ci++;target.textContent=w.slice(0,ci);if(ci===w.length){setTimeout(()=>{del=true;loop()},2800);return}setTimeout(loop,95)}
+  else{ci--;target.textContent=w.slice(0,ci);if(ci===0){del=false;wi=(wi+1)%words.length;setTimeout(loop,400);return}setTimeout(loop,50)}
+}
 </script>
