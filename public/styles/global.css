@@ -1,67 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Manrope:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
 
-/* ── RESET ── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* ── BASE ── */
 html {
   scroll-behavior: smooth;
-  background-color: #0e1110;
-  color: #f0ede8;
+  background-color: #FAF9F6;
+  color: #2C2420;
   font-family: var(--font-sans);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── TOKENS ── */
-:root {
-  /* Surfaces */
-  --surface:                   #f9f9f7;
-  --surface-container-lowest:  #ffffff;
-  --surface-container-low:     #f2f4f2;
-  --surface-container:         #ecefec;
-  --surface-container-highest: #dee4e0;
-
-  /* Colors */
-  --on-surface:          #2d3432;
-  --primary:             #5f5e5e;
-  --primary-container:   #e5e2e1;
-  --secondary:           #735b3a;
-  --on-secondary:        #fff8f2;
-  --secondary-fixed-dim: #b89a78;
-  --outline:             #767c79;
-  --error:               #9f403d;
-
-  /* Typography */
-  --font-serif: 'Noto Serif', Georgia, serif;
-  --font-sans:  'Manrope', system-ui, sans-serif;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-
-  /* Spacing — base 4px */
-  --space-4:  1rem;    /* 16px */
-  --space-6:  1.5rem;  /* 24px */
-  --space-8:  2rem;    /* 32px */
-  --space-20: 5rem;    /* 80px */
-  --space-24: 6rem;    /* 96px */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
-/* ── UTILIDADES GLOBALES ── */
+:root {
+  /* ── PALETA STUDIO2810 ── */
+  --white:        #FAF9F6;   /* Feather White — fondo principal */
+  --porcelain:    #F4F1EA;   /* Porcelain Mist — secciones alternadas */
+  --oat:          #E6DAC8;   /* Creamed Oat — calidez */
+  --sandstone:    #CBB9A4;   /* Soft Sandstone — bordes, labels */
+  --desert:       #A48D78;   /* Desert Rock — CTAs, acentos */
+  --desert-dark:  #8B7562;   /* Desert Rock oscuro — hover */
+  --ink:          #2C2420;   /* Negro cálido — texto principal */
+  --ink-soft:     #5C4F47;   /* Negro suave — texto secundario */
+  --ink-muted:    #9C8E86;   /* Texto terciario, placeholders */
+
+  /* Aliases para compatibilidad con componentes existentes */
+  --surface:                   #FAF9F6;
+  --surface-container-lowest:  #ffffff;
+  --surface-container-low:     #F4F1EA;
+  --surface-container:         #E6DAC8;
+  --surface-container-highest: #CBB9A4;
+  --on-surface:                #2C2420;
+  --primary:                   #A48D78;
+  --primary-container:         #E6DAC8;
+  --secondary:                 #A48D78;
+  --on-secondary:              #FAF9F6;
+  --secondary-fixed-dim:       #CBB9A4;
+  --outline:                   #9C8E86;
+  --error:                     #9f403d;
+
+  /* Typography */
+  --font-serif:   'Noto Serif', Georgia, serif;
+  --font-sans:    'Manrope', system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+
+  /* Spacing */
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+}
+
 .label {
   font-size: 0.75rem;
   font-family: var(--font-sans);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--outline);
+  color: var(--ink-muted);
 }
 
 .btn-primary {
   display: inline-block;
-  background: var(--secondary);
-  color: var(--on-secondary);
+  background: var(--desert);
+  color: var(--white);
   font-family: var(--font-sans);
   font-size: 0.875rem;
   letter-spacing: 0.05em;
@@ -70,15 +81,14 @@ html {
   border: none;
   border-radius: 0;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: background 0.3s ease;
   text-decoration: none;
 }
-
-.btn-primary:hover { opacity: 0.85; }
-
-/* ── FIX SCROLL HORIZONTAL ── */
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-  max-width: 100%;
+/* ── FALLBACK ANIMACIONES ── */
+.hero__label,
+.hero__title,
+.hero__subtitle,
+.hero__actions {
+  opacity: 1 !important;
 }
+.btn-primary:hover { background: var(--desert-dark); }

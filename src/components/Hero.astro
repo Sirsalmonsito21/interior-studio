@@ -6,8 +6,8 @@
   <div class="hero__image-wrap">
     <img
       class="hero__image"
-      src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1800&q=80"
-      alt="Interior de lujo Studio2810"
+      src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800&q=85"
+      alt="Interior Studio2810"
     />
     <div class="hero__overlay"></div>
   </div>
@@ -70,13 +70,12 @@
     inset: 0;
     background: linear-gradient(
       to right,
-      rgba(12, 14, 13, 0.82) 0%,
-      rgba(12, 14, 13, 0.45) 60%,
-      rgba(12, 14, 13, 0.15) 100%
+      rgba(250, 249, 246, 0.88) 0%,
+      rgba(250, 249, 246, 0.55) 55%,
+      rgba(250, 249, 246, 0.10) 100%
     );
   }
 
-  /* ── CONTENIDO ── */
   .hero__content {
     position: relative;
     z-index: 2;
@@ -88,10 +87,13 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-6);
+    /* Visible siempre — sin opacity 0 */
+    opacity: 1;
   }
 
   .hero__label {
-    color: rgba(240, 237, 232, 0.55);
+    color: var(--ink-muted);
+    opacity: 1;
   }
 
   .hero__title {
@@ -100,8 +102,9 @@
     font-weight: 300;
     letter-spacing: -0.02em;
     line-height: 1.1;
-    color: #f0ede8;
+    color: var(--ink);
     max-width: 680px;
+    opacity: 1;
   }
 
   .hero__title em {
@@ -109,14 +112,14 @@
     font-weight: 300;
     min-height: 1.2em;
     display: inline-block;
+    color: var(--desert);
   }
 
-  /* Cursor parpadeante */
   .hero__typewriter::after {
     content: '|';
     display: inline-block;
     margin-left: 2px;
-    color: var(--secondary-fixed-dim);
+    color: var(--sandstone);
     animation: blink 0.9s step-end infinite;
   }
 
@@ -130,11 +133,15 @@
     font-size: 1rem;
     font-weight: 300;
     line-height: 1.6;
-    color: rgba(240, 237, 232, 0.70);
+    color: var(--ink-soft);
     max-width: 440px;
+    opacity: 1;
   }
 
-  .hero__actions { margin-top: var(--space-4); }
+  .hero__actions {
+    margin-top: var(--space-4);
+    opacity: 1;
+  }
 
   .hero__btn {
     display: inline-block;
@@ -143,19 +150,18 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(240, 237, 232, 0.85);
-    border: 1px solid rgba(240, 237, 232, 0.35);
+    color: var(--ink);
+    border: 1px solid rgba(44, 36, 32, 0.3);
     padding: 0.9rem 2.2rem;
     transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
   }
 
   .hero__btn:hover {
-    border-color: rgba(240, 237, 232, 0.8);
-    color: #f0ede8;
-    background: rgba(240, 237, 232, 0.08);
+    border-color: var(--desert);
+    color: var(--desert);
+    background: rgba(164, 141, 120, 0.06);
   }
 
-  /* Scroll indicator */
   .hero__scroll {
     position: absolute;
     right: var(--space-8);
@@ -168,7 +174,7 @@
   }
 
   .hero__scroll .label {
-    color: rgba(240, 237, 232, 0.4);
+    color: var(--ink-muted);
     writing-mode: vertical-rl;
     letter-spacing: 0.15em;
     font-size: 0.6rem;
@@ -177,7 +183,7 @@
   .hero__scroll-line {
     width: 1px;
     height: 60px;
-    background: linear-gradient(to bottom, rgba(240, 237, 232, 0.45), rgba(240, 237, 232, 0));
+    background: linear-gradient(to bottom, var(--sandstone), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
   }
 
@@ -186,16 +192,11 @@
     50%       { opacity: 1;   transform: scaleY(1.15); }
   }
 
-  /* ── RESPONSIVE MOBILE ── */
   @media (max-width: 768px) {
-    .hero {
-      align-items: center;
-      justify-content: center;
-    }
+    .hero { align-items: center; justify-content: center; }
 
-    /* Overlay más oscuro para mejor legibilidad en mobile */
     .hero__overlay {
-      background: rgba(12, 14, 13, 0.65);
+      background: rgba(250, 249, 246, 0.80);
     }
 
     .hero__content {
@@ -205,10 +206,7 @@
       text-align: center;
     }
 
-    /* Label en esquina superior izquierda */
-    .hero__label {
-  display: none;
-}
+    .hero__label { display: none; }
 
     .hero__title {
       font-size: clamp(2.2rem, 8vw, 3rem);
@@ -219,7 +217,6 @@
     .hero__subtitle {
       max-width: 100%;
       text-align: center;
-      font-size: 0.9rem;
     }
 
     .hero__actions {
@@ -233,46 +230,20 @@
 
   @media (max-width: 480px) {
     .hero__title { font-size: clamp(1.9rem, 7vw, 2.5rem); }
-    .hero__subtitle { font-size: 0.85rem; }
   }
 </style>
 
 <script>
-  import gsap from 'gsap'
-
-  // Animaciones entrada — con delay del preloader
-  gsap.from('.hero__label', {
-    opacity: 0, y: 20, duration: 1, delay: 2.4, ease: 'power2.out'
-  })
-  gsap.from('.hero__title', {
-    opacity: 0, y: 40, duration: 1.2, delay: 2.6, ease: 'power3.out'
-  })
-  gsap.from('.hero__subtitle', {
-    opacity: 0, y: 30, duration: 1, delay: 2.9, ease: 'power2.out'
-  })
-  gsap.from('.hero__actions', {
-    opacity: 0, y: 20, duration: 1, delay: 3.1, ease: 'power2.out'
-  })
-
-  // ── TYPEWRITER ──
+  // Typewriter — sin GSAP para evitar opacity: 0 en producción
   const words   = ['cuentan tu historia.', 'transforman tu vida.', 'definen tu estilo.']
   const target  = document.getElementById('heroTypewriter')
   let wordIndex = 0
   let charIndex = 0
   let deleting  = false
-  let running   = false
 
   if (target) {
-    // Arranca después del preloader + animaciones
-    setTimeout(startTypewriter, 3800)
-  }
-
-  function startTypewriter() {
-    if (running) return
-    running = true
-    // Texto inicial vacío
-    if (target) target.textContent = ''
-    typeLoop()
+    target.textContent = ''
+    setTimeout(typeLoop, 1200)
   }
 
   function typeLoop() {
@@ -282,24 +253,17 @@
     if (!deleting) {
       charIndex++
       target.textContent = current.slice(0, charIndex)
-
       if (charIndex === current.length) {
-        // Pausa larga al terminar la palabra
-        setTimeout(() => {
-          deleting = true
-          typeLoop()
-        }, 2800)
+        setTimeout(() => { deleting = true; typeLoop() }, 2800)
         return
       }
       setTimeout(typeLoop, 95)
     } else {
       charIndex--
       target.textContent = current.slice(0, charIndex)
-
       if (charIndex === 0) {
         deleting  = false
         wordIndex = (wordIndex + 1) % words.length
-        // Pausa antes de escribir la siguiente
         setTimeout(typeLoop, 400)
         return
       }
