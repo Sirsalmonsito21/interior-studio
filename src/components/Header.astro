@@ -1,256 +1,286 @@
 ---
-const navLinks = [
-  { label: "Nosotros", href: "#esencia" },
-  { label: "Servicios", href: "#servicios" },
-  { label: "Portafolio", href: "#portafolio" },
-  { label: "Contacto", href: "#contacto" },
-]
 ---
 
-<header class="header" id="header">
-  <div class="header__inner">
-    <a href="/" class="header__logo">
-      <span class="header__logo-main">STUDIO</span>
-      <span class="header__logo-sub">2810</span>
-    </a>
+<section class="hero" id="inicio">
 
-    <nav class="header__nav">
-      {navLinks.map(link => (
-        <a href={link.href} class="header__nav-link">
-          {link.label}
-        </a>
-      ))}
-    </nav>
-
-    <a href="#contacto" class="header__cta">
-      Conversemos
-    </a>
-
-    <button class="header__burger" id="burger" aria-label="Abrir menú">
-      <span></span>
-      <span></span>
-    </button>
+  <div class="hero__image-wrap">
+    <img
+      class="hero__image"
+      src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800&q=85"
+      alt="Interior Studio2810"
+    />
+    <div class="hero__overlay"></div>
   </div>
 
-  <div class="header__mobile" id="mobileMenu">
-    {navLinks.map(link => (
-      <a href={link.href} class="header__mobile-link">
-        {link.label}
-      </a>
-    ))}
-    <a href="#contacto" class="header__cta" style="align-self: flex-start; margin-top: 1rem;">
-      Conversemos
-    </a>
+  <div class="hero__content">
+    <span class="label hero__label">Diseño de Interiores · Lima, Perú</span>
+
+    <h1 class="hero__title">
+      Espacios que<br />
+      <em class="hero__typewriter" id="heroTypewriter"></em>
+    </h1>
+
+    <p class="hero__subtitle">
+      Transformamos ambientes en experiencias. Cada proyecto es
+      una conversación entre quien lo habita y el espacio que lo contiene.
+    </p>
+
+    <div class="hero__actions">
+      <a href="#portafolio" class="hero__btn">Ver portafolio</a>
+    </div>
   </div>
-</header>
+
+  <div class="hero__scroll">
+    <span class="label">Scroll</span>
+    <div class="hero__scroll-line"></div>
+  </div>
+
+</section>
 
 <style>
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    padding: 0 var(--space-8);
-    background: rgba(18, 20, 19, 0.82);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-    transform: translateY(0);
-    transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
-  }
-
-  .header.is-hidden {
-    transform: translateY(-110%);
-  }
-
-  .header__inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    height: 72px;
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 680px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
+    overflow: hidden;
   }
 
-  /* Logo */
-  .header__logo {
-    text-decoration: none;
+  .hero__image-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+  }
+
+  .hero:hover .hero__image { transform: scale(1.0); }
+
+  /* Overlay claro — no oscuro */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(250, 249, 246, 0.82) 0%,
+      rgba(250, 249, 246, 0.50) 55%,
+      rgba(250, 249, 246, 0.10) 100%
+    );
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-8);
+    margin-top: -8vh;
     display: flex;
     flex-direction: column;
-    line-height: 1;
-    gap: 3px;
+    gap: var(--space-6);
   }
 
-  .header__logo-main {
+  .hero__label {
+    color: var(--ink-muted);
+  }
+
+  .hero__title {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    color: #f0ede8;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 680px;
   }
 
-  .header__logo-sub {
+  .hero__title em {
+    font-style: italic;
+    font-weight: 300;
+    min-height: 1.2em;
+    display: inline-block;
+    color: var(--desert);
+  }
+
+  .hero__typewriter::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--sandstone);
+    animation: blink 0.9s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  .hero__subtitle {
     font-family: var(--font-sans);
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: rgba(240, 237, 232, 0.45);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 440px;
   }
 
-  /* Nav */
-  .header__nav {
-    display: flex;
-    gap: var(--space-8);
-    align-items: center;
-  }
+  .hero__actions { margin-top: var(--space-4); }
 
-  .header__nav-link {
+  .hero__btn {
+    display: inline-block;
     font-family: var(--font-sans);
     font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: rgba(240, 237, 232, 0.7);
-    position: relative;
-    padding-bottom: 2px;
-    transition: color 0.3s ease;
-  }
-
-  .header__nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    height: 1px;
-    background: var(--secondary-fixed-dim);
-    transition: width 0.35s ease;
-  }
-
-  .header__nav-link:hover {
-    color: #f0ede8;
-  }
-
-  .header__nav-link:hover::after { width: 100%; }
-
-  /* Botón fino elegante */
-  .header__cta {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(240, 237, 232, 0.85);
-    border: 1px solid rgba(240, 237, 232, 0.25);
-    padding: 0.55rem 1.4rem;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
-    white-space: nowrap;
+    color: var(--ink);
+    border: 1px solid rgba(44, 36, 32, 0.3);
+    padding: 0.9rem 2.2rem;
+    transition: border-color 0.3s ease,
+                color 0.3s ease,
+                background 0.3s ease;
   }
 
-  .header__cta:hover {
-    border-color: rgba(240, 237, 232, 0.7);
-    color: #f0ede8;
-    background: rgba(240, 237, 232, 0.06);
+  .hero__btn:hover {
+    border-color: var(--desert);
+    color: var(--desert);
+    background: rgba(164, 141, 120, 0.06);
   }
 
-  /* Burger */
-  .header__burger {
-    display: none;
+  .hero__scroll {
+    position: absolute;
+    right: var(--space-8);
+    bottom: var(--space-8);
+    z-index: 2;
+    display: flex;
     flex-direction: column;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
+    align-items: center;
+    gap: var(--space-4);
   }
 
-  .header__burger span {
-    display: block;
-    width: 22px;
-    height: 1px;
-    background: rgba(240, 237, 232, 0.8);
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  .hero__scroll .label {
+    color: var(--ink-muted);
+    writing-mode: vertical-rl;
+    letter-spacing: 0.15em;
+    font-size: 0.6rem;
   }
 
-  .header__burger.is-open span:first-child {
-    transform: translateY(3.5px) rotate(45deg);
-  }
-  .header__burger.is-open span:last-child {
-    transform: translateY(-3.5px) rotate(-45deg);
-  }
-
-  /* Mobile menu */
-  .header__mobile {
-    display: none;
-    flex-direction: column;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
+  .hero__scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--sandstone), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
   }
 
-  .header__mobile.is-open {
-    max-height: 400px;
-    padding: var(--space-6) 0;
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.15); }
   }
 
-  .header__mobile-link {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: rgba(240, 237, 232, 0.75);
-    padding: 0.6rem 0;
-    transition: color 0.3s ease;
-  }
-
-  .header__mobile-link:hover { color: #f0ede8; }
-
-  /* Responsive */
   @media (max-width: 768px) {
-    .header { padding: 0 var(--space-6); }
-    .header__nav, .header__cta { display: none; }
-    .header__burger { display: flex; }
-    .header__mobile { display: flex; }
+    .hero { align-items: center; justify-content: center; }
+
+    .hero__overlay {
+      background: rgba(250, 249, 246, 0.75);
+    }
+
+    .hero__content {
+      padding: 0 var(--space-6);
+      margin-top: -4vh;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero__label { display: none; }
+
+    .hero__title {
+      font-size: clamp(2.2rem, 8vw, 3rem);
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .hero__subtitle {
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .hero__actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .hero__scroll { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero__title { font-size: clamp(1.9rem, 7vw, 2.5rem); }
   }
 </style>
 
 <script>
-  const burger = document.getElementById('burger')
-  const mobileMenu = document.getElementById('mobileMenu')
-  const header = document.getElementById('header')
+  import gsap from 'gsap'
 
-  // Burger
-  burger?.addEventListener('click', () => {
-    burger.classList.toggle('is-open')
-    mobileMenu?.classList.toggle('is-open')
+  gsap.from('.hero__label', {
+    opacity: 0, y: 20, duration: 1, delay: 2.4, ease: 'power2.out'
+  })
+  gsap.from('.hero__title', {
+    opacity: 0, y: 40, duration: 1.2, delay: 2.6, ease: 'power3.out'
+  })
+  gsap.from('.hero__subtitle', {
+    opacity: 0, y: 30, duration: 1, delay: 2.9, ease: 'power2.out'
+  })
+  gsap.from('.hero__actions', {
+    opacity: 0, y: 20, duration: 1, delay: 3.1, ease: 'power2.out'
   })
 
-  mobileMenu?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      burger?.classList.remove('is-open')
-      mobileMenu?.classList.remove('is-open')
-    })
-  })
+  const words   = ['cuentan tu historia.', 'transforman tu vida.', 'definen tu estilo.']
+  const target  = document.getElementById('heroTypewriter')
+  let wordIndex = 0
+  let charIndex = 0
+  let deleting  = false
+  let running   = false
 
-  // Hide on scroll down / show on scroll up
-  let lastScroll = 0
+  if (target) setTimeout(startTypewriter, 3800)
 
-  window.addEventListener('scroll', () => {
-    const current = window.scrollY
+  function startTypewriter() {
+    if (running) return
+    running = true
+    if (target) target.textContent = ''
+    typeLoop()
+  }
 
-    if (current <= 60) {
-      header?.classList.remove('is-hidden')
-    } else if (current > lastScroll + 8) {
-      // Scrolleando hacia abajo
-      header?.classList.add('is-hidden')
-    } else if (current < lastScroll - 8) {
-      // Scrolleando hacia arriba
-      header?.classList.remove('is-hidden')
+  function typeLoop() {
+    if (!target) return
+    const current = words[wordIndex]
+    if (!deleting) {
+      charIndex++
+      target.textContent = current.slice(0, charIndex)
+      if (charIndex === current.length) {
+        setTimeout(() => { deleting = true; typeLoop() }, 2800)
+        return
+      }
+      setTimeout(typeLoop, 95)
+    } else {
+      charIndex--
+      target.textContent = current.slice(0, charIndex)
+      if (charIndex === 0) {
+        deleting  = false
+        wordIndex = (wordIndex + 1) % words.length
+        setTimeout(typeLoop, 400)
+        return
+      }
+      setTimeout(typeLoop, 50)
     }
-
-    lastScroll = current
-  })
+  }
 </script>
