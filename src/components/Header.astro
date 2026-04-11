@@ -6,6 +6,7 @@ const navLinks = [
   { label: "Contacto",   href: "#contacto"   },
 ]
 ---
+
 <header class="header" id="header">
   <div class="header__inner">
     <a href="/" class="header__logo">
@@ -26,7 +27,7 @@ const navLinks = [
     {navLinks.map(link => (
       <a href={link.href} class="header__mobile-link">{link.label}</a>
     ))}
-    <a href="#contacto" class="header__cta" style="align-self:flex-start;margin-top:1rem;">Conversemos</a>
+    <a href="#contacto" class="header__mobile-cta">Conversemos</a>
   </div>
 </header>
 
@@ -39,13 +40,28 @@ const navLinks = [
     z-index: 100;
     padding: 0 2rem;
     background: transparent;
-    transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+    transition:
+      transform 0.45s cubic-bezier(0.77, 0, 0.175, 1),
+      background 0.5s ease,
+      border-color 0.5s ease,
+      box-shadow 0.5s ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  /* Cuando hay scroll — fondo crema traslúcido con blur */
+  .header.is-scrolled {
+    background: rgba(245, 242, 238, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(160, 140, 110, 0.15);
+    box-shadow: 0 2px 40px rgba(20, 16, 10, 0.06);
   }
 
   .header.is-hidden {
     transform: translateY(-110%);
   }
 
+  /* ── INNER ── */
   .header__inner {
     max-width: 1400px;
     margin: 0 auto;
@@ -56,32 +72,47 @@ const navLinks = [
     gap: 2rem;
   }
 
-  /* Logo */
+  /* ── LOGO ── */
   .header__logo {
     text-decoration: none;
     display: flex;
     flex-direction: column;
     line-height: 1;
     gap: 3px;
+    transition: opacity 0.3s ease;
   }
 
+  .header__logo:hover { opacity: 0.7; }
+
   .header__logo-main {
-    font-family: 'Noto Serif', Georgia, serif;
+    font-family: 'Cormorant Garamond', 'Noto Serif', Georgia, serif;
     font-size: 1.1rem;
     font-weight: 400;
     letter-spacing: 0.2em;
     color: #FAF9F6;
+    transition: color 0.5s ease;
   }
 
   .header__logo-sub {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Jost', 'Manrope', sans-serif;
     font-size: 0.55rem;
+    font-weight: 300;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: rgba(250, 249, 246, 0.45);
+    transition: color 0.5s ease;
   }
 
-  /* Nav */
+  /* Logo oscuro cuando hay scroll */
+  .header.is-scrolled .header__logo-main {
+    color: #0a0a08;
+  }
+
+  .header.is-scrolled .header__logo-sub {
+    color: rgba(100, 85, 60, 0.6);
+  }
+
+  /* ── NAV ── */
   .header__nav {
     display: flex;
     gap: 2rem;
@@ -89,40 +120,74 @@ const navLinks = [
   }
 
   .header__nav-link {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    font-family: 'Jost', 'Manrope', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(250, 249, 246, 0.85);
-    transition: color 0.3s ease;
+    color: rgba(250, 249, 246, 0.9);
+    transition: color 0.5s ease, opacity 0.3s ease;
+    position: relative;
   }
 
-  .header__nav-link::after { display: none; }
+  /* Subrayado animado */
+  .header__nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.35s ease;
+  }
 
-  .header__nav-link:hover { color: #2C2420; }
+  .header__nav-link:hover::after { width: 100%; }
 
-  /* CTA */
+  /* Nav oscuro cuando hay scroll */
+  .header.is-scrolled .header__nav-link {
+    color: rgba(20, 16, 12, 0.75);
+  }
+
+  .header.is-scrolled .header__nav-link:hover {
+    color: rgb(120, 95, 60);
+  }
+
+  /* ── CTA ── */
   .header__cta {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
+    font-family: 'Jost', 'Manrope', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(250, 249, 246, 0.85);
+    color: rgba(250, 249, 246, 0.9);
     border: 1px solid rgba(250, 249, 246, 0.35);
     padding: 0.55rem 1.4rem;
-    transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    transition: color 0.5s ease, background 0.3s ease, border-color 0.5s ease;
     white-space: nowrap;
   }
 
   .header__cta:hover {
-    color: #2C2420;
+    color: #0a0a08;
     background: #FAF9F6;
     border-color: #FAF9F6;
   }
 
-  /* Burger */
+  /* CTA oscuro cuando hay scroll */
+  .header.is-scrolled .header__cta {
+    color: rgb(100, 85, 60);
+    border-color: rgba(100, 85, 60, 0.4);
+  }
+
+  .header.is-scrolled .header__cta:hover {
+    color: #f5f2ee;
+    background: rgb(100, 85, 60);
+    border-color: rgb(100, 85, 60);
+  }
+
+  /* ── BURGER ── */
   .header__burger {
     display: none;
     flex-direction: column;
@@ -138,7 +203,11 @@ const navLinks = [
     width: 22px;
     height: 1px;
     background: #FAF9F6;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform 0.35s ease, opacity 0.35s ease, background 0.5s ease;
+  }
+
+  .header.is-scrolled .header__burger span {
+    background: #0a0a08;
   }
 
   .header__burger.is-open span:first-child {
@@ -149,34 +218,60 @@ const navLinks = [
     transform: translateY(-3.5px) rotate(-45deg);
   }
 
-  /* Mobile menu */
+  /* ── MOBILE MENU ── */
   .header__mobile {
     display: none;
     flex-direction: column;
     max-height: 0;
     overflow: hidden;
-    background: rgba(250, 249, 246, 0.98);
-    transition: max-height 0.4s ease, padding 0.4s ease;
+    background: rgba(245, 242, 238, 0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-top: 1px solid rgba(160, 140, 110, 0.12);
+    transition: max-height 0.45s ease, padding 0.45s ease;
+    padding: 0 0;
   }
 
   .header__mobile.is-open {
     max-height: 400px;
-    padding: 1.5rem 0;
+    padding: 1.8rem 0 2rem;
   }
 
   .header__mobile-link {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
+    font-family: 'Jost', 'Manrope', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: #2C2420;
-    padding: 0.6rem 0;
+    color: rgba(20, 16, 12, 0.75);
+    padding: 0.7rem 0;
     transition: color 0.3s ease;
   }
 
-  .header__mobile-link:hover { color: #A48D78; }
+  .header__mobile-link:hover { color: rgb(120, 95, 60); }
 
+  .header__mobile-cta {
+    font-family: 'Jost', 'Manrope', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgb(100, 85, 60);
+    border: 1px solid rgba(100, 85, 60, 0.4);
+    padding: 0.6rem 1.4rem;
+    margin-top: 1rem;
+    align-self: flex-start;
+    transition: color 0.3s ease, background 0.3s ease;
+  }
+
+  .header__mobile-cta:hover {
+    color: #f5f2ee;
+    background: rgb(100, 85, 60);
+  }
+
+  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .header { padding: 0 1.5rem; }
     .header__nav, .header__cta { display: none; }
@@ -191,11 +286,13 @@ const navLinks = [
   const header     = document.getElementById('header')
   let lastScroll   = 0
 
+  // Burger toggle
   burger?.addEventListener('click', () => {
     burger.classList.toggle('is-open')
     mobileMenu?.classList.toggle('is-open')
   })
 
+  // Cerrar al hacer click en un link
   mobileMenu?.querySelectorAll('a').forEach(l => {
     l.addEventListener('click', () => {
       burger?.classList.remove('is-open')
@@ -203,11 +300,26 @@ const navLinks = [
     })
   })
 
+  // Scroll — añade is-scrolled y oculta al bajar
   window.addEventListener('scroll', () => {
     const c = window.scrollY
-    if (c <= 60) header?.classList.remove('is-hidden')
-    else if (c > lastScroll + 8) header?.classList.add('is-hidden')
-    else if (c < lastScroll - 8) header?.classList.remove('is-hidden')
+
+    // Fondo al hacer scroll
+    if (c > 40) {
+      header?.classList.add('is-scrolled')
+    } else {
+      header?.classList.remove('is-scrolled')
+    }
+
+    // Ocultar al bajar, mostrar al subir
+    if (c <= 60) {
+      header?.classList.remove('is-hidden')
+    } else if (c > lastScroll + 8) {
+      header?.classList.add('is-hidden')
+    } else if (c < lastScroll - 8) {
+      header?.classList.remove('is-hidden')
+    }
+
     lastScroll = c
   })
 </script>

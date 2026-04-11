@@ -2,31 +2,35 @@
 const servicios = [
   {
     numero: "01",
-    titulo: "Diseño de<br>Interiores",
+    titulo: "Diseño de\nInteriores",
     descripcion: "Desde la concepción hasta el detalle final. Creamos espacios que equilibran estética y funcionalidad con intención en cada decisión.",
     tag: "Servicio Principal",
-    imagen: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600&q=85",
+    imagen: "/images/cocina3.jpeg",
+    tagImagen: "Cocina · Lima",
   },
   {
     numero: "02",
-    titulo: "Remo&shy;delación",
+    titulo: "Remodelación",
     descripcion: "Transformamos ambientes existentes respetando su esencia y elevando su potencial al máximo.",
     tag: "Transformación",
-    imagen: "https://images.unsplash.com/photo-1503174971373-b1f69850bded?w=1600&q=85",
+    imagen: "/images/entrada1.jpeg",
+    tagImagen: "Entrada · Lima",
   },
   {
     numero: "03",
-    titulo: "Mobiliario<br>a Medida",
+    titulo: "Mobiliario\na Medida",
     descripcion: "Piezas únicas que se integran perfectamente al espacio. Cada mueble es una extensión del ambiente.",
     tag: "Exclusivo",
-    imagen: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600&q=85",
+    imagen: "/images/niña4.jpeg",
+    tagImagen: "Detalle · Lima",
   },
   {
     numero: "04",
     titulo: "Consultoría",
     descripcion: "Una mirada experta para decisiones clave: paletas, materiales, distribución y estilo.",
     tag: "Asesoría",
-    imagen: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=85",
+    imagen: "/images/oficina2.png",
+    tagImagen: "Oficina · Lima",
   },
 ]
 ---
@@ -34,31 +38,52 @@ const servicios = [
 <section class="srv" id="servicios">
 
   <div class="srv__intro">
-    <p class="srv__eyebrow">Lo que hacemos</p>
-    <h2 class="srv__heading">Nuestros<br><em>Servicios</em></h2>
+    <div class="srv__label-wrap">
+      <span class="srv__label-line"></span>
+      <span class="srv__label">Lo Que Hacemos</span>
+    </div>
+    <h2 class="srv__heading">Nuestros <em>Servicios</em></h2>
   </div>
 
   <div class="srv__items">
     {servicios.map((s, i) => (
-      <div
-        class="srv__item"
-        style={`--bg: url('${s.imagen}')`}
-      >
-        <div class="srv__item-overlay"></div>
-        <div class="srv__item-content">
+      <div class={`srv__item ${i % 2 === 0 ? 'srv__item--normal' : 'srv__item--reverse'}`}>
 
-          <div class="srv__item-left">
-            <span class="srv__item-tag">{s.tag}</span>
-            <span class="srv__item-num">{s.numero}</span>
-            <h3 class="srv__item-title" set:html={s.titulo} />
+        <div class="srv__image-col">
+          <div class="srv__image-frame">
+            <img
+              class="srv__image"
+              src={s.imagen}
+              alt={s.titulo}
+              loading="lazy"
+            />
+            <div class="srv__image-tag">
+              <span>Studio2810</span>
+              <span class="srv__image-tag-line"></span>
+              <span>{s.tagImagen}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="srv__text-col">
+
+          <div class="srv__label-wrap">
+            <span class="srv__label-line"></span>
+            <span class="srv__label">{s.tag}</span>
           </div>
 
-          <div class="srv__item-right">
-            <div class="srv__item-line"></div>
-            <p class="srv__item-desc">{s.descripcion}</p>
-          </div>
+          <div class="srv__num">{s.numero}</div>
+
+          <h3 class="srv__title">
+            {s.titulo.split('\n').map((line, j) => (
+              <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
+            ))}
+          </h3>
+
+          <p class="srv__desc">{s.descripcion}</p>
 
         </div>
+
       </div>
     ))}
   </div>
@@ -66,239 +91,286 @@ const servicios = [
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
 
   .srv {
-    font-family: 'Jost', sans-serif;
-    background: #0a0d0b;
-    color: #f0ede8;
+    background: #f5f2ee;
+    padding: 10rem 5vw;
+    overflow: hidden;
   }
 
   /* ── INTRO ── */
   .srv__intro {
-    min-height: 38vh;
+    max-width: 1300px;
+    margin: 0 auto 7rem;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 6rem 5vw 5rem;
-    position: relative;
+    gap: 1.2rem;
   }
 
-  .srv__intro::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 5vw;
-    right: 5vw;
+  .srv__label-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .srv__label-line {
+    display: inline-block;
+    width: 32px;
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(240, 237, 232, 0.12) 20%,
-      rgba(240, 237, 232, 0.12) 80%,
-      transparent
-    );
+    background: rgba(100, 85, 60, 0.4);
+    flex-shrink: 0;
   }
 
-  .srv__eyebrow {
-    font-size: 0.62rem;
-    font-weight: 300;
+  .srv__label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(240, 237, 232, 0.38);
-    margin-bottom: 1.4rem;
+    color: rgb(120, 95, 60);
   }
 
   .srv__heading {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.2rem, 7vw, 6.5rem);
-    font-weight: 300;
-    line-height: 0.95;
+    font-size: clamp(2.4rem, 3.8vw, 3.6rem);
+    font-weight: 500;
     letter-spacing: -0.02em;
-    color: #f0ede8;
+    line-height: 1.1;
+    color: #0a0a08;
   }
 
   .srv__heading em {
     font-style: italic;
-    color: rgba(240, 237, 232, 0.5);
+    color: rgb(110, 90, 55);
   }
 
   /* ── ITEMS ── */
   .srv__items {
+    max-width: 1300px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    gap: 9rem;
   }
 
   .srv__item {
+    display: grid;
+    grid-template-columns: 1.45fr 0.55fr;
+    gap: 5vw;
+    align-items: center;
+  }
+
+  .srv__item--reverse {
+    grid-template-columns: 0.55fr 1.45fr;
+  }
+
+  .srv__item--reverse .srv__image-col {
+    order: 2;
+  }
+
+  .srv__item--reverse .srv__text-col {
+    order: 1;
+  }
+
+  /* ── IMAGEN ── */
+  .srv__image-col {
     position: relative;
-    min-height: 92vh;
-    display: flex;
-    align-items: flex-end;
+  }
+
+  .srv__image-frame {
+    position: relative;
     overflow: hidden;
   }
 
-  /* La imagen va aquí como pseudo-elemento */
-  .srv__item::before {
+  .srv__image-frame::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background-image: var(--bg);
-    background-size: cover;
-    background-position: center;
-    filter: brightness(0.52);
-    transition: transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                filter 0.6s ease;
+    top: -24px;
+    left: -24px;
+    width: 60%;
+    height: 60%;
+    border: 1px solid rgba(160, 140, 110, 0.25);
     z-index: 0;
+    transition: transform 0.8s ease;
   }
 
-  .srv__item:hover::before {
-    transform: scale(1.06);
-    filter: brightness(0.65);
+  .srv__item--reverse .srv__image-frame::before {
+    left: auto;
+    right: -24px;
   }
 
-  /* Degradado oscuro desde abajo */
-  .srv__item-overlay {
+  .srv__image-frame::after {
+    content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to top,
-      rgba(8, 11, 9, 0.93) 0%,
-      rgba(8, 11, 9, 0.48) 35%,
-      rgba(8, 11, 9, 0.08) 65%,
-      transparent 100%
-    );
-    z-index: 1;
+    bottom: -20px;
+    right: -20px;
+    width: 45%;
+    height: 45%;
+    background: rgba(160, 140, 110, 0.08);
+    z-index: 0;
+    transition: transform 0.8s ease;
   }
 
-  /* Contenido */
-  .srv__item-content {
+  .srv__item--reverse .srv__image-frame::after {
+    right: auto;
+    left: -20px;
+  }
+
+  .srv__image-col:hover .srv__image-frame::before {
+    transform: translate(-6px, -6px);
+  }
+
+  .srv__item--reverse .srv__image-col:hover .srv__image-frame::before {
+    transform: translate(6px, -6px);
+  }
+
+  .srv__image-col:hover .srv__image-frame::after {
+    transform: translate(6px, 6px);
+  }
+
+  .srv__item--reverse .srv__image-col:hover .srv__image-frame::after {
+    transform: translate(-6px, 6px);
+  }
+
+  .srv__image {
     position: relative;
-    z-index: 2;
-    padding: 0 5vw 6vh;
+    z-index: 1;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: flex-end;
-    gap: 2rem;
+    height: 580px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
     opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
+    transform: scale(1.04);
+    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .srv__item.visible .srv__item-content {
+  .srv__image.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .srv__image-tag {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #0f0f0d;
+    background: rgba(245, 242, 238, 0.92);
+    padding: 0.55em 1em;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+  }
+
+  .srv__item--reverse .srv__image-tag {
+    left: auto;
+    right: 24px;
+  }
+
+  .srv__image-frame:has(.is-visible) .srv__image-tag {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* Izquierda */
-  .srv__item-left {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .srv__item-tag {
+  .srv__image-tag-line {
     display: inline-block;
-    font-size: 0.58rem;
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(240, 237, 232, 0.38);
-    border: 0.5px solid rgba(240, 237, 232, 0.14);
-    padding: 0.35em 0.85em;
-    margin-bottom: 2rem;
-    width: fit-content;
+    width: 22px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.35);
   }
 
-  .srv__item-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(5rem, 12vw, 10rem);
-    font-weight: 300;
-    line-height: 0.85;
-    color: rgba(240, 237, 232, 0.06);
-    letter-spacing: -0.03em;
-    margin-bottom: -1.5rem;
-  }
-
-  .srv__item-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.6rem, 5.5vw, 5.2rem);
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: #f0ede8;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Derecha */
-  .srv__item-right {
+  /* ── TEXTO ── */
+  .srv__text-col {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    gap: 1.8rem;
-    padding-bottom: 0.3rem;
+    gap: 1.6rem;
   }
 
-  .srv__item-line {
-    width: 1px;
-    height: 55px;
-    background: linear-gradient(to bottom, transparent, rgba(240, 237, 232, 0.2));
-    transition: height 0.5s ease;
+  .srv__num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4.5rem, 9vw, 8rem);
+    font-weight: 400;
+    line-height: 0.85;
+    color: rgba(160, 120, 70, 0.28);
+    letter-spacing: -0.03em;
+    margin-bottom: -1rem;
   }
 
-  .srv__item:hover .srv__item-line {
-    height: 85px;
+  .srv__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3.4vw, 3.2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #0a0a08;
   }
 
-  .srv__item-desc {
-    font-size: clamp(0.78rem, 1.05vw, 0.9rem);
-    font-weight: 200;
-    line-height: 1.9;
-    color: rgba(240, 237, 232, 0.48);
-    max-width: 340px;
-    text-align: right;
+  .srv__desc {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(20, 18, 14, 0.82);
+    max-width: 380px;
   }
 
   /* Separador entre items */
   .srv__item + .srv__item {
-    border-top: 1px solid rgba(240, 237, 232, 0.04);
+    padding-top: 9rem;
+    border-top: 1px solid rgba(100, 85, 60, 0.12);
+    margin-top: -9rem;
   }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .srv__image { height: 480px; }
+  }
+
   @media (max-width: 768px) {
-    .srv__intro {
-      padding: 5rem 1.5rem 4rem;
+    .srv {
+      padding: 6rem 1.5rem;
     }
 
-    .srv__item {
-      min-height: 82vh;
-    }
+    .srv__items { gap: 5rem; }
 
-    .srv__item-content {
+    .srv__item,
+    .srv__item--reverse {
       grid-template-columns: 1fr;
-      gap: 1.4rem;
-      padding: 0 1.5rem 5vh;
+      gap: 2.5rem;
     }
 
-    .srv__item-right {
-      align-items: flex-start;
+    .srv__item--reverse .srv__image-col,
+    .srv__item--reverse .srv__text-col {
+      order: unset;
     }
 
-    .srv__item-desc {
-      text-align: left;
-      max-width: 100%;
-    }
-
-    .srv__item-line {
+    .srv__image-frame::before,
+    .srv__image-frame::after {
       display: none;
+    }
+
+    .srv__image { height: 320px; }
+
+    .srv__desc { max-width: 100%; }
+
+    .srv__item + .srv__item {
+      padding-top: 5rem;
+      margin-top: -5rem;
     }
   }
 
   @media (max-width: 480px) {
-    .srv__item {
-      min-height: 75vh;
-    }
+    .srv__image { height: 260px; }
   }
 </style>
 
@@ -307,25 +379,52 @@ const servicios = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
-  // Animación intro header
-  gsap.from('.srv__eyebrow, .srv__heading', {
+  // Intro header
+  gsap.from('.srv__intro > *', {
     scrollTrigger: { trigger: '.srv__intro', start: 'top 80%' },
     opacity: 0,
     y: 22,
-    duration: 1,
-    stagger: 0.15,
+    duration: 1.4,
+    stagger: 0.2,
     ease: 'power3.out',
   })
 
-  // Activar cada item cuando entra en viewport (para el transition CSS)
-  const items = document.querySelectorAll('.srv__item')
-  const observer = new IntersectionObserver(
+  // Reveal imágenes
+  const images = document.querySelectorAll('.srv__image')
+  const imgObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add('visible')
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible')
+          imgObserver.unobserve(e.target)
+        }
       })
     },
     { threshold: 0.12 }
   )
-  items.forEach((el) => observer.observe(el))
+  images.forEach((img) => imgObserver.observe(img))
+
+  // Texto e imagen de cada item — mismo duration para todos
+  document.querySelectorAll('.srv__item').forEach((item) => {
+    const textCol   = item.querySelector('.srv__text-col')
+    const imgCol    = item.querySelector('.srv__image-col')
+    const isReverse = item.classList.contains('srv__item--reverse')
+
+    gsap.from(textCol.querySelectorAll(':scope > *'), {
+      scrollTrigger: { trigger: item, start: 'top 75%' },
+      opacity: 0,
+      x: isReverse ? -30 : 30,
+      duration: 1.4,
+      stagger: 0.18,
+      ease: 'power3.out',
+    })
+
+    gsap.from(imgCol, {
+      scrollTrigger: { trigger: item, start: 'top 75%' },
+      opacity: 0,
+      x: isReverse ? 30 : -30,
+      duration: 1.5,
+      ease: 'power3.out',
+    })
+  })
 </script>
