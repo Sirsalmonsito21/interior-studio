@@ -9,14 +9,15 @@ const indicadores = [
 <section class="esencia" id="esencia">
   <div class="esencia__inner">
 
-    <!-- Imagen -->
     <div class="esencia__image-col">
       <div class="esencia__image-frame">
         <img
           class="esencia__image"
-          src="/images/comedor3.jpeg"
+          src="/images/comedor3.png"
           alt="Proyecto Studio2810"
-          loading="lazy"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
         />
         <div class="esencia__image-tag">
           <span>Studio2810</span>
@@ -26,7 +27,6 @@ const indicadores = [
       </div>
     </div>
 
-    <!-- Texto derecha -->
     <div class="esencia__text-col">
 
       <div class="esencia__label-wrap">
@@ -68,12 +68,11 @@ const indicadores = [
       </div>
 
     </div>
-
   </div>
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
 
   .esencia {
     background: #f5f2ee;
@@ -82,13 +81,13 @@ const indicadores = [
   }
 
   .esencia__inner {
-  max-width: 1300px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;  /* era 1fr 1fr */
-  gap: 7vw;
-  align-items: center;
-}
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.45fr 0.55fr;
+    gap: 5vw;
+    align-items: center;
+  }
 
   /* ── IMAGEN ── */
   .esencia__image-col {
@@ -100,7 +99,6 @@ const indicadores = [
     overflow: hidden;
   }
 
-  /* Rectángulo decorativo detrás */
   .esencia__image-frame::before {
     content: '';
     position: absolute;
@@ -117,7 +115,6 @@ const indicadores = [
     transform: translate(-6px, -6px);
   }
 
-  /* Bloque de color detrás abajo-derecha */
   .esencia__image-frame::after {
     content: '';
     position: absolute;
@@ -135,57 +132,55 @@ const indicadores = [
   }
 
   .esencia__image {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 640px;  /* era 580px */
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 640px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
 
   .esencia__image.is-visible {
     opacity: 1;
     transform: scale(1);
   }
 
-  /* Tag sobre la imagen */
   .esencia__image-tag {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-family: 'Jost', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #0f0f0d;
-  background: rgba(245, 242, 238, 0.92);
-  padding: 0.55em 1em;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
-}
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #0f0f0d;
+    background: rgba(245, 242, 238, 0.92);
+    padding: 0.55em 1em;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+  }
 
-  .esencia__image.is-visible ~ .esencia__image-tag,
   .esencia__image-frame:has(.is-visible) .esencia__image-tag {
     opacity: 1;
     transform: translateY(0);
   }
 
   .esencia__image-tag-line {
-  display: inline-block;
-  width: 22px;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.35);
-}
+    display: inline-block;
+    width: 22px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.35);
+  }
 
   /* ── TEXTO ── */
   .esencia__text-col {
@@ -208,37 +203,37 @@ const indicadores = [
     flex-shrink: 0;
   }
 
- .esencia__label {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgb(100, 85, 60);
-}
+  .esencia__label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(100, 85, 60);
+  }
 
- .esencia__title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.4rem, 3.8vw, 3.6rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: #0a0a08;
-}
+  .esencia__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 3.8vw, 3.6rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #0a0a08;
+  }
 
   .esencia__title em {
-  font-style: italic;
-  color: rgb(110, 90, 55);
-}
+    font-style: italic;
+    color: rgb(110, 90, 55);
+  }
 
- .esencia__body {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.97rem;
-  font-weight: 300;
-  line-height: 1.85;
-  color: rgba(20, 18, 14, 0.82);
-  max-width: 440px;
-}
+  .esencia__body {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(20, 18, 14, 0.82);
+    max-width: 440px;
+  }
 
   /* ── INDICADORES ── */
   .esencia__indicadores {
@@ -256,64 +251,175 @@ const indicadores = [
   }
 
   .esencia__ind-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 2.8vw, 2.8rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  color: #0a0a08;
-  line-height: 1;
-}
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 2.8vw, 2.8rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #0a0a08;
+    line-height: 1;
+  }
 
-.esencia__ind-label {
-  font-family: 'Jost', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(20, 18, 14, 0.65);
-}
+  .esencia__ind-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(20, 18, 14, 0.65);
+  }
 
-  /* ── RESPONSIVE ── */
+  /* ── TABLET (iPad) ── */
   @media (max-width: 1024px) {
-  .esencia__image { height: 520px; }  /* era 480px */
-}
-
-  @media (max-width: 768px) {
     .esencia {
-      padding: 6rem 1.5rem;
+      padding: 8rem 4vw;
     }
 
-   .esencia__inner {
-  max-width: 1300px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.45fr 0.55fr;
-  gap: 5vw;
-  align-items: center;
-}
+    .esencia__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 4vw;
+    }
+
+    .esencia__image {
+      height: 500px;
+    }
+
+    .esencia__title {
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+    }
+
+    .esencia__indicadores {
+      gap: 1.8rem;
+    }
+  }
+
+  /* ── TABLET PORTRAIT (iPad vertical) ── */
+  @media (max-width: 820px) {
+    .esencia {
+      padding: 6rem 3rem;
+    }
+
+    .esencia__inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
 
     .esencia__image-frame::before,
     .esencia__image-frame::after {
       display: none;
     }
 
-    .esencia__image { height: 320px; }
-
-    .esencia__text-col {
-      gap: 1.5rem;
+    .esencia__image {
+      height: 420px;
+      opacity: 1;
+      transform: scale(1);
     }
 
-    .esencia__body { max-width: 100%; }
+    .esencia__image-tag {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-    .esencia__indicadores {
-      gap: 2rem;
-      flex-wrap: wrap;
+    .esencia__text-col {
+      gap: 1.4rem;
+    }
+
+    .esencia__body {
+      max-width: 100%;
+    }
+
+    .esencia__title {
+      font-size: 2.4rem;
     }
   }
 
-  @media (max-width: 480px) {
-    .esencia__image { height: 260px; }
-    .esencia__indicadores { gap: 1.5rem; }
+  /* ── MOBILE (iPhone 12 mini = 375px) ── */
+  @media (max-width: 768px) {
+    .esencia {
+      padding: 5rem 1.4rem 4rem;
+    }
+
+    .esencia__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .esencia__image-frame::before,
+    .esencia__image-frame::after {
+      display: none;
+    }
+
+    .esencia__image {
+      height: 300px;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .esencia__image-tag {
+      font-size: 0.58rem;
+      padding: 0.45em 0.8em;
+      bottom: 16px;
+      left: 16px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .esencia__text-col {
+      gap: 1.2rem;
+    }
+
+    .esencia__title {
+      font-size: 2rem;
+      line-height: 1.15;
+    }
+
+    .esencia__body {
+      max-width: 100%;
+      font-size: 0.93rem;
+    }
+
+    .esencia__indicadores {
+      gap: 0;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      padding-top: 1.5rem;
+    }
+
+    .esencia__ind {
+      align-items: flex-start;
+      flex: 1;
+    }
+
+    .esencia__ind-num {
+      font-size: 1.9rem;
+    }
+
+    .esencia__ind-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  /* ── iPhone 12 mini y menores (375px) ── */
+  @media (max-width: 390px) {
+    .esencia {
+      padding: 4.5rem 1.2rem 3.5rem;
+    }
+
+    .esencia__image {
+      height: 260px;
+    }
+
+    .esencia__title {
+      font-size: 1.85rem;
+    }
+
+    .esencia__ind-num {
+      font-size: 1.7rem;
+    }
+
+    .esencia__ind-label {
+      font-size: 0.55rem;
+    }
   }
 </style>
 
@@ -322,41 +428,41 @@ const indicadores = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
-  /* Imagen reveal */
-  const img = document.querySelector('.esencia__image')
-  if (img) {
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          img.classList.add('is-visible')
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.12 }
-    )
-    obs.observe(img)
+  const isMobile = window.innerWidth <= 768
+
+  if (!isMobile) {
+    const img = document.querySelector('.esencia__image')
+    if (img) {
+      const obs = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            img.classList.add('is-visible')
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.12 }
+      )
+      obs.observe(img)
+    }
+
+    gsap.from('.esencia__text-col > *', {
+      scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
+      opacity: 0,
+      x: 36,
+      duration: 1,
+      stagger: 0.13,
+      ease: 'power3.out',
+    })
+
+    gsap.from('.esencia__image-col', {
+      scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
+      opacity: 0,
+      x: -36,
+      duration: 1.1,
+      ease: 'power3.out',
+    })
   }
 
-  /* Texto entra desde la derecha */
-  gsap.from('.esencia__text-col > *', {
-    scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
-    opacity: 0,
-    x: 36,
-    duration: 1,
-    stagger: 0.13,
-    ease: 'power3.out',
-  })
-
-  /* Imagen columna entra desde la izquierda */
-  gsap.from('.esencia__image-col', {
-    scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
-    opacity: 0,
-    x: -36,
-    duration: 1.1,
-    ease: 'power3.out',
-  })
-
-  /* Contadores */
   function animateCounter(el: Element) {
     const val    = parseInt(el.getAttribute('data-val') ?? '0')
     const plus   = el.getAttribute('data-plus') === 'true'
@@ -376,7 +482,7 @@ const indicadores = [
       ([e]) => {
         if (e.isIntersecting) { animateCounter(el); obs.disconnect() }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     )
     obs.observe(el)
   })
