@@ -51,40 +51,44 @@ const servicios = [
 
   <div class="srv__items">
     {servicios.map((s, i) => (
-      <div class={`srv__item ${i % 2 === 0 ? 'srv__item--normal' : 'srv__item--reverse'}`}>
+      <div class="srv__item-wrap">
+        <div class={`srv__item ${i % 2 === 0 ? 'srv__item--normal' : 'srv__item--reverse'}`}>
 
-        <div class="srv__image-col">
-          <div class="srv__image-frame">
-            <img
-              class="srv__image"
-              src={s.imagen}
-              alt={s.titulo}
-              loading={s.priority ? 'eager' : 'lazy'}
-              decoding="async"
-              fetchpriority={s.priority ? 'high' : 'low'}
-            />
-            <div class="srv__image-tag">
-              <span>Studio2810</span>
-              <span class="srv__image-tag-line"></span>
-              <span>{s.tagImagen}</span>
+          <div class="srv__image-col">
+            <div class="srv__image-frame">
+              <img
+                class="srv__image"
+                src={s.imagen}
+                alt={s.titulo}
+                loading={s.priority ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchpriority={s.priority ? 'high' : 'low'}
+              />
+              <div class="srv__image-tag">
+                <span>Studio2810</span>
+                <span class="srv__image-tag-line"></span>
+                <span>{s.tagImagen}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="srv__text-col">
-          <div class="srv__label-wrap">
-            <span class="srv__label-line"></span>
-            <span class="srv__label">{s.tag}</span>
+          <div class="srv__text-col">
+            <div class="srv__label-wrap">
+              <span class="srv__label-line"></span>
+              <span class="srv__label">{s.tag}</span>
+            </div>
+            <div class="srv__num">{s.numero}</div>
+            <h3 class="srv__title">
+              {s.titulo.split('\n').map((line, j) => (
+                <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
+              ))}
+            </h3>
+            <p class="srv__desc">{s.descripcion}</p>
           </div>
-          <div class="srv__num">{s.numero}</div>
-          <h3 class="srv__title">
-            {s.titulo.split('\n').map((line, j) => (
-              <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
-            ))}
-          </h3>
-          <p class="srv__desc">{s.descripcion}</p>
+
         </div>
 
+        <div class="srv__divider"></div>
       </div>
     ))}
   </div>
@@ -105,7 +109,7 @@ const servicios = [
   /* ── LÍNEA SEPARADORA FINAL ── */
   .srv__section-line {
     max-width: 1300px;
-    margin: 7rem auto 0;
+    margin: 0 auto;
     height: 1px;
     background: rgba(100, 85, 60, 0.15);
   }
@@ -113,7 +117,7 @@ const servicios = [
   /* ── INTRO ── */
   .srv__intro {
     max-width: 1300px;
-    margin: 0 auto 7rem;
+    margin: 0 auto 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -162,7 +166,13 @@ const servicios = [
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 9rem;
+    gap: 0;
+  }
+
+  /* Wrapper que contiene item + divider */
+  .srv__item-wrap {
+    display: flex;
+    flex-direction: column;
   }
 
   .srv__item {
@@ -170,6 +180,7 @@ const servicios = [
     grid-template-columns: 1.45fr 0.55fr;
     gap: 5vw;
     align-items: center;
+    padding: 7rem 0;
   }
 
   .srv__item--reverse {
@@ -178,6 +189,18 @@ const servicios = [
 
   .srv__item--reverse .srv__image-col { order: 2; }
   .srv__item--reverse .srv__text-col  { order: 1; }
+
+  /* ── DIVIDER entre servicios ── */
+  .srv__divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(100, 85, 60, 0.12);
+  }
+
+  /* Último divider oculto — la línea final lo reemplaza */
+  .srv__item-wrap:last-child .srv__divider {
+    display: none;
+  }
 
   /* ── IMAGEN ── */
   .srv__image-col {
@@ -229,7 +252,6 @@ const servicios = [
   .srv__image-col:hover .srv__image-frame::after { transform: translate(6px, 6px); }
   .srv__item--reverse .srv__image-col:hover .srv__image-frame::after { transform: translate(-6px, 6px); }
 
-  /* ── IMAGEN: estado base siempre invisible ── */
   .srv__image {
     position: relative;
     z-index: 1;
@@ -239,8 +261,8 @@ const servicios = [
     object-position: center;
     display: block;
     opacity: 0;
-    transform: scale(1.06);
-    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: scale(1.05);
+    transition: opacity 1.6s ease, transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .srv__image.is-visible {
@@ -266,7 +288,7 @@ const servicios = [
     padding: 0.55em 1em;
     opacity: 0;
     transform: translateY(8px);
-    transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s;
+    transition: opacity 1s ease 0.9s, transform 1s ease 0.9s;
   }
 
   .srv__item--reverse .srv__image-tag {
@@ -286,15 +308,15 @@ const servicios = [
     background: rgba(0, 0, 0, 0.35);
   }
 
-  /* ── TEXTO: estado base invisible en todos los tamaños ── */
+  /* ── TEXTO ── */
   .srv__text-col {
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
     min-width: 0;
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 1s ease, transform 1s ease;
+    transform: translateY(28px);
+    transition: opacity 1.3s ease, transform 1.3s ease;
   }
 
   .srv__text-col.is-visible {
@@ -328,12 +350,7 @@ const servicios = [
     line-height: 1.85;
     color: rgba(20, 18, 14, 0.82);
     max-width: 380px;
-  }
-
-  .srv__item + .srv__item {
-    padding-top: 9rem;
-    border-top: 1px solid rgba(100, 85, 60, 0.12);
-    margin-top: -9rem;
+    text-align: justify;
   }
 
   /* ── TABLET LANDSCAPE (1024px) ── */
@@ -343,21 +360,12 @@ const servicios = [
     .srv__item {
       grid-template-columns: 1.2fr 0.8fr;
       gap: 3vw;
+      padding: 6rem 0;
     }
 
-    .srv__item--reverse {
-      grid-template-columns: 0.8fr 1.2fr;
-    }
+    .srv__item--reverse { grid-template-columns: 0.8fr 1.2fr; }
 
     .srv__image { height: 460px; }
-    .srv__items { gap: 7rem; }
-
-    .srv__item + .srv__item {
-      padding-top: 7rem;
-      margin-top: -7rem;
-    }
-
-    .srv__section-line { margin-top: 5rem; }
   }
 
   /* ── TABLET PORTRAIT (820px) ── */
@@ -365,14 +373,13 @@ const servicios = [
     .srv { padding: 6rem 2.5rem; }
 
     .srv__intro { margin-bottom: 4rem; }
-    .srv__items { gap: 0; }
 
     .srv__item,
     .srv__item--reverse {
       display: flex;
       flex-direction: column;
       gap: 0;
-      padding-bottom: 4rem;
+      padding: 3.5rem 0;
     }
 
     .srv__item--reverse .srv__image-col,
@@ -381,11 +388,10 @@ const servicios = [
     .srv__image-frame::before,
     .srv__image-frame::after { display: none; }
 
-    /* Imagen arranca invisible — JS la activa */
     .srv__image {
       height: 400px;
       opacity: 0;
-      transform: scale(1.06);
+      transform: scale(1.05);
     }
 
     .srv__image-tag {
@@ -398,14 +404,13 @@ const servicios = [
       right: auto;
     }
 
-    /* Texto arranca invisible — JS lo activa */
     .srv__text-col {
       gap: 0.8rem;
       padding: 2.2rem 2rem 0;
       text-align: left;
       align-items: flex-start;
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(28px);
     }
 
     .srv__label-wrap { justify-content: flex-start; }
@@ -423,16 +428,8 @@ const servicios = [
     .srv__desc {
       max-width: 100%;
       font-size: 0.95rem;
-      text-align: left;
+      text-align: justify;
     }
-
-    .srv__item + .srv__item {
-      padding-top: 4rem;
-      margin-top: 0;
-      border-top: 1px solid rgba(100, 85, 60, 0.12);
-    }
-
-    .srv__section-line { margin-top: 4rem; }
   }
 
   /* ── MOBILE (768px) ── */
@@ -440,14 +437,13 @@ const servicios = [
     .srv { padding: 5rem 1.4rem 4rem; }
 
     .srv__intro { margin-bottom: 3rem; }
-    .srv__items { gap: 0; }
 
     .srv__item,
     .srv__item--reverse {
       display: flex;
       flex-direction: column;
       gap: 0;
-      padding-bottom: 3.5rem;
+      padding: 3rem 0;
     }
 
     .srv__item--reverse .srv__image-col,
@@ -459,7 +455,7 @@ const servicios = [
     .srv__image {
       height: 280px;
       opacity: 0;
-      transform: scale(1.06);
+      transform: scale(1.05);
     }
 
     .srv__image-tag {
@@ -482,7 +478,7 @@ const servicios = [
       text-align: left;
       align-items: flex-start;
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(28px);
     }
 
     .srv__label-wrap { justify-content: flex-start; }
@@ -500,16 +496,8 @@ const servicios = [
     .srv__desc {
       max-width: 100%;
       font-size: 0.93rem;
-      text-align: left;
+      text-align: justify;
     }
-
-    .srv__item + .srv__item {
-      padding-top: 3.5rem;
-      margin-top: 0;
-      border-top: 1px solid rgba(100, 85, 60, 0.12);
-    }
-
-    .srv__section-line { margin-top: 3.5rem; }
   }
 
   /* ── iPhone pequeño (390px) ── */
@@ -523,8 +511,6 @@ const servicios = [
     .srv__num { font-size: 2.8rem; }
     .srv__title { font-size: 1.85rem; }
     .srv__desc { font-size: 0.9rem; }
-
-    .srv__section-line { margin-top: 3rem; }
   }
 </style>
 
@@ -535,7 +521,7 @@ const servicios = [
 
   const isMobile = window.innerWidth <= 820
 
-  // ── IntersectionObserver para imágenes (todos los tamaños) ──
+  // ── Imágenes: IntersectionObserver en todos los tamaños ──
   const imgObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -549,7 +535,7 @@ const servicios = [
   )
   document.querySelectorAll('.srv__image').forEach(img => imgObserver.observe(img))
 
-  // ── IntersectionObserver para texto (todos los tamaños) ──
+  // ── Texto: IntersectionObserver en todos los tamaños ──
   const textObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((e) => {
@@ -563,25 +549,25 @@ const servicios = [
   )
   document.querySelectorAll('.srv__text-col').forEach(col => textObserver.observe(col))
 
-  // ── GSAP solo en desktop para animaciones más elaboradas ──
+  // ── GSAP solo en desktop para animaciones laterales ──
   if (!isMobile) {
     document.querySelectorAll('.srv__item').forEach((item) => {
-      const textCol   = item.querySelector('.srv__text-col')
-      const imgCol    = item.querySelector('.srv__image-col')
+      const textCol   = item.querySelector('.srv__text-col') as HTMLElement | null
+      const imgCol    = item.querySelector('.srv__image-col') as HTMLElement | null
       const isReverse = item.classList.contains('srv__item--reverse')
 
-      // En desktop GSAP toma el control — desactivamos la transition CSS
-      // para que no compitan entre sí
       if (textCol) {
-        (textCol as HTMLElement).style.transition = 'none'
-        gsap.from(textCol.querySelectorAll(':scope > *'), {
+        textCol.style.transition = 'none'
+        gsap.set(textCol, { opacity: 0, x: isReverse ? -30 : 30 })
+        gsap.to(textCol, {
           scrollTrigger: { trigger: item, start: 'top 75%' },
-          opacity: 0,
-          x: isReverse ? -30 : 30,
-          duration: 1.4,
-          stagger: 0.18,
+          opacity: 1,
+          x: 0,
+          duration: 1.6,
           ease: 'power3.out',
-          onStart() { (textCol as HTMLElement).style.opacity = '1'; (textCol as HTMLElement).style.transform = 'none' },
+          onStart() {
+            textCol.style.transform = ''
+          },
         })
       }
 
@@ -590,7 +576,7 @@ const servicios = [
           scrollTrigger: { trigger: item, start: 'top 75%' },
           opacity: 0,
           x: isReverse ? 30 : -30,
-          duration: 1.5,
+          duration: 1.7,
           ease: 'power3.out',
         })
       }
@@ -600,8 +586,8 @@ const servicios = [
       scrollTrigger: { trigger: '.srv__intro', start: 'top 80%' },
       opacity: 0,
       y: 22,
-      duration: 1.4,
-      stagger: 0.2,
+      duration: 1.6,
+      stagger: 0.22,
       ease: 'power3.out',
     })
   }
