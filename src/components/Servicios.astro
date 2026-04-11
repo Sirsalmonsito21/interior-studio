@@ -53,6 +53,21 @@ const servicios = [
     {servicios.map((s, i) => (
       <div class={`srv__item ${i % 2 === 0 ? 'srv__item--normal' : 'srv__item--reverse'}`}>
 
+        <!-- MOBILE: header del servicio arriba -->
+        <div class="srv__mobile-header">
+          <div class="srv__label-wrap">
+            <span class="srv__label-line"></span>
+            <span class="srv__label">{s.tag}</span>
+          </div>
+          <div class="srv__num">{s.numero}</div>
+          <h3 class="srv__title">
+            {s.titulo.split('\n').map((line, j) => (
+              <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
+            ))}
+          </h3>
+        </div>
+
+        <!-- Imagen -->
         <div class="srv__image-col">
           <div class="srv__image-frame">
             <img
@@ -71,23 +86,24 @@ const servicios = [
           </div>
         </div>
 
+        <!-- DESKTOP: texto a la derecha / izquierda -->
         <div class="srv__text-col">
-
           <div class="srv__label-wrap">
             <span class="srv__label-line"></span>
             <span class="srv__label">{s.tag}</span>
           </div>
-
           <div class="srv__num">{s.numero}</div>
-
           <h3 class="srv__title">
             {s.titulo.split('\n').map((line, j) => (
               <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
             ))}
           </h3>
-
           <p class="srv__desc">{s.descripcion}</p>
+        </div>
 
+        <!-- MOBILE: descripción debajo de imagen -->
+        <div class="srv__mobile-desc">
+          <p class="srv__desc">{s.descripcion}</p>
         </div>
 
       </div>
@@ -160,6 +176,13 @@ const servicios = [
     gap: 9rem;
   }
 
+  /* Mobile header y desc — ocultos en desktop */
+  .srv__mobile-header,
+  .srv__mobile-desc {
+    display: none;
+  }
+
+  /* ── DESKTOP ITEM ── */
   .srv__item {
     display: grid;
     grid-template-columns: 1.45fr 0.55fr;
@@ -280,7 +303,7 @@ const servicios = [
     background: rgba(0, 0, 0, 0.35);
   }
 
-  /* ── TEXTO ── */
+  /* ── TEXTO DESKTOP ── */
   .srv__text-col {
     display: flex;
     flex-direction: column;
@@ -322,11 +345,9 @@ const servicios = [
     margin-top: -9rem;
   }
 
-  /* ── TABLET (iPad landscape) ── */
+  /* ── TABLET LANDSCAPE (1024px) ── */
   @media (max-width: 1024px) {
-    .srv {
-      padding: 8rem 4vw;
-    }
+    .srv { padding: 8rem 4vw; }
 
     .srv__item {
       grid-template-columns: 1.2fr 0.8fr;
@@ -338,7 +359,6 @@ const servicios = [
     }
 
     .srv__image { height: 460px; }
-
     .srv__items { gap: 7rem; }
 
     .srv__item + .srv__item {
@@ -347,68 +367,26 @@ const servicios = [
     }
   }
 
-  /* ── TABLET PORTRAIT (iPad vertical ~820px) ── */
-  @media (max-width: 820px) {
-    .srv {
-      padding: 6rem 3rem;
-    }
+  /* ── TABLET + MOBILE (860px y menos) ── */
+  @media (max-width: 860px) {
+    .srv { padding: 5rem 1.6rem 4rem; }
 
-    .srv__intro { margin-bottom: 4rem; }
-
-    .srv__items { gap: 5rem; }
-
-    .srv__item,
-    .srv__item--reverse {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .srv__item--reverse .srv__image-col,
-    .srv__item--reverse .srv__text-col {
-      order: unset;
-    }
-
-    .srv__image-frame::before,
-    .srv__image-frame::after { display: none; }
-
-    .srv__image {
-      height: 380px;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .srv__image-tag {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .srv__item--reverse .srv__image-tag {
-      left: 24px;
-      right: auto;
-    }
-
-    .srv__desc { max-width: 100%; }
-
-    .srv__item + .srv__item {
-      padding-top: 5rem;
-      margin-top: -5rem;
-    }
-  }
-
-  /* ── MOBILE (768px y menos) ── */
-  @media (max-width: 768px) {
-    .srv {
-      padding: 5rem 1.4rem 4rem;
-    }
-
-    .srv__intro { margin-bottom: 3rem; }
-
+    .srv__intro { margin-bottom: 3.5rem; }
     .srv__items { gap: 4rem; }
 
+    /* Mostrar mobile header y desc */
+    .srv__mobile-header { display: flex; flex-direction: column; gap: 0.6rem; }
+    .srv__mobile-desc   { display: block; }
+
+    /* Ocultar texto desktop */
+    .srv__text-col { display: none; }
+
+    /* Una columna: header → imagen → desc */
     .srv__item,
     .srv__item--reverse {
-      grid-template-columns: 1fr;
-      gap: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
     }
 
     .srv__item--reverse .srv__image-col,
@@ -420,58 +398,56 @@ const servicios = [
     .srv__image-frame::after { display: none; }
 
     .srv__image {
-      height: 280px;
+      height: 320px;
       opacity: 1;
       transform: scale(1);
     }
 
     .srv__image-tag {
-      font-size: 0.58rem;
-      padding: 0.45em 0.8em;
-      bottom: 14px;
-      left: 14px;
       opacity: 1;
       transform: translateY(0);
-    }
-
-    .srv__item--reverse .srv__image-tag {
+      font-size: 0.6rem;
+      padding: 0.45em 0.85em;
+      bottom: 14px;
       left: 14px;
-      right: auto;
     }
 
-    .srv__text-col { gap: 1rem; }
-
-    .srv__num {
-      font-size: 4rem;
-      margin-bottom: -0.6rem;
+    .srv__mobile-header .srv__num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      line-height: 0.85;
+      color: rgba(160, 120, 70, 0.28);
+      letter-spacing: -0.03em;
+      margin-bottom: -0.4rem;
     }
 
-    .srv__title { font-size: 2rem; }
+    .srv__mobile-header .srv__title {
+      font-size: 2rem;
+    }
 
-    .srv__desc {
+    .srv__mobile-desc .srv__desc {
       max-width: 100%;
       font-size: 0.93rem;
     }
 
     .srv__item + .srv__item {
+      padding-top: 0;
+      margin-top: 0;
+      border-top: 1px solid rgba(100, 85, 60, 0.12);
       padding-top: 4rem;
-      margin-top: -4rem;
     }
   }
 
-  /* ── iPhone 12 mini y menores (390px) ── */
+  /* ── iPhone 12 mini (390px y menos) ── */
   @media (max-width: 390px) {
-    .srv {
-      padding: 4.5rem 1.2rem 3.5rem;
-    }
+    .srv { padding: 4.5rem 1.2rem 3.5rem; }
 
-    .srv__image { height: 240px; }
+    .srv__image { height: 260px; }
 
-    .srv__num { font-size: 3.5rem; }
-
-    .srv__title { font-size: 1.85rem; }
-
-    .srv__desc { font-size: 0.9rem; }
+    .srv__mobile-header .srv__num  { font-size: 3rem; }
+    .srv__mobile-header .srv__title { font-size: 1.85rem; }
+    .srv__mobile-desc .srv__desc  { font-size: 0.9rem; }
   }
 </style>
 
@@ -480,16 +456,9 @@ const servicios = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
-  const isMobile = window.innerWidth <= 820
+  const isDesktop = window.innerWidth > 860
 
-  // En mobile las imágenes se muestran directo, sin animación de opacity
-  // para evitar que queden en opacity:0 si el observer falla
-  if (isMobile) {
-    document.querySelectorAll('.srv__image').forEach(img => {
-      img.classList.add('is-visible')
-    })
-  } else {
-    // Reveal de imágenes con IntersectionObserver
+  if (isDesktop) {
     const imgObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -503,40 +472,42 @@ const servicios = [
     )
     document.querySelectorAll('.srv__image').forEach(img => imgObserver.observe(img))
 
-    // Animaciones de texto solo en desktop
     document.querySelectorAll('.srv__item').forEach((item) => {
       const textCol   = item.querySelector('.srv__text-col')
       const imgCol    = item.querySelector('.srv__image-col')
       const isReverse = item.classList.contains('srv__item--reverse')
 
-      gsap.from(textCol.querySelectorAll(':scope > *'), {
-        scrollTrigger: { trigger: item, start: 'top 75%' },
-        opacity: 0,
-        x: isReverse ? -30 : 30,
-        duration: 1.4,
-        stagger: 0.18,
-        ease: 'power3.out',
-      })
+      if (textCol) {
+        gsap.from(textCol.querySelectorAll(':scope > *'), {
+          scrollTrigger: { trigger: item, start: 'top 75%' },
+          opacity: 0,
+          x: isReverse ? -30 : 30,
+          duration: 1.4,
+          stagger: 0.18,
+          ease: 'power3.out',
+        })
+      }
 
-      gsap.from(imgCol, {
-        scrollTrigger: { trigger: item, start: 'top 75%' },
-        opacity: 0,
-        x: isReverse ? 30 : -30,
-        duration: 1.5,
-        ease: 'power3.out',
-      })
+      if (imgCol) {
+        gsap.from(imgCol, {
+          scrollTrigger: { trigger: item, start: 'top 75%' },
+          opacity: 0,
+          x: isReverse ? 30 : -30,
+          duration: 1.5,
+          ease: 'power3.out',
+        })
+      }
     })
-  }
 
-  // Intro header — solo desktop
-  if (!isMobile) {
     gsap.from('.srv__intro > *', {
       scrollTrigger: { trigger: '.srv__intro', start: 'top 80%' },
-      opacity: 0,
-      y: 22,
-      duration: 1.4,
-      stagger: 0.2,
-      ease: 'power3.out',
+      opacity: 0, y: 22, duration: 1.4, stagger: 0.2, ease: 'power3.out',
+    })
+
+  } else {
+    // Mobile/tablet: imágenes visibles directo
+    document.querySelectorAll('.srv__image').forEach(img => {
+      img.classList.add('is-visible')
     })
   }
 </script>

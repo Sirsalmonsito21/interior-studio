@@ -9,6 +9,18 @@ const indicadores = [
 <section class="esencia" id="esencia">
   <div class="esencia__inner">
 
+    <div class="esencia__text-col">
+      <div class="esencia__label-wrap">
+        <span class="esencia__label-line"></span>
+        <span class="esencia__label">Nuestra Esencia</span>
+      </div>
+
+      <h2 class="esencia__title">
+        Diseñamos con<br />
+        <em>propósito y detalle</em>
+      </h2>
+    </div>
+
     <div class="esencia__image-col">
       <div class="esencia__image-frame">
         <img
@@ -27,30 +39,17 @@ const indicadores = [
       </div>
     </div>
 
-    <div class="esencia__text-col">
-
-      <div class="esencia__label-wrap">
-        <span class="esencia__label-line"></span>
-        <span class="esencia__label">Nuestra Esencia</span>
-      </div>
-
-      <h2 class="esencia__title">
-        Diseñamos con<br />
-        <em>propósito y detalle</em>
-      </h2>
-
+    <div class="esencia__body-col">
       <p class="esencia__body">
         En Studio2810 creemos que un espacio bien diseñado transforma
         la manera en que vivimos, sentimos y nos relacionamos con el mundo.
         Cada línea, textura y luz tiene una razón de ser.
       </p>
-
       <p class="esencia__body">
         Nuestro proceso combina escucha profunda, rigor técnico y
         sensibilidad estética para entregar ambientes que son, ante todo,
         auténticamente tuyos.
       </p>
-
       <div class="esencia__indicadores">
         {indicadores.map(ind => (
           <div class="esencia__ind">
@@ -66,8 +65,8 @@ const indicadores = [
           </div>
         ))}
       </div>
-
     </div>
+
   </div>
 </section>
 
@@ -80,14 +79,24 @@ const indicadores = [
     overflow: hidden;
   }
 
+  /* ── DESKTOP: grid 2 columnas ── */
   .esencia__inner {
     max-width: 1300px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1.45fr 0.55fr;
-    gap: 5vw;
-    align-items: center;
+    grid-template-rows: auto auto;
+    column-gap: 5vw;
+    row-gap: 3rem;
+    grid-template-areas:
+      "img  text"
+      "img  body";
+    align-items: start;
   }
+
+  .esencia__text-col  { grid-area: text; }
+  .esencia__image-col { grid-area: img;  }
+  .esencia__body-col  { grid-area: body; }
 
   /* ── IMAGEN ── */
   .esencia__image-col {
@@ -186,7 +195,8 @@ const indicadores = [
   .esencia__text-col {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.4rem;
+    padding-top: 1rem;
   }
 
   .esencia__label-wrap {
@@ -226,13 +236,19 @@ const indicadores = [
     color: rgb(110, 90, 55);
   }
 
+  /* ── BODY COL ── */
+  .esencia__body-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
   .esencia__body {
     font-family: 'Jost', sans-serif;
     font-size: 0.97rem;
     font-weight: 300;
     line-height: 1.85;
     color: rgba(20, 18, 14, 0.82);
-    max-width: 440px;
   }
 
   /* ── INDICADORES ── */
@@ -268,39 +284,34 @@ const indicadores = [
     color: rgba(20, 18, 14, 0.65);
   }
 
-  /* ── TABLET (iPad) ── */
+  /* ── TABLET (iPad landscape ~1024px) ── */
   @media (max-width: 1024px) {
     .esencia {
-      padding: 8rem 4vw;
+      padding: 7rem 4vw;
     }
 
     .esencia__inner {
-      grid-template-columns: 1fr 1fr;
-      gap: 4vw;
+      grid-template-columns: 1.2fr 0.8fr;
     }
 
-    .esencia__image {
-      height: 500px;
-    }
-
-    .esencia__title {
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
-    }
-
-    .esencia__indicadores {
-      gap: 1.8rem;
-    }
+    .esencia__image { height: 520px; }
   }
 
-  /* ── TABLET PORTRAIT (iPad vertical) ── */
-  @media (max-width: 820px) {
+  /* ── TABLET PORTRAIT + MOBILE ── */
+  /* iPad vertical (~820px) y iPhone: layout de una columna */
+  @media (max-width: 860px) {
     .esencia {
-      padding: 6rem 3rem;
+      padding: 5rem 1.6rem 4rem;
     }
 
+    /* Una sola columna, orden explícito */
     .esencia__inner {
       grid-template-columns: 1fr;
-      gap: 3rem;
+      grid-template-areas:
+        "text"
+        "img"
+        "body";
+      row-gap: 2rem;
     }
 
     .esencia__image-frame::before,
@@ -309,7 +320,7 @@ const indicadores = [
     }
 
     .esencia__image {
-      height: 420px;
+      height: 340px;
       opacity: 1;
       transform: scale(1);
     }
@@ -317,81 +328,38 @@ const indicadores = [
     .esencia__image-tag {
       opacity: 1;
       transform: translateY(0);
+      font-size: 0.6rem;
+      padding: 0.45em 0.85em;
+      bottom: 14px;
+      left: 14px;
     }
 
     .esencia__text-col {
-      gap: 1.4rem;
-    }
-
-    .esencia__body {
-      max-width: 100%;
+      padding-top: 0;
+      gap: 1rem;
     }
 
     .esencia__title {
-      font-size: 2.4rem;
-    }
-  }
-
-  /* ── MOBILE (iPhone 12 mini = 375px) ── */
-  @media (max-width: 768px) {
-    .esencia {
-      padding: 5rem 1.4rem 4rem;
+      font-size: 2.2rem;
     }
 
-    .esencia__inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .esencia__image-frame::before,
-    .esencia__image-frame::after {
-      display: none;
-    }
-
-    .esencia__image {
-      height: 300px;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .esencia__image-tag {
-      font-size: 0.58rem;
-      padding: 0.45em 0.8em;
-      bottom: 16px;
-      left: 16px;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .esencia__text-col {
+    .esencia__body-col {
       gap: 1.2rem;
     }
 
-    .esencia__title {
-      font-size: 2rem;
-      line-height: 1.15;
-    }
-
     .esencia__body {
-      max-width: 100%;
       font-size: 0.93rem;
     }
 
     .esencia__indicadores {
       gap: 0;
       justify-content: space-between;
-      flex-wrap: nowrap;
       padding-top: 1.5rem;
     }
 
-    .esencia__ind {
-      align-items: flex-start;
-      flex: 1;
-    }
+    .esencia__ind { flex: 1; }
 
-    .esencia__ind-num {
-      font-size: 1.9rem;
-    }
+    .esencia__ind-num { font-size: 1.9rem; }
 
     .esencia__ind-label {
       font-size: 0.58rem;
@@ -399,27 +367,19 @@ const indicadores = [
     }
   }
 
-  /* ── iPhone 12 mini y menores (375px) ── */
+  /* ── iPhone 12 mini (390px y menos) ── */
   @media (max-width: 390px) {
     .esencia {
       padding: 4.5rem 1.2rem 3.5rem;
     }
 
-    .esencia__image {
-      height: 260px;
-    }
+    .esencia__image { height: 260px; }
 
-    .esencia__title {
-      font-size: 1.85rem;
-    }
+    .esencia__title { font-size: 1.9rem; }
 
-    .esencia__ind-num {
-      font-size: 1.7rem;
-    }
+    .esencia__ind-num { font-size: 1.7rem; }
 
-    .esencia__ind-label {
-      font-size: 0.55rem;
-    }
+    .esencia__ind-label { font-size: 0.55rem; }
   }
 </style>
 
@@ -428,50 +388,48 @@ const indicadores = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
-  const isMobile = window.innerWidth <= 768
+  const isDesktop = window.innerWidth > 860
 
-  if (!isMobile) {
+  if (isDesktop) {
     const img = document.querySelector('.esencia__image')
     if (img) {
       const obs = new IntersectionObserver(
         ([e]) => {
-          if (e.isIntersecting) {
-            img.classList.add('is-visible')
-            obs.disconnect()
-          }
+          if (e.isIntersecting) { img.classList.add('is-visible'); obs.disconnect() }
         },
-        { threshold: 0.12 }
+        { threshold: 0.1 }
       )
       obs.observe(img)
     }
 
     gsap.from('.esencia__text-col > *', {
       scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
-      opacity: 0,
-      x: 36,
-      duration: 1,
-      stagger: 0.13,
-      ease: 'power3.out',
+      opacity: 0, x: 30, duration: 1.1, stagger: 0.13, ease: 'power3.out',
+    })
+
+    gsap.from('.esencia__body-col > *', {
+      scrollTrigger: { trigger: '.esencia', start: 'top 60%' },
+      opacity: 0, x: 30, duration: 1.1, stagger: 0.13, ease: 'power3.out',
     })
 
     gsap.from('.esencia__image-col', {
       scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
-      opacity: 0,
-      x: -36,
-      duration: 1.1,
-      ease: 'power3.out',
+      opacity: 0, x: -36, duration: 1.2, ease: 'power3.out',
     })
+  } else {
+    // Mobile/tablet: imagen visible directo
+    const img = document.querySelector('.esencia__image')
+    img?.classList.add('is-visible')
   }
 
+  // Contadores — funcionan en todos los tamaños
   function animateCounter(el: Element) {
     const val    = parseInt(el.getAttribute('data-val') ?? '0')
     const plus   = el.getAttribute('data-plus') === 'true'
     const suffix = el.getAttribute('data-suffix') ?? ''
     const obj    = { v: 0 }
     gsap.to(obj, {
-      v: val,
-      duration: 2,
-      ease: 'power3.out',
+      v: val, duration: 2, ease: 'power3.out',
       onUpdate() { el.textContent = (plus ? '+' : '') + Math.round(obj.v) + suffix },
       onComplete() { el.textContent = (plus ? '+' : '') + val + suffix },
     })
@@ -479,9 +437,7 @@ const indicadores = [
 
   document.querySelectorAll('.esencia__ind-num').forEach(el => {
     const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) { animateCounter(el); obs.disconnect() }
-      },
+      ([e]) => { if (e.isIntersecting) { animateCounter(el); obs.disconnect() } },
       { threshold: 0.3 }
     )
     obs.observe(el)
