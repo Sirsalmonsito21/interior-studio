@@ -107,13 +107,14 @@ const categorias = [
   </div>
 
   <div class="port__grid" id="portGrid">
-    {categorias.map((cat, i) => (
+    {categorias.map((cat) => (
       <div
         class="port__card"
         data-tipo={cat.tipo}
         data-id={cat.id}
         data-imagenes={JSON.stringify(cat.imagenes)}
         data-label={cat.label}
+        data-count={cat.imagenes.length}
       >
         <div class="port__card-img-wrap">
           <img class="port__card-img" src={cat.cover} alt={cat.label} loading="lazy" />
@@ -124,28 +125,74 @@ const categorias = [
         <div class="port__card-info">
           <span class="port__card-tipo">{cat.tipo}</span>
           <span class="port__card-nombre">{cat.label}</span>
+          <span class="port__card-count">{cat.imagenes.length} {cat.imagenes.length === 1 ? 'foto' : 'fotos'}</span>
         </div>
       </div>
     ))}
   </div>
 </section>
 
-<!-- Lightbox fullscreen inmersivo -->
-<div class="lb" id="lightbox">
-  <button class="lb__close" id="lbClose"><span></span><span></span></button>
-  <div class="lb__info" id="lbInfo">
-    <span class="lb__label" id="lbLabel"></span>
-    <span class="lb__counter" id="lbCounter"></span>
+<!-- ── LIGHTBOX ── -->
+<div class="lb" id="lightbox" aria-hidden="true">
+
+  <!-- Cerrar -->
+  <button class="lb__close" id="lbClose" aria-label="Cerrar">
+    <span></span><span></span>
+  </button>
+
+  <!-- Sidebar: navega entre proyectos de la misma categoría -->
+  <aside class="lb__sidebar" id="lbSidebar">
+    <button class="lb__proj-btn" id="lbProjPrev" aria-label="Proyecto anterior">
+      <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.5 16.5L2 9L9.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <div class="lb__sidebar-info">
+      <span class="lb__sidebar-cat"  id="lbSidebarCat"></span>
+      <span class="lb__sidebar-name" id="lbSidebarName"></span>
+      <span class="lb__sidebar-idx"  id="lbSidebarIdx"></span>
+    </div>
+
+    <button class="lb__proj-btn" id="lbProjNext" aria-label="Proyecto siguiente">
+      <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1.5 1.5L9 9L1.5 16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </aside>
+
+  <!-- Zona principal: scroll vertical por fotos -->
+  <div class="lb__main">
+
+    <!-- Contenedor de scroll — este es el único que scrollea -->
+    <div class="lb__scroll" id="lbScroll"></div>
+
+    <!-- Contador de foto actual (esquina inf-derecha) -->
+    <div class="lb__photo-counter" id="lbPhotoCounter">
+      <span id="lbPhotoCurrent">1</span>
+      <span class="lb__photo-sep"></span>
+      <span id="lbPhotoTotal">1</span>
+    </div>
+
+    <!-- Hint scroll (solo cuando hay más de 1 foto) -->
+    <div class="lb__hint" id="lbHint">
+      <svg width="12" height="18" viewBox="0 0 12 18" fill="none">
+        <rect x="1" y="1" width="10" height="14" rx="5" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="6" y1="4" x2="6" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M3 15.5l3 2 3-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Scroll</span>
+    </div>
+
   </div>
-  <div class="lb__track" id="lbTrack"></div>
-  <button class="lb__arrow lb__arrow--prev" id="lbPrev">&#8592;</button>
-  <button class="lb__arrow lb__arrow--next" id="lbNext">&#8594;</button>
 </div>
 
 <style>
-  /* ── SECCIÓN ── */
+  /* ══════════════════════════════════════
+     PORTAFOLIO — SECCIÓN
+  ══════════════════════════════════════ */
   .port {
-    background: #FAF9F6;
+    background: #F4F1EA;
     padding: 6rem 0;
   }
 
@@ -171,7 +218,7 @@ const categorias = [
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #CBB9A4;
+    color: #A48D78;
   }
 
   .port__title {
@@ -185,16 +232,15 @@ const categorias = [
 
   .port__title em { font-style: italic; }
 
-  /* Filtros */
   .port__filtros {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     flex-shrink: 0;
   }
 
   .port__filtro {
     font-family: 'Manrope', sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     background: none;
@@ -209,6 +255,7 @@ const categorias = [
   .port__filtro.is-active {
     border-color: #A48D78;
     color: #A48D78;
+    background: rgba(164, 141, 120, 0.06);
   }
 
   /* ── GRILLA ── */
@@ -218,17 +265,17 @@ const categorias = [
     padding: 0 2rem;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: 280px;
-    gap: 12px;
+    grid-auto-rows: 300px;
+    gap: 10px;
   }
 
   .port__card:nth-child(1) { grid-column: span 7; grid-row: span 2; }
-  .port__card:nth-child(2) { grid-column: span 5; grid-row: span 1; }
-  .port__card:nth-child(3) { grid-column: span 5; grid-row: span 1; }
+  .port__card:nth-child(2) { grid-column: span 5; }
+  .port__card:nth-child(3) { grid-column: span 5; }
   .port__card:nth-child(4) { grid-column: span 4; grid-row: span 2; }
-  .port__card:nth-child(5) { grid-column: span 4; grid-row: span 1; }
-  .port__card:nth-child(6) { grid-column: span 4; grid-row: span 1; }
-  .port__card:nth-child(7) { grid-column: span 4; grid-row: span 1; }
+  .port__card:nth-child(5) { grid-column: span 4; }
+  .port__card:nth-child(6) { grid-column: span 4; }
+  .port__card:nth-child(7) { grid-column: span 4; }
 
   /* ── CARD ── */
   .port__card {
@@ -239,10 +286,8 @@ const categorias = [
   }
 
   .port__card-img-wrap {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    position: absolute;
+    inset: 0;
   }
 
   .port__card-img {
@@ -250,7 +295,7 @@ const categorias = [
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .port__card:hover .port__card-img { transform: scale(1.06); }
@@ -258,7 +303,7 @@ const categorias = [
   .port__card-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(44, 36, 32, 0.45);
+    background: rgba(44, 36, 32, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -274,7 +319,7 @@ const categorias = [
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #FAF9F6;
-    border: 1px solid rgba(250, 249, 246, 0.7);
+    border: 1px solid rgba(250,249,246,0.6);
     padding: 0.6rem 1.4rem;
   }
 
@@ -283,40 +328,57 @@ const categorias = [
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 1rem 1.2rem;
-    background: linear-gradient(to top, rgba(44,36,32,0.7) 0%, transparent 100%);
+    padding: 1.2rem 1.4rem;
+    background: linear-gradient(to top, rgba(44,36,32,0.75) 0%, transparent 100%);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
   }
 
   .port__card-tipo {
     font-family: 'Manrope', sans-serif;
-    font-size: 0.6rem;
-    color: #CBB9A4;
+    font-size: 0.58rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
+    color: #CBB9A4;
   }
 
   .port__card-nombre {
     font-family: 'Noto Serif', Georgia, serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 300;
     font-style: italic;
     color: #FAF9F6;
+    line-height: 1.2;
+  }
+
+  .port__card-count {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: rgba(250,249,246,0.5);
   }
 
   .port__card.is-hidden { display: none; }
 
-  /* ── LIGHTBOX FULLSCREEN ── */
+  /* ══════════════════════════════════════
+     LIGHTBOX
+  ══════════════════════════════════════ */
+
+  /*
+    El lightbox es fixed y ocupa todo el viewport.
+    El scroll del body se bloquea con JS al abrir.
+    SOLO lb__scroll tiene overflow-y: scroll.
+  */
   .lb {
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #0a0a09;
+    background: #0C0B0A;
+    display: flex;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .lb.is-open {
@@ -324,28 +386,28 @@ const categorias = [
     pointer-events: all;
   }
 
-  /* Cerrar */
+  /* ── Botón cerrar ── */
   .lb__close {
     position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 10;
-    width: 44px;
-    height: 44px;
+    top: 1.4rem;
+    right: 1.4rem;
+    z-index: 20;
+    width: 42px;
+    height: 42px;
     background: rgba(250,249,246,0.06);
     border: 1px solid rgba(250,249,246,0.12);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease;
+    transition: background 0.25s;
   }
 
-  .lb__close:hover { background: rgba(250,249,246,0.12); }
+  .lb__close:hover { background: rgba(250,249,246,0.14); }
 
   .lb__close span {
     position: absolute;
-    width: 18px;
+    width: 16px;
     height: 1px;
     background: rgba(250,249,246,0.8);
   }
@@ -353,100 +415,200 @@ const categorias = [
   .lb__close span:first-child { transform: rotate(45deg); }
   .lb__close span:last-child  { transform: rotate(-45deg); }
 
-  /* Info */
-  .lb__info {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+  /* ── Sidebar izquierdo ── */
+  .lb__sidebar {
+    width: 76px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    justify-content: center;
+    gap: 1.5rem;
+    border-right: 1px solid rgba(250,249,246,0.06);
+    padding: 2rem 0;
   }
 
-  .lb__label {
-    font-family: 'Noto Serif', Georgia, serif;
-    font-size: 0.9rem;
-    font-weight: 300;
-    font-style: italic;
-    color: rgba(250,249,246,0.6);
+  .lb__proj-btn {
+    width: 34px;
+    height: 34px;
+    background: rgba(250,249,246,0.04);
+    border: 1px solid rgba(250,249,246,0.1);
+    color: rgba(250,249,246,0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
   }
 
-  .lb__counter {
+  .lb__proj-btn:hover:not(:disabled) {
+    background: rgba(250,249,246,0.1);
+    color: rgba(250,249,246,0.9);
+    border-color: rgba(250,249,246,0.25);
+  }
+
+  .lb__proj-btn:disabled {
+    opacity: 0.15;
+    cursor: default;
+  }
+
+  .lb__sidebar-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    overflow: hidden;
+  }
+
+  .lb__sidebar-cat {
     font-family: 'Manrope', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: rgba(250,249,246,0.3);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(164,141,120,0.65);
+    writing-mode: vertical-rl;
   }
 
-  /* Track */
-  .lb__track {
+  .lb__sidebar-name {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 0.78rem;
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(250,249,246,0.5);
+    writing-mode: vertical-rl;
+    letter-spacing: 0.03em;
+    max-height: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lb__sidebar-idx {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.1em;
+    color: rgba(250,249,246,0.18);
+    writing-mode: vertical-rl;
+  }
+
+  /* ── Área principal ── */
+  .lb__main {
+    flex: 1;
+    position: relative;
+    /* Sin overflow aquí — solo lb__scroll scrollea */
+    overflow: hidden;
+  }
+
+  /* ── Contenedor de scroll ──
+     Este es el único elemento con overflow-y scroll.
+     Ocupa todo el área principal y snapea por foto.
+  */
+  .lb__scroll {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Ocultar scrollbar visual */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
+  .lb__scroll::-webkit-scrollbar { display: none; }
+
+  /* ── Cada slide: exactamente 100vh ── */
   .lb__slide {
-    position: absolute;
-    inset: 0;
+    /* Ocupa el 100% de lb__scroll, que es 100% del lb__main, que es 100vh */
+    width: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5rem;
-    opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Padding interno para que la imagen no toque los bordes */
+    padding: 3rem 3.5rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
-  .lb__slide.is-active { opacity: 1; }
-
+  /* ── Imagen dentro del slide ──
+     max-width/height 100% del slide → nunca se desborda.
+     object-fit: contain → mantiene aspecto sin recortar.
+  */
   .lb__slide img {
+    display: block;
     max-width: 100%;
     max-height: 100%;
     width: auto;
     height: auto;
     object-fit: contain;
-    display: block;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: opacity 0.35s ease;
   }
 
-  /* Flechas */
-  .lb__arrow {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
+  .lb__slide img.is-loaded {
+    opacity: 1;
+  }
+
+  /* ── Contador de foto ── */
+  .lb__photo-counter {
+    position: absolute;
+    bottom: 1.6rem;
+    right: 1.8rem;
     z-index: 10;
-    background: rgba(250,249,246,0.05);
-    border: 1px solid rgba(250,249,246,0.1);
-    color: rgba(250,249,246,0.6);
-    width: 52px;
-    height: 52px;
-    font-size: 1.1rem;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
+    gap: 0.45rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: rgba(250,249,246,0.28);
+    pointer-events: none;
   }
 
-  .lb__arrow:hover {
-    background: rgba(250,249,246,0.1);
-    color: #FAF9F6;
+  .lb__photo-sep {
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: rgba(250,249,246,0.18);
   }
 
-  .lb__arrow--prev { left: 1.5rem; }
-  .lb__arrow--next { right: 1.5rem; }
+  /* ── Hint de scroll ── */
+  .lb__hint {
+    position: absolute;
+    bottom: 1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250,249,246,0.18);
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
 
-  /* ── RESPONSIVE ── */
+  .lb__hint.is-hidden {
+    opacity: 0;
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
   @media (max-width: 1024px) {
     .port__grid {
       grid-template-columns: repeat(6, 1fr);
       grid-auto-rows: 240px;
     }
-
     .port__card:nth-child(1) { grid-column: span 6; grid-row: span 2; }
     .port__card:nth-child(2) { grid-column: span 3; grid-row: span 1; }
     .port__card:nth-child(3) { grid-column: span 3; grid-row: span 1; }
@@ -466,7 +628,6 @@ const categorias = [
       padding: 0 1.5rem;
       margin-bottom: 2rem;
     }
-
     .port__header-inner { align-items: center; }
     .port__filtros { flex-wrap: wrap; justify-content: center; }
 
@@ -476,12 +637,56 @@ const categorias = [
       grid-auto-rows: 200px;
       gap: 8px;
     }
-
     .port__card:nth-child(n) { grid-column: span 1; grid-row: span 1; }
-    .port__card:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .port__card:nth-child(1) { grid-column: span 2; }
 
-    .lb__slide { padding: 4rem 1rem; }
-    .lb__arrow { display: none; }
+    /* Mobile: sidebar → barra inferior fija */
+    .lb__sidebar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: auto;
+      width: 100%;
+      height: 52px;
+      flex-direction: row;
+      border-right: none;
+      border-top: 1px solid rgba(250,249,246,0.08);
+      padding: 0 1.2rem;
+      background: rgba(12,11,10,0.96);
+      gap: 1rem;
+      z-index: 15;
+    }
+
+    .lb__sidebar-info {
+      flex-direction: row;
+      flex: 1;
+      max-height: none;
+      gap: 0.6rem;
+      overflow: hidden;
+    }
+
+    .lb__sidebar-cat { display: none; }
+
+    .lb__sidebar-name,
+    .lb__sidebar-idx {
+      writing-mode: horizontal-tb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb__sidebar-name { font-size: 0.72rem; }
+    .lb__sidebar-idx  { font-size: 0.55rem; }
+
+    /* El slide deja espacio para la barra inferior */
+    .lb__slide {
+      height: calc(100vh - 52px);
+      padding: 1rem 1rem;
+    }
+
+    .lb__photo-counter { bottom: 4.2rem; }
+    .lb__hint { display: none; }
   }
 
   @media (max-width: 480px) {
@@ -489,138 +694,243 @@ const categorias = [
       grid-template-columns: 1fr;
       grid-auto-rows: 220px;
     }
-
     .port__card:nth-child(n) { grid-column: span 1; }
     .port__card:nth-child(1) { grid-column: span 1; }
   }
 </style>
-<script>
-  // ── FILTROS ──
-  const filtros = document.querySelectorAll('.port__filtro')
-  const cards   = document.querySelectorAll('.port__card')
 
-  filtros.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filtros.forEach(b => b.classList.remove('is-active'))
+<script>
+  // ══════════════════════════════════════
+  // FILTROS
+  // ══════════════════════════════════════
+  var filtros = document.querySelectorAll('.port__filtro')
+  var cards   = document.querySelectorAll('.port__card')
+
+  filtros.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filtros.forEach(function(b) { b.classList.remove('is-active') })
       btn.classList.add('is-active')
-      const filter = btn.getAttribute('data-filter')
-      cards.forEach(card => {
-        const tipo = card.getAttribute('data-tipo')
+      var filter = btn.getAttribute('data-filter')
+      cards.forEach(function(card) {
+        var tipo = card.getAttribute('data-tipo')
         card.classList.toggle('is-hidden', filter !== 'todos' && tipo !== filter)
       })
     })
   })
 
-  // ── LIGHTBOX ──
-  const lb        = document.getElementById('lightbox')
-  const lbClose   = document.getElementById('lbClose')
-  const lbTrack   = document.getElementById('lbTrack')
-  const lbLabel   = document.getElementById('lbLabel')
-  const lbCounter = document.getElementById('lbCounter')
-  const lbPrev    = document.getElementById('lbPrev')
-  const lbNext    = document.getElementById('lbNext')
+  // ══════════════════════════════════════
+  // LIGHTBOX
+  // ══════════════════════════════════════
+  var lb           = document.getElementById('lightbox')
+  var lbClose      = document.getElementById('lbClose')
+  var lbScroll     = document.getElementById('lbScroll')
+  var lbProjPrev   = document.getElementById('lbProjPrev')
+  var lbProjNext   = document.getElementById('lbProjNext')
+  var lbSidebarCat  = document.getElementById('lbSidebarCat')
+  var lbSidebarName = document.getElementById('lbSidebarName')
+  var lbSidebarIdx  = document.getElementById('lbSidebarIdx')
+  var lbPhotoCurrent = document.getElementById('lbPhotoCurrent')
+  var lbPhotoTotal   = document.getElementById('lbPhotoTotal')
+  var lbHint         = document.getElementById('lbHint')
 
-  let imgs: string[] = []
-  let idx = 0
-  let transitioning = false
+  // Estado global
+  var siblingProjects = []   // proyectos de la misma categoría (tipo)
+  var projIdx = 0            // índice actual dentro de siblingProjects
+  var observer = null        // IntersectionObserver para el contador de foto
 
-  function open(imagenes: string[], label: string) {
-    imgs = imagenes
-    idx  = 0
-
-    // Limpiar track completamente
-    if (lbTrack) lbTrack.innerHTML = ''
-
-    // Solo crear la primera imagen — no todas
-    showImage(0)
-
-    if (lbLabel)   lbLabel.textContent   = label
-    if (lbCounter) lbCounter.textContent = `1 / ${imagenes.length}`
-
-    lb?.classList.add('is-open')
-    document.body.style.overflow = 'hidden'
+  // ── Calcular ancho del scrollbar para evitar layout shift ──
+  function getScrollbarWidth() {
+    return window.innerWidth - document.documentElement.clientWidth
   }
 
-  function showImage(index: number) {
-    if (!lbTrack) return
+  // ── Construir slides en el contenedor de scroll ──
+  function buildSlides(imagenes) {
+    if (!lbScroll) return
 
-    // Limpiar completamente antes de mostrar nueva
-    lbTrack.innerHTML = ''
+    // Desconectar observer anterior
+    if (observer) { observer.disconnect(); observer = null }
 
-    const img = document.createElement('img')
-    img.src   = imgs[index]
-    img.style.cssText = `
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      display: block;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    `
+    lbScroll.innerHTML = ''
 
-    lbTrack.appendChild(img)
+    imagenes.forEach(function(src) {
+      var slide = document.createElement('div')
+      slide.className = 'lb__slide'
 
-    // Fade in después de cargar
-    img.onload = () => {
-      requestAnimationFrame(() => { img.style.opacity = '1' })
+      var img = document.createElement('img')
+      img.alt = ''
+      img.decoding = 'async'
+
+      function markLoaded() { img.classList.add('is-loaded') }
+      img.addEventListener('load', markLoaded)
+      img.addEventListener('error', markLoaded) // mostrar aunque falle
+      img.src = src
+
+      // Ya en caché
+      if (img.complete) markLoaded()
+
+      slide.appendChild(img)
+      lbScroll.appendChild(slide)
+    })
+
+    // Resetear scroll al inicio
+    lbScroll.scrollTop = 0
+
+    // Actualizar totales
+    if (lbPhotoTotal)   lbPhotoTotal.textContent   = imagenes.length
+    if (lbPhotoCurrent) lbPhotoCurrent.textContent = 1
+
+    // Hint: mostrar solo si hay más de 1 foto
+    if (lbHint) {
+      lbHint.classList.toggle('is-hidden', imagenes.length <= 1)
     }
 
-    // Si ya estaba cacheada
-    if (img.complete) {
-      requestAnimationFrame(() => { img.style.opacity = '1' })
-    }
+    // Observar slides para actualizar contador
+    setupObserver()
   }
 
-  function close() {
-    lb?.classList.remove('is-open')
-    document.body.style.overflow = ''
-    if (lbTrack) lbTrack.innerHTML = ''
+  // ── IntersectionObserver: detectar qué foto es visible ──
+  function setupObserver() {
+    var slides = lbScroll.querySelectorAll('.lb__slide')
+    if (!slides.length) return
+
+    observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return
+        var idx = Array.prototype.indexOf.call(slides, entry.target)
+        if (lbPhotoCurrent) lbPhotoCurrent.textContent = idx + 1
+        // Ocultar hint después del primer scroll
+        if (idx > 0 && lbHint) lbHint.classList.add('is-hidden')
+      })
+    }, {
+      root: lbScroll,
+      threshold: 0.5
+    })
+
+    slides.forEach(function(slide) { observer.observe(slide) })
   }
 
-  function goTo(newIdx: number) {
-    if (transitioning) return
-    transitioning = true
+  // ── Actualizar sidebar con los datos del proyecto actual ──
+  function updateSidebar() {
+    var proj = siblingProjects[projIdx]
+    if (!proj) return
 
-    idx = (newIdx + imgs.length) % imgs.length
-    showImage(idx)
+    if (lbSidebarCat)  lbSidebarCat.textContent  = proj.tipo
+    if (lbSidebarName) lbSidebarName.textContent = proj.label
+    if (lbSidebarIdx)  lbSidebarIdx.textContent  = (projIdx + 1) + ' / ' + siblingProjects.length
 
-    if (lbCounter) lbCounter.textContent = `${idx + 1} / ${imgs.length}`
+    // Estado de botones: deshabilitar en los extremos
+    if (lbProjPrev) lbProjPrev.disabled = (projIdx === 0)
+    if (lbProjNext) lbProjNext.disabled = (projIdx === siblingProjects.length - 1)
 
-    setTimeout(() => { transitioning = false }, 500)
+    buildSlides(proj.imagenes)
   }
 
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const raw      = card.getAttribute('data-imagenes') ?? '[]'
-      const imagenes = JSON.parse(raw) as string[]
-      const label    = card.getAttribute('data-label') ?? ''
-      open(imagenes, label)
+  // ── Abrir lightbox ──
+  function openLightbox(clickedCard) {
+    var clickedTipo  = clickedCard.getAttribute('data-tipo')
+    var clickedLabel = clickedCard.getAttribute('data-label')
+
+    // Recopilar proyectos visibles de la MISMA categoría (tipo)
+    siblingProjects = []
+    cards.forEach(function(card) {
+      if (card.classList.contains('is-hidden')) return
+      if (card.getAttribute('data-tipo') !== clickedTipo) return
+      siblingProjects.push({
+        label:    card.getAttribute('data-label')    || '',
+        tipo:     card.getAttribute('data-tipo')     || '',
+        imagenes: JSON.parse(card.getAttribute('data-imagenes') || '[]')
+      })
+    })
+
+    // Encontrar índice del proyecto clickeado
+    projIdx = siblingProjects.findIndex(function(p) {
+      return p.label === clickedLabel
+    })
+    if (projIdx < 0) projIdx = 0
+
+    updateSidebar()
+
+    // Abrir el lightbox
+    lb.classList.add('is-open')
+    lb.setAttribute('aria-hidden', 'false')
+
+    // Bloquear scroll del body SIN layout shift
+    var sbw = getScrollbarWidth()
+    document.body.style.overflow     = 'hidden'
+    document.body.style.paddingRight = sbw + 'px'
+  }
+
+  // ── Cerrar lightbox ──
+  function closeLightbox() {
+    lb.classList.remove('is-open')
+    lb.setAttribute('aria-hidden', 'true')
+
+    // Restaurar scroll del body
+    document.body.style.overflow     = ''
+    document.body.style.paddingRight = ''
+
+    // Limpiar DOM tras la transición
+    setTimeout(function() {
+      if (observer) { observer.disconnect(); observer = null }
+      if (lbScroll) lbScroll.innerHTML = ''
+    }, 420)
+  }
+
+  // ── Navegar entre proyectos de la misma categoría ──
+  function goPrevProj() {
+    if (projIdx <= 0) return
+    projIdx--
+    updateSidebar()
+  }
+
+  function goNextProj() {
+    if (projIdx >= siblingProjects.length - 1) return
+    projIdx++
+    updateSidebar()
+  }
+
+  // ── Eventos: cards ──
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      openLightbox(card)
     })
   })
 
-  lbClose?.addEventListener('click', close)
-  lbPrev?.addEventListener('click',  () => goTo(idx - 1))
-  lbNext?.addEventListener('click',  () => goTo(idx + 1))
-  lb?.addEventListener('click', e => { if (e.target === lb) close() })
+  // ── Eventos: controles del lightbox ──
+  lbClose.addEventListener('click', closeLightbox)
+  lbProjPrev.addEventListener('click', goPrevProj)
+  lbProjNext.addEventListener('click', goNextProj)
 
-  document.addEventListener('keydown', e => {
-    if (!lb?.classList.contains('is-open')) return
-    if (e.key === 'Escape')     close()
-    if (e.key === 'ArrowLeft')  goTo(idx - 1)
-    if (e.key === 'ArrowRight') goTo(idx + 1)
+  // Cerrar al hacer clic en el fondo negro (no en el contenido)
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) closeLightbox()
   })
 
-  let touchX = 0
-  lb?.addEventListener('touchstart', e => { touchX = e.touches[0].clientX })
-  lb?.addEventListener('touchend',   e => {
-    const diff = touchX - e.changedTouches[0].clientX
-    if (Math.abs(diff) > 50) diff > 0 ? goTo(idx + 1) : goTo(idx - 1)
+  // ── Teclado ──
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('is-open')) return
+    if (e.key === 'Escape')     closeLightbox()
+    if (e.key === 'ArrowLeft')  goPrevProj()
+    if (e.key === 'ArrowRight') goNextProj()
   })
+
+  // ── Swipe horizontal en mobile → cambiar proyecto ──
+  //    Swipe vertical → scroll nativo de lb__scroll (no lo interceptamos)
+  var touchX0 = 0
+  var touchY0 = 0
+
+  lb.addEventListener('touchstart', function(e) {
+    touchX0 = e.touches[0].clientX
+    touchY0 = e.touches[0].clientY
+  }, { passive: true })
+
+  lb.addEventListener('touchend', function(e) {
+    var dx = touchX0 - e.changedTouches[0].clientX
+    var dy = touchY0 - e.changedTouches[0].clientY
+    // Solo swipe horizontal dominante
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 55) {
+      if (dx > 0) goNextProj()
+      else        goPrevProj()
+    }
+  }, { passive: true })
 </script>

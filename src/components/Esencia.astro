@@ -9,36 +9,35 @@ const indicadores = [
 <section class="esencia" id="esencia">
   <div class="esencia__inner">
 
-    <!-- MOBILE: título va primero -->
-    <div class="esencia__title-mobile">
-      <span class="label esencia__label">Nuestra Esencia</span>
+    <!-- Imagen -->
+    <div class="esencia__image-col">
+      <div class="esencia__image-frame">
+        <img
+          class="esencia__image"
+          src="/images/comedor3.jpeg"
+          alt="Proyecto Studio2810"
+          loading="lazy"
+        />
+        <div class="esencia__image-tag">
+          <span>Studio2810</span>
+          <span class="esencia__image-tag-line"></span>
+          <span>Lima, Perú</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Texto derecha -->
+    <div class="esencia__text-col">
+
+      <div class="esencia__label-wrap">
+        <span class="esencia__label-line"></span>
+        <span class="esencia__label">Nuestra Esencia</span>
+      </div>
+
       <h2 class="esencia__title">
         Diseñamos con<br />
         <em>propósito y detalle</em>
       </h2>
-    </div>
-
-    <!-- Imagen -->
-    <div class="esencia__image-col">
-      <img
-        class="esencia__image"
-        src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&q=85"
-        alt="Proyecto Studio2810"
-        loading="lazy"
-      />
-    </div>
-
-    <!-- Texto derecha (desktop) / debajo imagen (mobile) -->
-    <div class="esencia__text-col">
-
-      <!-- Solo visible en desktop -->
-      <div class="esencia__title-desktop">
-        <span class="label esencia__label">Nuestra Esencia</span>
-        <h2 class="esencia__title">
-          Diseñamos con<br />
-          <em>propósito y detalle</em>
-        </h2>
-      </div>
 
       <p class="esencia__body">
         En Studio2810 creemos que un espacio bien diseñado transforma
@@ -63,192 +62,258 @@ const indicadores = [
             >
               {ind.plus ? '+' : ''}{ind.numero}{ind.suffix ?? ''}
             </span>
-            <span class="esencia__ind-label label">{ind.label}</span>
+            <span class="esencia__ind-label">{ind.label}</span>
           </div>
         ))}
       </div>
+
     </div>
 
   </div>
 </section>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+
   .esencia {
-    background: #0e1110;
-    padding: var(--space-24) var(--space-8);
+    background: #f5f2ee;
+    padding: 10rem 5vw;
+    overflow: hidden;
   }
 
   .esencia__inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-20);
-    align-items: center;
-  }
-
-  /* Título mobile — oculto en desktop */
-  .esencia__title-mobile {
-    display: none;
-  }
-
-  /* Título desktop — visible en desktop */
-  .esencia__title-desktop {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;  /* era 1fr 1fr */
+  gap: 7vw;
+  align-items: center;
+}
 
   /* ── IMAGEN ── */
   .esencia__image-col {
-    width: 100%;
-    height: 600px;
+    position: relative;
+  }
+
+  .esencia__image-frame {
+    position: relative;
     overflow: hidden;
-    background: #1a1f1d;
+  }
+
+  /* Rectángulo decorativo detrás */
+  .esencia__image-frame::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: -24px;
+    width: 60%;
+    height: 60%;
+    border: 1px solid rgba(160, 140, 110, 0.25);
+    z-index: 0;
+    transition: transform 0.8s ease;
+  }
+
+  .esencia__image-col:hover .esencia__image-frame::before {
+    transform: translate(-6px, -6px);
+  }
+
+  /* Bloque de color detrás abajo-derecha */
+  .esencia__image-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 45%;
+    height: 45%;
+    background: rgba(160, 140, 110, 0.08);
+    z-index: 0;
+    transition: transform 0.8s ease;
+  }
+
+  .esencia__image-col:hover .esencia__image-frame::after {
+    transform: translate(6px, 6px);
   }
 
   .esencia__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1.2s ease, transform 1.2s ease;
-  }
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 640px;  /* era 580px */
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
   .esencia__image.is-visible {
     opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Tag sobre la imagen */
+  .esencia__image-tag {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #0f0f0d;
+  background: rgba(245, 242, 238, 0.92);
+  padding: 0.55em 1em;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+}
+
+  .esencia__image.is-visible ~ .esencia__image-tag,
+  .esencia__image-frame:has(.is-visible) .esencia__image-tag {
+    opacity: 1;
     transform: translateY(0);
   }
+
+  .esencia__image-tag-line {
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.35);
+}
 
   /* ── TEXTO ── */
   .esencia__text-col {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: 2rem;
   }
 
-  .esencia__label { color: var(--secondary-fixed-dim); }
-
-  .esencia__title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: #f0ede8;
+  .esencia__label-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
   }
 
-  .esencia__title em { font-style: italic; }
-
-  .esencia__body {
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.6;
-    color: rgba(240, 237, 232, 0.65);
-    max-width: 480px;
+  .esencia__label-line {
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: rgba(100, 85, 60, 0.4);
+    flex-shrink: 0;
   }
+
+ .esencia__label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(100, 85, 60);
+}
+
+ .esencia__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 3.8vw, 3.6rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #0a0a08;
+}
+
+  .esencia__title em {
+  font-style: italic;
+  color: rgb(110, 90, 55);
+}
+
+ .esencia__body {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.97rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(20, 18, 14, 0.82);
+  max-width: 440px;
+}
 
   /* ── INDICADORES ── */
   .esencia__indicadores {
     display: flex;
-    gap: var(--space-8);
-    margin-top: var(--space-4);
-    padding-top: var(--space-6);
-    border-top: 1px solid rgba(240, 237, 232, 0.08);
+    gap: 3rem;
+    margin-top: 0.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(100, 85, 60, 0.15);
   }
 
   .esencia__ind {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
 
   .esencia__ind-num {
-    font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 2.5vw, 2.5rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: #f0ede8;
-  }
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 2.8vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #0a0a08;
+  line-height: 1;
+}
 
-  .esencia__ind-label {
-    color: rgba(240, 237, 232, 0.4);
-    font-size: 0.7rem;
-  }
+.esencia__ind-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(20, 18, 14, 0.65);
+}
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .esencia__image-col { height: 500px; }
-  }
+  .esencia__image { height: 520px; }  /* era 480px */
+}
 
   @media (max-width: 768px) {
     .esencia {
-      padding: var(--space-20) var(--space-6);
+      padding: 6rem 1.5rem;
     }
 
-    /* Grid pasa a una columna */
-    .esencia__inner {
-      grid-template-columns: 1fr;
-      gap: 0;
+   .esencia__inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.45fr 0.55fr;
+  gap: 5vw;
+  align-items: center;
+}
+
+    .esencia__image-frame::before,
+    .esencia__image-frame::after {
+      display: none;
     }
 
-    /* Título mobile aparece primero */
-    .esencia__title-mobile {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-      text-align: center;
-      align-items: center;
-      margin-bottom: var(--space-8);
-    }
+    .esencia__image { height: 320px; }
 
-    /* Imagen en segundo lugar */
-    .esencia__image-col {
-      order: 2;
-      height: 280px;
-      width: 100%;
-      margin-bottom: var(--space-8);
-    }
-
-    /* Título desktop oculto en mobile */
-    .esencia__title-desktop { display: none; }
-
-    /* Texto después de imagen */
     .esencia__text-col {
-      order: 3;
-      text-align: center;
-      align-items: center;
+      gap: 1.5rem;
     }
 
-    .esencia__body {
-      max-width: 100%;
-      text-align: center;
-    }
+    .esencia__body { max-width: 100%; }
 
-    /* Indicadores centrados */
     .esencia__indicadores {
-      justify-content: center;
+      gap: 2rem;
       flex-wrap: wrap;
-      gap: var(--space-6);
-      width: 100%;
-    }
-
-    .esencia__ind {
-      align-items: center;
-      text-align: center;
     }
   }
 
   @media (max-width: 480px) {
-    .esencia__image-col { height: 240px; }
-
-    .esencia__title-mobile h2 {
-      font-size: 1.8rem;
-    }
+    .esencia__image { height: 260px; }
+    .esencia__indicadores { gap: 1.5rem; }
   }
 </style>
 
@@ -257,6 +322,7 @@ const indicadores = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
+  /* Imagen reveal */
   const img = document.querySelector('.esencia__image')
   if (img) {
     const obs = new IntersectionObserver(
@@ -266,25 +332,42 @@ const indicadores = [
           obs.disconnect()
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     )
     obs.observe(img)
   }
 
+  /* Texto entra desde la derecha */
   gsap.from('.esencia__text-col > *', {
-    scrollTrigger: { trigger: '.esencia', start: 'top 75%' },
-    opacity: 0, x: 30, duration: 0.9, stagger: 0.15, ease: 'power2.out'
+    scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
+    opacity: 0,
+    x: 36,
+    duration: 1,
+    stagger: 0.13,
+    ease: 'power3.out',
   })
 
+  /* Imagen columna entra desde la izquierda */
+  gsap.from('.esencia__image-col', {
+    scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
+    opacity: 0,
+    x: -36,
+    duration: 1.1,
+    ease: 'power3.out',
+  })
+
+  /* Contadores */
   function animateCounter(el: Element) {
     const val    = parseInt(el.getAttribute('data-val') ?? '0')
     const plus   = el.getAttribute('data-plus') === 'true'
     const suffix = el.getAttribute('data-suffix') ?? ''
     const obj    = { v: 0 }
     gsap.to(obj, {
-      v: val, duration: 2, ease: 'power3.out',
+      v: val,
+      duration: 2,
+      ease: 'power3.out',
       onUpdate() { el.textContent = (plus ? '+' : '') + Math.round(obj.v) + suffix },
-      onComplete() { el.textContent = (plus ? '+' : '') + val + suffix }
+      onComplete() { el.textContent = (plus ? '+' : '') + val + suffix },
     })
   }
 
