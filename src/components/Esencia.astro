@@ -241,6 +241,8 @@ const indicadores = [
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(100, 85, 60, 0.15);
   }
 
   .esencia__body {
@@ -257,7 +259,6 @@ const indicadores = [
     gap: 3rem;
     margin-top: 0.5rem;
     padding-top: 2rem;
-    
   }
 
   .esencia__ind {
@@ -298,13 +299,11 @@ const indicadores = [
   }
 
   /* ── TABLET PORTRAIT + MOBILE ── */
-  /* iPad vertical (~820px) y iPhone: layout de una columna */
   @media (max-width: 860px) {
     .esencia {
       padding: 5rem 1.6rem 4rem;
     }
 
-    /* Una sola columna, orden explícito */
     .esencia__inner {
       grid-template-columns: 1fr;
       grid-template-areas:
@@ -319,24 +318,43 @@ const indicadores = [
       display: none;
     }
 
+    /* Imagen: animación fade+scale activada por JS */
     .esencia__image {
       height: 340px;
+      opacity: 0;
+      transform: scale(1.04);
+    }
+
+    .esencia__image.is-visible {
       opacity: 1;
       transform: scale(1);
     }
 
     .esencia__image-tag {
-      opacity: 1;
-      transform: translateY(0);
+      opacity: 0;
+      transform: translateY(8px);
       font-size: 0.6rem;
       padding: 0.45em 0.85em;
       bottom: 14px;
       left: 14px;
     }
 
+    .esencia__image-frame:has(.is-visible) .esencia__image-tag {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .esencia__text-col {
       padding-top: 0;
       gap: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .esencia__text-col.is-visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .esencia__title {
@@ -344,31 +362,46 @@ const indicadores = [
     }
 
     .esencia__body-col {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-  /* 👇 agrega esto */
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(100, 85, 60, 0.15);
-}
+      gap: 1.2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+    }
+
+    .esencia__body-col.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .esencia__body {
       font-size: 0.93rem;
     }
 
+    /* Indicadores: 3 columnas simétricas centradas */
     .esencia__indicadores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 0;
-      justify-content: space-between;
       padding-top: 1.5rem;
+      text-align: center;
     }
 
-    .esencia__ind { flex: 1; }
+    .esencia__ind {
+      align-items: center;
+      padding: 0 0.5rem;
+    }
+
+    /* Separador vertical entre indicadores */
+    .esencia__ind + .esencia__ind {
+      border-left: 1px solid rgba(100, 85, 60, 0.15);
+    }
 
     .esencia__ind-num { font-size: 1.9rem; }
 
     .esencia__ind-label {
       font-size: 0.58rem;
       letter-spacing: 0.08em;
+      text-align: center;
     }
   }
 
@@ -396,6 +429,7 @@ const indicadores = [
   const isDesktop = window.innerWidth > 860
 
   if (isDesktop) {
+    // Desktop: imagen con IntersectionObserver
     const img = document.querySelector('.esencia__image')
     if (img) {
       const obs = new IntersectionObserver(
@@ -421,10 +455,45 @@ const indicadores = [
       scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
       opacity: 0, x: -36, duration: 1.2, ease: 'power3.out',
     })
+
   } else {
-    // Mobile/tablet: imagen visible directo
+    // Mobile/tablet: animaciones con IntersectionObserver (sin GSAP)
+
+    // Imagen: fade + scale al hacer scroll
     const img = document.querySelector('.esencia__image')
-    img?.classList.add('is-visible')
+    if (img) {
+      const imgObs = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) { img.classList.add('is-visible'); imgObs.disconnect() }
+        },
+        { threshold: 0.15 }
+      )
+      imgObs.observe(img)
+    }
+
+    // Título: fade + slide up al hacer scroll
+    const textCol = document.querySelector('.esencia__text-col')
+    if (textCol) {
+      const textObs = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) { textCol.classList.add('is-visible'); textObs.disconnect() }
+        },
+        { threshold: 0.2 }
+      )
+      textObs.observe(textCol)
+    }
+
+    // Body + indicadores: fade + slide up con delay
+    const bodyCol = document.querySelector('.esencia__body-col')
+    if (bodyCol) {
+      const bodyObs = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) { bodyCol.classList.add('is-visible'); bodyObs.disconnect() }
+        },
+        { threshold: 0.15 }
+      )
+      bodyObs.observe(bodyCol)
+    }
   }
 
   // Contadores — funcionan en todos los tamaños
