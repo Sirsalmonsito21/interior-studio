@@ -29,49 +29,185 @@ const navLinks = [
     <a href="#contacto" class="header__cta" style="align-self:flex-start;margin-top:1rem;">Conversemos</a>
   </div>
 </header>
+
 <style>
-.header{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;background:transparent;transition:transform 0.45s cubic-bezier(0.77,0,0.175,1),background 0.4s ease;}
-.header.is-scrolled{background:rgba(250,249,246,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(44,36,32,0.08);}
-.header.is-hidden{transform:translateY(-110%);}
-.header__inner{max-width:1400px;margin:0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
-.header__logo{text-decoration:none;display:flex;flex-direction:column;line-height:1;gap:3px;}
-.header__logo-main{font-family:'Noto Serif',Georgia,serif;font-size:1.1rem;font-weight:400;letter-spacing:0.2em;color:#2C2420;}
-.header__logo-sub{font-family:'Manrope',sans-serif;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:#9C8E86;}
-.header__nav{display:flex;gap:2rem;align-items:center;}
-.header__nav-link{font-family:'Manrope',sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:#2C2420;position:relative;padding-bottom:2px;transition:color 0.3s ease;}
-.header__nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0%;height:1px;background:#A48D78;transition:width 0.35s ease;}
-.header__nav-link:hover{color:#A48D78;}
-.header__nav-link:hover::after{width:100%;}
-.header__cta{font-family:'Manrope',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;color:#2C2420;border:1px solid rgba(44,36,32,0.25);padding:0.55rem 1.4rem;transition:all 0.3s ease;white-space:nowrap;}
-.header__cta:hover{border-color:#A48D78;color:#A48D78;}
-.header__burger{display:none;flex-direction:column;gap:6px;background:none;border:none;cursor:pointer;padding:4px;}
-.header__burger span{display:block;width:22px;height:1px;background:#2C2420;transition:transform 0.3s ease,opacity 0.3s ease;}
-.header__burger.is-open span:first-child{transform:translateY(3.5px) rotate(45deg);}
-.header__burger.is-open span:last-child{transform:translateY(-3.5px) rotate(-45deg);}
-.header__mobile{display:none;flex-direction:column;max-height:0;overflow:hidden;background:rgba(250,249,246,0.98);transition:max-height 0.4s ease,padding 0.4s ease;}
-.header__mobile.is-open{max-height:400px;padding:1.5rem 0;}
-.header__mobile-link{font-family:'Manrope',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:#2C2420;padding:0.6rem 0;transition:color 0.3s ease;}
-.header__mobile-link:hover{color:#A48D78;}
-@media(max-width:768px){
-  .header{padding:0 1.5rem;}
-  .header__nav,.header__cta{display:none;}
-  .header__burger{display:flex;}
-  .header__mobile{display:flex;}
-}
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    background: transparent;
+    transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+  }
+
+  .header.is-hidden {
+    transform: translateY(-110%);
+  }
+
+  .header__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  /* Logo */
+  .header__logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    gap: 3px;
+  }
+
+  .header__logo-main {
+    font-family: 'Noto Serif', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: #FAF9F6;
+  }
+
+  .header__logo-sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(250, 249, 246, 0.45);
+  }
+
+  /* Nav */
+  .header__nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .header__nav-link {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(250, 249, 246, 0.85);
+    transition: color 0.3s ease;
+  }
+
+  .header__nav-link::after { display: none; }
+
+  .header__nav-link:hover { color: #2C2420; }
+
+  /* CTA */
+  .header__cta {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(250, 249, 246, 0.85);
+    border: 1px solid rgba(250, 249, 246, 0.35);
+    padding: 0.55rem 1.4rem;
+    transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .header__cta:hover {
+    color: #2C2420;
+    background: #FAF9F6;
+    border-color: #FAF9F6;
+  }
+
+  /* Burger */
+  .header__burger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .header__burger span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: #FAF9F6;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .header__burger.is-open span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+
+  .header__burger.is-open span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .header__mobile {
+    display: none;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(250, 249, 246, 0.98);
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+
+  .header__mobile.is-open {
+    max-height: 400px;
+    padding: 1.5rem 0;
+  }
+
+  .header__mobile-link {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #2C2420;
+    padding: 0.6rem 0;
+    transition: color 0.3s ease;
+  }
+
+  .header__mobile-link:hover { color: #A48D78; }
+
+  @media (max-width: 768px) {
+    .header { padding: 0 1.5rem; }
+    .header__nav, .header__cta { display: none; }
+    .header__burger { display: flex; }
+    .header__mobile { display: flex; }
+  }
 </style>
+
 <script>
-const burger=document.getElementById('burger')
-const mobileMenu=document.getElementById('mobileMenu')
-const header=document.getElementById('header')
-let lastScroll=0
-burger?.addEventListener('click',()=>{burger.classList.toggle('is-open');mobileMenu?.classList.toggle('is-open')})
-mobileMenu?.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{burger?.classList.remove('is-open');mobileMenu?.classList.remove('is-open')}))
-window.addEventListener('scroll',()=>{
-  const c=window.scrollY
-  if(c>40)header?.classList.add('is-scrolled');else header?.classList.remove('is-scrolled')
-  if(c<=60)header?.classList.remove('is-hidden')
-  else if(c>lastScroll+8)header?.classList.add('is-hidden')
-  else if(c<lastScroll-8)header?.classList.remove('is-hidden')
-  lastScroll=c
-})
+  const burger     = document.getElementById('burger')
+  const mobileMenu = document.getElementById('mobileMenu')
+  const header     = document.getElementById('header')
+  let lastScroll   = 0
+
+  burger?.addEventListener('click', () => {
+    burger.classList.toggle('is-open')
+    mobileMenu?.classList.toggle('is-open')
+  })
+
+  mobileMenu?.querySelectorAll('a').forEach(l => {
+    l.addEventListener('click', () => {
+      burger?.classList.remove('is-open')
+      mobileMenu?.classList.remove('is-open')
+    })
+  })
+
+  window.addEventListener('scroll', () => {
+    const c = window.scrollY
+    if (c <= 60) header?.classList.remove('is-hidden')
+    else if (c > lastScroll + 8) header?.classList.add('is-hidden')
+    else if (c < lastScroll - 8) header?.classList.remove('is-hidden')
+    lastScroll = c
+  })
 </script>
