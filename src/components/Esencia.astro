@@ -25,7 +25,7 @@ const indicadores = [
       <div class="esencia__image-frame">
         <img
           class="esencia__image"
-          src="/images/comedor3.png"
+          src="/images/comedor3.jpeg"
           alt="Proyecto Studio2810"
           loading="eager"
           decoding="async"
@@ -257,7 +257,7 @@ const indicadores = [
     gap: 3rem;
     margin-top: 0.5rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(100, 85, 60, 0.15);
+    
   }
 
   .esencia__ind {
@@ -344,8 +344,13 @@ const indicadores = [
     }
 
     .esencia__body-col {
-      gap: 1.2rem;
-    }
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  /* 👇 agrega esto */
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(100, 85, 60, 0.15);
+}
 
     .esencia__body {
       font-size: 0.93rem;
