@@ -5,51 +5,9 @@ const navLinks = [
   { label: "Portafolio", href: "#portafolio" },
   { label: "Contacto",   href: "#contacto"   },
 ]
-
-const redes = [
-  {
-    nombre: "Instagram",
-    handle: "@studio2810",
-    href: "https://instagram.com/studio2810",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>`
-  },
-  {
-    nombre: "TikTok",
-    handle: "@studio2810",
-    href: "https://tiktok.com/@studio2810",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>`
-  },
-  {
-    nombre: "WhatsApp",
-    handle: "+51 999 999 999",
-    href: "https://wa.me/51999999999",
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`
-  },
-]
 ---
 
 <footer class="footer">
-
-  <div class="footer__redes">
-    <div class="footer__redes-inner">
-      <div class="footer__redes-header">
-        <span class="label footer__redes-label">Síguenos</span>
-        <p class="footer__redes-desc">Seguí nuestros proyectos y el proceso creativo día a día.</p>
-      </div>
-      <div class="footer__redes-list">
-        {redes.map(r => (
-          <a href={r.href} target="_blank" rel="noopener noreferrer" class="footer__red">
-            <span class="footer__red-icon" set:html={r.icon} />
-            <div class="footer__red-info">
-              <span class="footer__red-nombre">{r.nombre}</span>
-              <span class="footer__red-handle">{r.handle}</span>
-            </div>
-            <span class="footer__red-arrow">→</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </div>
 
   <div class="footer__body">
     <div class="footer__body-inner">
@@ -96,105 +54,6 @@ const redes = [
 
 <style>
   .footer { background: #070908; }
-
-  /* ── SÍGUENOS ── */
-  .footer__redes {
-    background: #0e1110;
-    border-bottom: 1px solid rgba(240, 237, 232, 0.06);
-  }
-
-  .footer__redes-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: var(--space-20) var(--space-8);
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: var(--space-20);
-    align-items: center;
-  }
-
-  .footer__redes-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .footer__redes-label { color: var(--secondary-fixed-dim); }
-
-  .footer__redes-desc {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
-    font-weight: 300;
-    font-style: italic;
-    line-height: 1.5;
-    color: rgba(240, 237, 232, 0.4);
-  }
-
-  .footer__redes-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .footer__red {
-    display: flex;
-    align-items: center;
-    gap: var(--space-6);
-    padding: var(--space-6);
-    text-decoration: none;
-    background: rgba(240, 237, 232, 0.02);
-    border: 1px solid rgba(240, 237, 232, 0.05);
-    transition: background 0.3s ease, border-color 0.3s ease, padding-left 0.3s ease;
-  }
-
-  .footer__red:hover {
-    background: rgba(240, 237, 232, 0.05);
-    border-color: rgba(240, 237, 232, 0.1);
-    padding-left: var(--space-8);
-  }
-
-  .footer__red-icon {
-    color: var(--secondary-fixed-dim);
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .footer__red-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: 1;
-  }
-
-  .footer__red-nombre {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 400;
-    color: rgba(240, 237, 232, 0.7);
-    transition: color 0.3s ease;
-  }
-
-  .footer__red:hover .footer__red-nombre { color: #f0ede8; }
-
-  .footer__red-handle {
-    font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 300;
-    color: rgba(240, 237, 232, 0.3);
-    letter-spacing: 0.05em;
-  }
-
-  .footer__red-arrow {
-    font-size: 0.85rem;
-    color: rgba(240, 237, 232, 0.2);
-    transition: color 0.3s ease, transform 0.3s ease;
-  }
-
-  .footer__red:hover .footer__red-arrow {
-    color: rgba(240, 237, 232, 0.6);
-    transform: translateX(4px);
-  }
 
   /* ── CUERPO ── */
   .footer__body {
@@ -350,15 +209,6 @@ const redes = [
 
   /* ── TABLET ── */
   @media (min-width: 769px) and (max-width: 1024px) {
-    .footer__redes-inner {
-      grid-template-columns: 1fr;
-      gap: var(--space-8);
-      text-align: center;
-      align-items: center;
-    }
-
-    .footer__redes-header { align-items: center; }
-
     .footer__body-inner {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-8);
@@ -372,7 +222,6 @@ const redes = [
     }
 
     .footer__tagline { text-align: center; }
-
     .footer__nav { align-items: flex-start; }
     .footer__nav-list { align-items: flex-start; }
     .footer__contact { align-items: flex-start; }
@@ -386,27 +235,6 @@ const redes = [
 
   /* ── MOBILE ── */
   @media (max-width: 768px) {
-    .footer__redes-inner {
-      padding: var(--space-8) var(--space-6);
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
-      text-align: center;
-      align-items: center;
-    }
-
-    .footer__redes-header {
-      align-items: center;
-      text-align: center;
-    }
-
-    .footer__redes-desc {
-      text-align: center;
-      font-size: 1rem;
-    }
-
-    .footer__red { padding: var(--space-4); }
-    .footer__red:hover { padding-left: var(--space-6); }
-
     .footer__body-inner {
       grid-template-columns: 1fr;
       padding: var(--space-8) var(--space-6);
@@ -414,7 +242,6 @@ const redes = [
     }
 
     .footer__brand {
-      grid-column: span 1;
       align-items: center;
       text-align: center;
     }
@@ -434,9 +261,5 @@ const redes = [
     }
 
     .footer__copy { text-align: center; }
-  }
-
-  @media (max-width: 480px) {
-    .footer__redes-inner { padding: var(--space-6); }
   }
 </style>

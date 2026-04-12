@@ -117,7 +117,17 @@ const categorias = [
         data-count={cat.imagenes.length}
       >
         <div class="port__card-img-wrap">
-          <img class="port__card-img" src={cat.cover} alt={cat.label} loading="lazy" />
+          <!--
+            CLAVE — mismo patrón que Esencia y Servicios:
+            opacity: 0 y scale en CSS desde el inicio.
+            JS agrega .is-visible cuando entra al viewport.
+          -->
+          <img
+            class="port__card-img"
+            src={cat.cover}
+            alt={cat.label}
+            loading="lazy"
+          />
           <div class="port__card-overlay">
             <span class="port__card-ver">Ver proyecto</span>
           </div>
@@ -135,33 +145,28 @@ const categorias = [
 <!-- ── LIGHTBOX ── -->
 <div class="lb" id="lightbox" aria-hidden="true">
 
-  <!-- Cerrar -->
   <button class="lb__close" id="lbClose" aria-label="Cerrar">
     <span></span><span></span>
   </button>
 
-  <!-- Flecha izquierda: foto anterior -->
   <button class="lb__arrow lb__arrow--prev" id="lbPrev" aria-label="Foto anterior">
     <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
       <path d="M9 17L1 9L9 1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
 
-  <!-- Área central: imagen -->
   <div class="lb__stage" id="lbStage">
     <div class="lb__img-wrap" id="lbImgWrap">
       <img class="lb__img" id="lbImg" src="" alt="" />
     </div>
   </div>
 
-  <!-- Flecha derecha: foto siguiente -->
   <button class="lb__arrow lb__arrow--next" id="lbNext" aria-label="Foto siguiente">
     <svg width="10" height="18" viewBox="0 0 10 18" fill="none">
       <path d="M1 1L9 9L1 17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
 
-  <!-- Barra inferior: info + contador + dots -->
   <div class="lb__bar">
     <div class="lb__bar-left">
       <span class="lb__bar-tipo" id="lbBarTipo"></span>
@@ -282,15 +287,33 @@ const categorias = [
     inset: 0;
   }
 
+  /*
+    CLAVE — mismo patrón que Esencia y Servicios:
+    La imagen arranca invisible vía CSS.
+    JS sólo agrega .is-visible cuando entra al viewport.
+    Nunca hay un flash de imagen visible antes de que JS corra.
+  */
   .port__card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0;
+    transform: scale(1.06);
+    transition:
+      opacity 1.6s ease,
+      transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .port__card:hover .port__card-img { transform: scale(1.06); }
+  .port__card-img.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* El hover de zoom sigue funcionando sobre el scale base */
+  .port__card:hover .port__card-img {
+    transform: scale(1.06);
+  }
 
   .port__card-overlay {
     position: absolute;
@@ -356,7 +379,6 @@ const categorias = [
   /* ══════════════════════════════════════
      LIGHTBOX
   ══════════════════════════════════════ */
-
   .lb {
     position: fixed;
     inset: 0;
@@ -378,7 +400,6 @@ const categorias = [
     pointer-events: all;
   }
 
-  /* ── Cerrar ── */
   .lb__close {
     position: fixed;
     top: 1.2rem;
@@ -407,7 +428,6 @@ const categorias = [
   .lb__close span:first-child { transform: rotate(45deg); }
   .lb__close span:last-child  { transform: rotate(-45deg); }
 
-  /* ── Flechas laterales ── */
   .lb__arrow {
     display: flex;
     align-items: center;
@@ -433,7 +453,6 @@ const categorias = [
     cursor: default;
   }
 
-  /* ── Stage: área central con la imagen ── */
   .lb__stage {
     grid-area: stage;
     position: relative;
@@ -443,7 +462,6 @@ const categorias = [
     justify-content: center;
   }
 
-  /* Wrap de la imagen — permite pinch-zoom en mobile */
   .lb__img-wrap {
     width: 100%;
     height: 100%;
@@ -469,7 +487,6 @@ const categorias = [
 
   .lb__img.is-loaded { opacity: 1; }
 
-  /* Animación entrada desde derecha/izquierda */
   .lb__img.slide-in-right {
     animation: slideInRight 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
@@ -487,7 +504,6 @@ const categorias = [
     to   { opacity: 1; transform: translateX(0); }
   }
 
-  /* ── Barra inferior ── */
   .lb__bar {
     grid-area: bar;
     display: flex;
@@ -526,7 +542,6 @@ const categorias = [
     text-overflow: ellipsis;
   }
 
-  /* ── Dots de navegación ── */
   .lb__bar-center {
     display: flex;
     align-items: center;
@@ -617,17 +632,13 @@ const categorias = [
     .port__card:nth-child(n) { grid-column: span 1; grid-row: span 1; }
     .port__card:nth-child(1) { grid-column: span 2; }
 
-    /* Flechas más pequeñas y barra más alta para touch */
     .lb {
       grid-template-columns: 52px 1fr 52px;
       grid-template-rows: 1fr 72px;
     }
 
     .lb__bar { padding: 0 1rem; }
-
     .lb__bar-name { font-size: 0.8rem; }
-
-    /* Ocultar dots si hay muchas fotos — se maneja con el contador */
     .lb__dot { width: 4px; height: 4px; }
   }
 
@@ -648,7 +659,42 @@ const categorias = [
 
 <script>
   // ══════════════════════════════════════
+  // CARGA FLUIDA — mismo patrón que Esencia y Servicios
+  // CSS pone opacity: 0 desde el inicio.
+  // IntersectionObserver agrega .is-visible cuando la card entra al viewport.
+  // Cada imagen tiene un delay escalonado según su posición en la grilla
+  // para un efecto en cascada natural.
+  // ══════════════════════════════════════
+
+  var cardImgs = document.querySelectorAll('.port__card-img')
+
+  var imgObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var img = entry.target
+        // Delay escalonado: cada imagen espera un poco más que la anterior
+        // según su índice dentro de la grilla, para un efecto en cascada
+        var card  = img.closest('.port__card')
+        var cards = Array.from(document.querySelectorAll('.port__card:not(.is-hidden)'))
+        var idx   = cards.indexOf(card)
+        var delay = Math.min(idx * 80, 400) // máximo 400ms de delay
+
+        setTimeout(function() {
+          img.classList.add('is-visible')
+        }, delay)
+
+        imgObserver.unobserve(img)
+      }
+    })
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' })
+
+  cardImgs.forEach(function(img) {
+    imgObserver.observe(img)
+  })
+
+  // ══════════════════════════════════════
   // FILTROS
+  // Cuando se filtra, re-observar las imágenes que vuelven a aparecer
   // ══════════════════════════════════════
   var filtros = document.querySelectorAll('.port__filtro')
   var cards   = document.querySelectorAll('.port__card')
@@ -658,9 +704,20 @@ const categorias = [
       filtros.forEach(function(b) { b.classList.remove('is-active') })
       btn.classList.add('is-active')
       var filter = btn.getAttribute('data-filter')
+
       cards.forEach(function(card) {
         var tipo = card.getAttribute('data-tipo')
-        card.classList.toggle('is-hidden', filter !== 'todos' && tipo !== filter)
+        var hide = filter !== 'todos' && tipo !== filter
+        card.classList.toggle('is-hidden', hide)
+
+        // Si la card vuelve a mostrarse y su imagen aún no fue animada,
+        // re-observarla para que aparezca fluida
+        if (!hide) {
+          var img = card.querySelector('.port__card-img')
+          if (img && !img.classList.contains('is-visible')) {
+            imgObserver.observe(img)
+          }
+        }
       })
     })
   })
@@ -680,20 +737,16 @@ const categorias = [
   var lbCurrent  = document.getElementById('lbCurrent')
   var lbTotal    = document.getElementById('lbTotal')
 
-  // Estado
-  var imagenes   = []
-  var photoIdx   = 0
+  var imagenes    = []
+  var photoIdx    = 0
   var isAnimating = false
 
-  // ── Calcular scrollbar width para evitar layout shift ──
   function getScrollbarWidth() {
     return window.innerWidth - document.documentElement.clientWidth
   }
 
-  // ── Construir dots ──
   function buildDots(total) {
     lbDots.innerHTML = ''
-    // Máximo 12 dots visibles para no saturar en mobile
     var max = Math.min(total, 12)
     for (var i = 0; i < max; i++) {
       var dot = document.createElement('button')
@@ -711,7 +764,6 @@ const categorias = [
     dots.forEach(function(d, i) { d.classList.toggle('is-active', i === photoIdx) })
   }
 
-  // ── Cargar imagen con animación ──
   function goTo(idx, direction) {
     if (isAnimating) return
     if (idx < 0 || idx >= imagenes.length) return
@@ -719,10 +771,8 @@ const categorias = [
     isAnimating = true
     photoIdx = idx
 
-    // Quitar clases de animación anteriores
     lbImg.classList.remove('slide-in-right', 'slide-in-left', 'is-loaded')
 
-    // Pequeño delay para que el browser repinte antes de la animación
     requestAnimationFrame(function() {
       lbImg.src = imagenes[photoIdx]
 
@@ -742,14 +792,12 @@ const categorias = [
       }
     })
 
-    // Actualizar UI
     if (lbCurrent) lbCurrent.textContent = photoIdx + 1
     updateDots()
     lbPrev.disabled = (photoIdx === 0)
     lbNext.disabled = (photoIdx === imagenes.length - 1)
   }
 
-  // ── Abrir lightbox ──
   function openLightbox(card) {
     imagenes = JSON.parse(card.getAttribute('data-imagenes') || '[]')
     var label = card.getAttribute('data-label') || ''
@@ -757,18 +805,15 @@ const categorias = [
 
     photoIdx = 0
 
-    // Info barra
     if (lbBarTipo) lbBarTipo.textContent = tipo
     if (lbBarName) lbBarName.textContent = label
     if (lbTotal)   lbTotal.textContent   = imagenes.length
 
     buildDots(imagenes.length)
 
-    // Mostrar lightbox antes de cargar imagen
     lb.classList.add('is-open')
     lb.setAttribute('aria-hidden', 'false')
 
-    // Bloquear scroll
     var sbw = getScrollbarWidth()
     document.body.style.overflow     = 'hidden'
     document.body.style.paddingRight = sbw + 'px'
@@ -776,7 +821,6 @@ const categorias = [
     goTo(0, 'right')
   }
 
-  // ── Cerrar lightbox ──
   function closeLightbox() {
     lb.classList.remove('is-open')
     lb.setAttribute('aria-hidden', 'true')
@@ -792,12 +836,10 @@ const categorias = [
     }, 420)
   }
 
-  // ── Eventos cards ──
   cards.forEach(function(card) {
     card.addEventListener('click', function() { openLightbox(card) })
   })
 
-  // ── Eventos flechas ──
   lbPrev.addEventListener('click', function() {
     if (photoIdx > 0) goTo(photoIdx - 1, 'left')
   })
@@ -806,10 +848,8 @@ const categorias = [
     if (photoIdx < imagenes.length - 1) goTo(photoIdx + 1, 'right')
   })
 
-  // ── Cerrar ──
   lbClose.addEventListener('click', closeLightbox)
 
-  // ── Teclado ──
   document.addEventListener('keydown', function(e) {
     if (!lb.classList.contains('is-open')) return
     if (e.key === 'Escape')     closeLightbox()
@@ -817,14 +857,13 @@ const categorias = [
     if (e.key === 'ArrowRight') { if (photoIdx < imagenes.length - 1) goTo(photoIdx + 1, 'right') }
   })
 
-  // ── Swipe horizontal en mobile ──
-  var touchX0 = 0
-  var touchY0 = 0
+  var touchX0    = 0
+  var touchY0    = 0
   var touchMoved = false
 
   lbImgWrap.addEventListener('touchstart', function(e) {
-    touchX0 = e.touches[0].clientX
-    touchY0 = e.touches[0].clientY
+    touchX0    = e.touches[0].clientX
+    touchY0    = e.touches[0].clientY
     touchMoved = false
   }, { passive: true })
 
@@ -836,7 +875,6 @@ const categorias = [
     var dx = touchX0 - e.changedTouches[0].clientX
     var dy = touchY0 - e.changedTouches[0].clientY
 
-    // Solo swipe horizontal dominante y significativo
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
       if (dx > 0 && photoIdx < imagenes.length - 1) goTo(photoIdx + 1, 'right')
       if (dx < 0 && photoIdx > 0)                   goTo(photoIdx - 1, 'left')
