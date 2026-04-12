@@ -35,6 +35,31 @@ const servicios = [
 ]
 ---
 
+<!--
+  OPTIMIZACIÓN DE CARGA: Inyectamos <link rel="preload"> para las 4 imágenes
+  directamente en el <head> via un script de inicialización temprana.
+  Esto le dice al browser que las descargue ANTES de parsear el DOM,
+  eliminando el retraso que sufren las imágenes 3 y 4.
+-->
+<script is:inline>
+  ;(function () {
+    const imgs = [
+      '/images/cocina3.jpeg',
+      '/images/entrada1.jpeg',
+      '/images/niña4.jpeg',
+      '/images/oficina2.png',
+    ]
+    imgs.forEach(function (src) {
+      var link = document.createElement('link')
+      link.rel = 'preload'
+      link.as = 'image'
+      link.href = src
+      link.fetchpriority = 'high'
+      document.head.appendChild(link)
+    })
+  })()
+</script>
+
 <section class="srv" id="servicios">
 
   <div class="srv__intro">
@@ -57,7 +82,7 @@ const servicios = [
                 src={s.imagen}
                 alt={s.titulo}
                 loading="eager"
-                decoding="async"
+                decoding={i < 2 ? 'async' : 'sync'}
                 fetchpriority="high"
               />
               <div class="srv__image-tag">
@@ -242,7 +267,6 @@ const servicios = [
   .srv__image-col:hover .srv__image-frame::after { transform: translate(6px, 6px); }
   .srv__item--reverse .srv__image-col:hover .srv__image-frame::after { transform: translate(-6px, 6px); }
 
-  /* Imagen: SIN opacity en CSS — GSAP lo maneja al 100% */
   .srv__image {
     position: relative;
     z-index: 1;
@@ -292,7 +316,6 @@ const servicios = [
     background: rgba(0, 0, 0, 0.35);
   }
 
-  /* Texto: SIN opacity en CSS — GSAP lo maneja */
   .srv__text-col {
     display: flex;
     flex-direction: column;
@@ -448,9 +471,24 @@ const servicios = [
 
   const isMobile = window.innerWidth <= 820
 
+  /**
+   * Retorna una Promise que se resuelve cuando la imagen está completamente cargada.
+   * Si ya está cacheada (complete = true), resuelve de inmediato.
+   */
+  function waitForImage(img: HTMLImageElement): Promise<void> {
+    return new Promise((resolve) => {
+      if (img.complete && img.naturalWidth > 0) {
+        resolve()
+      } else {
+        img.addEventListener('load',  () => resolve(), { once: true })
+        img.addEventListener('error', () => resolve(), { once: true })
+      }
+    })
+  }
+
   function initAnimations() {
     if (isMobile) {
-      // Mobile: CSS transition + IntersectionObserver
+      // ── MOBILE: CSS transition + IntersectionObserver ──
       document.querySelectorAll('.srv__image').forEach(img => {
         const el = img as HTMLElement
         el.style.opacity = '0'
@@ -468,10 +506,13 @@ const servicios = [
       const imgObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            const el = e.target as HTMLElement
-            el.style.opacity = '1'
-            el.style.transform = 'scale(1)'
-            el.classList.add('is-visible')
+            const el = e.target as HTMLImageElement
+            // Esperar a que la imagen esté lista antes de disparar la transición
+            waitForImage(el).then(() => {
+              el.style.opacity = '1'
+              el.style.transform = 'scale(1)'
+              el.classList.add('is-visible')
+            })
             imgObserver.unobserve(e.target)
           }
         })
@@ -492,14 +533,14 @@ const servicios = [
       document.querySelectorAll('.srv__text-col').forEach(col => textObserver.observe(col))
 
     } else {
-      // Desktop: GSAP controla todo — exactamente igual para las 4 imágenes
+      // ── DESKTOP: GSAP — espera a que cada imagen esté cargada antes de animar ──
       document.querySelectorAll('.srv__item').forEach((item) => {
         const textCol   = item.querySelector('.srv__text-col') as HTMLElement | null
         const imgCol    = item.querySelector('.srv__image-col') as HTMLElement | null
-        const img       = item.querySelector('.srv__image') as HTMLElement | null
+        const img       = item.querySelector('.srv__image') as HTMLImageElement | null
         const isReverse = item.classList.contains('srv__item--reverse')
 
-        // Poner todas en opacity 0 inmediatamente via GSAP
+        // Poner en opacity 0 inmediatamente vía GSAP
         if (img)     gsap.set(img,     { opacity: 0, scale: 1.06 })
         if (textCol) gsap.set(textCol, { opacity: 0, x: isReverse ? -30 : 30 })
 
@@ -507,18 +548,20 @@ const servicios = [
           trigger: item,
           start: 'top 78%',
           onEnter: () => {
-            // Imagen: fade + scale — igual para las 4
+            // Esperar a que la imagen esté descargada antes de disparar GSAP
             if (img) {
-              gsap.to(img, {
-                opacity: 1,
-                scale: 1,
-                duration: 2,
-                ease: 'power2.out',
-                onComplete() { img.classList.add('is-visible') },
+              waitForImage(img).then(() => {
+                gsap.to(img, {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 2,
+                  ease: 'power2.out',
+                  onComplete() { img.classList.add('is-visible') },
+                })
               })
             }
 
-            // Columna imagen: deslizamiento lateral
+            // La columna imagen puede deslizarse aunque la img no esté lista
             if (imgCol) {
               gsap.fromTo(imgCol,
                 { x: isReverse ? 36 : -36 },
@@ -526,7 +569,7 @@ const servicios = [
               )
             }
 
-            // Texto: fade + deslizamiento lateral opuesto
+            // Texto: no depende de la imagen, puede animar en paralelo
             if (textCol) {
               gsap.to(textCol, {
                 opacity: 1,
