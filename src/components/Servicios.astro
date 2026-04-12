@@ -7,7 +7,6 @@ const servicios = [
     tag: "Servicio Principal",
     imagen: "/images/cocina3.jpeg",
     tagImagen: "Cocina · Lima",
-    priority: true,
   },
   {
     numero: "02",
@@ -16,7 +15,6 @@ const servicios = [
     tag: "Transformación",
     imagen: "/images/entrada1.jpeg",
     tagImagen: "Entrada · Lima",
-    priority: true,
   },
   {
     numero: "03",
@@ -25,7 +23,6 @@ const servicios = [
     tag: "Exclusivo",
     imagen: "/images/niña4.jpeg",
     tagImagen: "Detalle · Lima",
-    priority: false,
   },
   {
     numero: "04",
@@ -34,7 +31,6 @@ const servicios = [
     tag: "Asesoría",
     imagen: "/images/oficina2.png",
     tagImagen: "Oficina · Lima",
-    priority: false,
   },
 ]
 ---
@@ -60,9 +56,9 @@ const servicios = [
                 class="srv__image"
                 src={s.imagen}
                 alt={s.titulo}
-                loading={s.priority ? 'eager' : 'lazy'}
+                loading="eager"
                 decoding="async"
-                fetchpriority={s.priority ? 'high' : 'low'}
+                fetchpriority="high"
               />
               <div class="srv__image-tag">
                 <span>Studio2810</span>
@@ -102,11 +98,10 @@ const servicios = [
 
   .srv {
     background: #f5f2ee;
-    padding: 10rem 5vw;
+    padding: 4rem 5vw 10rem;
     overflow: hidden;
   }
 
-  /* ── LÍNEA SEPARADORA FINAL ── */
   .srv__section-line {
     max-width: 1300px;
     margin: 0 auto;
@@ -114,10 +109,9 @@ const servicios = [
     background: rgba(100, 85, 60, 0.15);
   }
 
-  /* ── INTRO ── */
   .srv__intro {
     max-width: 1300px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
@@ -160,7 +154,6 @@ const servicios = [
     color: rgb(110, 90, 55);
   }
 
-  /* ── ITEMS ── */
   .srv__items {
     max-width: 1300px;
     margin: 0 auto;
@@ -169,7 +162,6 @@ const servicios = [
     gap: 0;
   }
 
-  /* Wrapper que contiene item + divider */
   .srv__item-wrap {
     display: flex;
     flex-direction: column;
@@ -180,7 +172,7 @@ const servicios = [
     grid-template-columns: 1.45fr 0.55fr;
     gap: 5vw;
     align-items: center;
-    padding: 7rem 0;
+    padding: 4rem 0;
   }
 
   .srv__item--reverse {
@@ -190,14 +182,12 @@ const servicios = [
   .srv__item--reverse .srv__image-col { order: 2; }
   .srv__item--reverse .srv__text-col  { order: 1; }
 
-  /* ── DIVIDER entre servicios ── */
   .srv__divider {
     width: 100%;
     height: 1px;
     background: rgba(100, 85, 60, 0.12);
   }
 
-  /* Último divider oculto — la línea final lo reemplaza */
   .srv__item-wrap:last-child .srv__divider {
     display: none;
   }
@@ -252,6 +242,7 @@ const servicios = [
   .srv__image-col:hover .srv__image-frame::after { transform: translate(6px, 6px); }
   .srv__item--reverse .srv__image-col:hover .srv__image-frame::after { transform: translate(-6px, 6px); }
 
+  /* Imagen: SIN opacity en CSS — GSAP lo maneja al 100% */
   .srv__image {
     position: relative;
     z-index: 1;
@@ -260,14 +251,7 @@ const servicios = [
     object-fit: cover;
     object-position: center;
     display: block;
-    opacity: 0;
-    transform: scale(1.05);
-    transition: opacity 1.6s ease, transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .srv__image.is-visible {
-    opacity: 1;
-    transform: scale(1);
+    /* Sin opacity ni transform aquí — GSAP los pone via gsap.set() */
   }
 
   .srv__image-tag {
@@ -288,7 +272,7 @@ const servicios = [
     padding: 0.55em 1em;
     opacity: 0;
     transform: translateY(8px);
-    transition: opacity 1s ease 0.9s, transform 1s ease 0.9s;
+    transition: opacity 1.2s ease 1s, transform 1.2s ease 1s;
   }
 
   .srv__item--reverse .srv__image-tag {
@@ -296,7 +280,7 @@ const servicios = [
     right: 24px;
   }
 
-  .srv__image-frame:has(.is-visible) .srv__image-tag {
+  .srv__image-frame:has(.srv__image.is-visible) .srv__image-tag {
     opacity: 1;
     transform: translateY(0);
   }
@@ -308,20 +292,12 @@ const servicios = [
     background: rgba(0, 0, 0, 0.35);
   }
 
-  /* ── TEXTO ── */
+  /* Texto: SIN opacity en CSS — GSAP lo maneja */
   .srv__text-col {
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
     min-width: 0;
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 1.3s ease, transform 1.3s ease;
-  }
-
-  .srv__text-col.is-visible {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   .srv__num {
@@ -355,88 +331,22 @@ const servicios = [
 
   /* ── TABLET LANDSCAPE (1024px) ── */
   @media (max-width: 1024px) {
-    .srv { padding: 8rem 4vw; }
+    .srv { padding: 4rem 4vw 8rem; }
 
     .srv__item {
       grid-template-columns: 1.2fr 0.8fr;
       gap: 3vw;
-      padding: 6rem 0;
+      padding: 3.5rem 0;
     }
 
     .srv__item--reverse { grid-template-columns: 0.8fr 1.2fr; }
-
     .srv__image { height: 460px; }
   }
 
   /* ── TABLET PORTRAIT (820px) ── */
   @media (max-width: 820px) {
-    .srv { padding: 6rem 2.5rem; }
-
-    .srv__intro { margin-bottom: 4rem; }
-
-    .srv__item,
-    .srv__item--reverse {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      padding: 3.5rem 0;
-    }
-
-    .srv__item--reverse .srv__image-col,
-    .srv__item--reverse .srv__text-col { order: unset; }
-
-    .srv__image-frame::before,
-    .srv__image-frame::after { display: none; }
-
-    .srv__image {
-      height: 400px;
-      opacity: 0;
-      transform: scale(1.05);
-    }
-
-    .srv__image-tag {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
-    .srv__item--reverse .srv__image-tag {
-      left: 24px;
-      right: auto;
-    }
-
-    .srv__text-col {
-      gap: 0.8rem;
-      padding: 2.2rem 2rem 0;
-      text-align: left;
-      align-items: flex-start;
-      opacity: 0;
-      transform: translateY(28px);
-    }
-
-    .srv__label-wrap { justify-content: flex-start; }
-
-    .srv__num {
-      font-size: 3.8rem;
-      margin-bottom: -0.4rem;
-    }
-
-    .srv__title {
-      font-size: 2.4rem;
-      text-align: left;
-    }
-
-    .srv__desc {
-      max-width: 100%;
-      font-size: 0.95rem;
-      text-align: justify;
-    }
-  }
-
-  /* ── MOBILE (768px) ── */
-  @media (max-width: 768px) {
-    .srv { padding: 5rem 1.4rem 4rem; }
-
-    .srv__intro { margin-bottom: 3rem; }
+    .srv { padding: 3rem 2.5rem 6rem; }
+    .srv__intro { margin-bottom: 2.5rem; }
 
     .srv__item,
     .srv__item--reverse {
@@ -452,11 +362,49 @@ const servicios = [
     .srv__image-frame::before,
     .srv__image-frame::after { display: none; }
 
-    .srv__image {
-      height: 280px;
+    .srv__image { height: 400px; }
+
+    .srv__image-tag {
       opacity: 0;
-      transform: scale(1.05);
+      transform: translateY(8px);
     }
+
+    .srv__item--reverse .srv__image-tag { left: 24px; right: auto; }
+
+    .srv__text-col {
+      gap: 0.8rem;
+      padding: 2.2rem 2rem 0;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .srv__label-wrap { justify-content: flex-start; }
+
+    .srv__num { font-size: 3.8rem; margin-bottom: -0.4rem; }
+    .srv__title { font-size: 2.4rem; text-align: left; }
+    .srv__desc { max-width: 100%; font-size: 0.95rem; text-align: justify; }
+  }
+
+  /* ── MOBILE (768px) ── */
+  @media (max-width: 768px) {
+    .srv { padding: 3rem 1.4rem 5rem; }
+    .srv__intro { margin-bottom: 2rem; }
+
+    .srv__item,
+    .srv__item--reverse {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 2.5rem 0;
+    }
+
+    .srv__item--reverse .srv__image-col,
+    .srv__item--reverse .srv__text-col { order: unset; }
+
+    .srv__image-frame::before,
+    .srv__image-frame::after { display: none; }
+
+    .srv__image { height: 280px; }
 
     .srv__image-tag {
       font-size: 0.58rem;
@@ -467,47 +415,26 @@ const servicios = [
       transform: translateY(8px);
     }
 
-    .srv__item--reverse .srv__image-tag {
-      left: 14px;
-      right: auto;
-    }
+    .srv__item--reverse .srv__image-tag { left: 14px; right: auto; }
 
     .srv__text-col {
       gap: 0.7rem;
       padding: 1.8rem 1rem 0;
       text-align: left;
       align-items: flex-start;
-      opacity: 0;
-      transform: translateY(28px);
     }
 
     .srv__label-wrap { justify-content: flex-start; }
-
-    .srv__num {
-      font-size: 3.2rem;
-      margin-bottom: -0.5rem;
-    }
-
-    .srv__title {
-      font-size: 2rem;
-      text-align: left;
-    }
-
-    .srv__desc {
-      max-width: 100%;
-      font-size: 0.93rem;
-      text-align: justify;
-    }
+    .srv__num { font-size: 3.2rem; margin-bottom: -0.5rem; }
+    .srv__title { font-size: 2rem; text-align: left; }
+    .srv__desc { max-width: 100%; font-size: 0.93rem; text-align: justify; }
   }
 
   /* ── iPhone pequeño (390px) ── */
   @media (max-width: 390px) {
-    .srv { padding: 4.5rem 1.2rem 3.5rem; }
-
+    .srv { padding: 2.5rem 1.2rem 4rem; }
     .srv__image { height: 240px; }
-
     .srv__text-col { padding: 1.5rem 0.8rem 0; }
-
     .srv__num { font-size: 2.8rem; }
     .srv__title { font-size: 1.85rem; }
     .srv__desc { font-size: 0.9rem; }
@@ -521,74 +448,112 @@ const servicios = [
 
   const isMobile = window.innerWidth <= 820
 
-  // ── Imágenes: IntersectionObserver en todos los tamaños ──
-  const imgObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible')
-          imgObserver.unobserve(e.target)
-        }
+  function initAnimations() {
+    if (isMobile) {
+      // Mobile: CSS transition + IntersectionObserver
+      document.querySelectorAll('.srv__image').forEach(img => {
+        const el = img as HTMLElement
+        el.style.opacity = '0'
+        el.style.transform = 'scale(1.05)'
+        el.style.transition = 'opacity 2s ease, transform 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
       })
-    },
-    { threshold: 0.1 }
-  )
-  document.querySelectorAll('.srv__image').forEach(img => imgObserver.observe(img))
 
-  // ── Texto: IntersectionObserver en todos los tamaños ──
-  const textObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          e.target.classList.add('is-visible')
-          textObserver.unobserve(e.target)
-        }
+      document.querySelectorAll('.srv__text-col').forEach(col => {
+        const el = col as HTMLElement
+        el.style.opacity = '0'
+        el.style.transform = 'translateY(28px)'
+        el.style.transition = 'opacity 1.4s ease, transform 1.4s ease'
       })
-    },
-    { threshold: 0.12 }
-  )
-  document.querySelectorAll('.srv__text-col').forEach(col => textObserver.observe(col))
 
-  // ── GSAP solo en desktop para animaciones laterales ──
-  if (!isMobile) {
-    document.querySelectorAll('.srv__item').forEach((item) => {
-      const textCol   = item.querySelector('.srv__text-col') as HTMLElement | null
-      const imgCol    = item.querySelector('.srv__image-col') as HTMLElement | null
-      const isReverse = item.classList.contains('srv__item--reverse')
-
-      if (textCol) {
-        textCol.style.transition = 'none'
-        gsap.set(textCol, { opacity: 0, x: isReverse ? -30 : 30 })
-        gsap.to(textCol, {
-          scrollTrigger: { trigger: item, start: 'top 75%' },
-          opacity: 1,
-          x: 0,
-          duration: 1.6,
-          ease: 'power3.out',
-          onStart() {
-            textCol.style.transform = ''
-          },
+      const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const el = e.target as HTMLElement
+            el.style.opacity = '1'
+            el.style.transform = 'scale(1)'
+            el.classList.add('is-visible')
+            imgObserver.unobserve(e.target)
+          }
         })
-      }
+      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' })
 
-      if (imgCol) {
-        gsap.from(imgCol, {
-          scrollTrigger: { trigger: item, start: 'top 75%' },
-          opacity: 0,
-          x: isReverse ? 30 : -30,
-          duration: 1.7,
-          ease: 'power3.out',
+      const textObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const el = e.target as HTMLElement
+            el.style.opacity = '1'
+            el.style.transform = 'translateY(0)'
+            textObserver.unobserve(e.target)
+          }
         })
-      }
-    })
+      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' })
 
-    gsap.from('.srv__intro > *', {
-      scrollTrigger: { trigger: '.srv__intro', start: 'top 80%' },
-      opacity: 0,
-      y: 22,
-      duration: 1.6,
-      stagger: 0.22,
-      ease: 'power3.out',
-    })
+      document.querySelectorAll('.srv__image').forEach(img => imgObserver.observe(img))
+      document.querySelectorAll('.srv__text-col').forEach(col => textObserver.observe(col))
+
+    } else {
+      // Desktop: GSAP controla todo — exactamente igual para las 4 imágenes
+      document.querySelectorAll('.srv__item').forEach((item) => {
+        const textCol   = item.querySelector('.srv__text-col') as HTMLElement | null
+        const imgCol    = item.querySelector('.srv__image-col') as HTMLElement | null
+        const img       = item.querySelector('.srv__image') as HTMLElement | null
+        const isReverse = item.classList.contains('srv__item--reverse')
+
+        // Poner todas en opacity 0 inmediatamente via GSAP
+        if (img)     gsap.set(img,     { opacity: 0, scale: 1.06 })
+        if (textCol) gsap.set(textCol, { opacity: 0, x: isReverse ? -30 : 30 })
+
+        ScrollTrigger.create({
+          trigger: item,
+          start: 'top 78%',
+          onEnter: () => {
+            // Imagen: fade + scale — igual para las 4
+            if (img) {
+              gsap.to(img, {
+                opacity: 1,
+                scale: 1,
+                duration: 2,
+                ease: 'power2.out',
+                onComplete() { img.classList.add('is-visible') },
+              })
+            }
+
+            // Columna imagen: deslizamiento lateral
+            if (imgCol) {
+              gsap.fromTo(imgCol,
+                { x: isReverse ? 36 : -36 },
+                { x: 0, duration: 2, ease: 'power3.out' }
+              )
+            }
+
+            // Texto: fade + deslizamiento lateral opuesto
+            if (textCol) {
+              gsap.to(textCol, {
+                opacity: 1,
+                x: 0,
+                duration: 1.8,
+                ease: 'power3.out',
+              })
+            }
+          }
+        })
+      })
+
+      gsap.from('.srv__intro > *', {
+        scrollTrigger: { trigger: '.srv__intro', start: 'top 82%' },
+        opacity: 0,
+        y: 20,
+        duration: 1.6,
+        stagger: 0.2,
+        ease: 'power3.out',
+      })
+    }
+  }
+
+  // Esperar a que TODO esté cargado antes de inicializar
+  if (document.readyState === 'complete') {
+    initAnimations()
+  } else {
+    window.addEventListener('load', initAnimations)
   }
 </script>
