@@ -20,24 +20,39 @@ const navLinks = [
     </nav>
     <a href="#contacto" class="header__cta">Conversemos</a>
     <button class="header__burger" id="burger" aria-label="Abrir menú">
-      <span></span><span></span>
+      <span></span><span></span><span></span>
     </button>
-  </div>
-  <div class="header__mobile" id="mobileMenu">
-    {navLinks.map(link => (
-      <a href={link.href} class="header__mobile-link">{link.label}</a>
-    ))}
-    <a href="#contacto" class="header__mobile-cta">Conversemos</a>
   </div>
 </header>
 
+<!-- Mobile menu fuera del header — cubre toda la pantalla -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu__inner">
+    <nav class="mobile-menu__nav">
+      {navLinks.map(link => (
+        <a href={link.href} class="mobile-menu__link">
+          <span class="mobile-menu__link-num"></span>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <div class="mobile-menu__footer">
+      <a href="#contacto" class="mobile-menu__cta">Conversemos</a>
+      <span class="mobile-menu__brand">Studio2810 · Lima, Perú</span>
+    </div>
+  </div>
+</div>
+
 <style>
+  /* ══════════════════════════════════════
+     HEADER
+  ══════════════════════════════════════ */
   .header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 100;
+    z-index: 200;
     padding: 0 2rem;
     background: transparent;
     transition:
@@ -48,11 +63,10 @@ const navLinks = [
     border-bottom: 1px solid transparent;
   }
 
-  /* Cuando hay scroll — fondo crema traslúcido con blur */
   .header.is-scrolled {
-    background: rgba(245, 242, 238, 0.88);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background: rgba(245, 242, 238, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(160, 140, 110, 0.15);
     box-shadow: 0 2px 40px rgba(20, 16, 10, 0.06);
   }
@@ -65,7 +79,7 @@ const navLinks = [
   .header__inner {
     max-width: 1400px;
     margin: 0 auto;
-    height: 72px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -80,6 +94,7 @@ const navLinks = [
     line-height: 1;
     gap: 3px;
     transition: opacity 0.3s ease;
+    flex-shrink: 0;
   }
 
   .header__logo:hover { opacity: 0.7; }
@@ -88,85 +103,73 @@ const navLinks = [
     font-family: 'Cormorant Garamond', 'Noto Serif', Georgia, serif;
     font-size: 1.1rem;
     font-weight: 400;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     color: #FAF9F6;
     transition: color 0.5s ease;
   }
 
   .header__logo-sub {
     font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.55rem;
+    font-size: 0.52rem;
     font-weight: 300;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
     color: rgba(250, 249, 246, 0.45);
     transition: color 0.5s ease;
   }
 
-  /* Logo oscuro cuando hay scroll */
-  .header.is-scrolled .header__logo-main {
-    color: #0a0a08;
-  }
-
-  .header.is-scrolled .header__logo-sub {
-    color: rgba(100, 85, 60, 0.6);
-  }
+  .header.is-scrolled .header__logo-main { color: #0a0a08; }
+  .header.is-scrolled .header__logo-sub  { color: rgba(100, 85, 60, 0.6); }
 
   /* ── NAV ── */
   .header__nav {
     display: flex;
-    gap: 2rem;
+    gap: 2.2rem;
     align-items: center;
   }
 
   .header__nav-link {
     font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 400;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(250, 249, 246, 0.9);
-    transition: color 0.5s ease, opacity 0.3s ease;
+    color: rgba(250, 249, 246, 0.85);
+    transition: color 0.4s ease;
     position: relative;
   }
 
-  /* Subrayado animado */
   .header__nav-link::after {
     content: '';
     position: absolute;
-    bottom: -3px;
+    bottom: -4px;
     left: 0;
     width: 0;
     height: 1px;
     background: currentColor;
-    transition: width 0.35s ease;
+    transition: width 0.3s ease;
   }
 
   .header__nav-link:hover::after { width: 100%; }
 
-  /* Nav oscuro cuando hay scroll */
-  .header.is-scrolled .header__nav-link {
-    color: rgba(20, 16, 12, 0.75);
-  }
-
-  .header.is-scrolled .header__nav-link:hover {
-    color: rgb(120, 95, 60);
-  }
+  .header.is-scrolled .header__nav-link       { color: rgba(20, 16, 12, 0.72); }
+  .header.is-scrolled .header__nav-link:hover { color: rgb(110, 90, 55); }
 
   /* ── CTA ── */
   .header__cta {
     font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgba(250, 249, 246, 0.9);
-    border: 1px solid rgba(250, 249, 246, 0.35);
-    padding: 0.55rem 1.4rem;
-    transition: color 0.5s ease, background 0.3s ease, border-color 0.5s ease;
+    color: rgba(250, 249, 246, 0.85);
+    border: 1px solid rgba(250, 249, 246, 0.3);
+    padding: 0.52rem 1.3rem;
+    transition: color 0.4s ease, background 0.3s ease, border-color 0.4s ease;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .header__cta:hover {
@@ -175,10 +178,9 @@ const navLinks = [
     border-color: #FAF9F6;
   }
 
-  /* CTA oscuro cuando hay scroll */
   .header.is-scrolled .header__cta {
     color: rgb(100, 85, 60);
-    border-color: rgba(100, 85, 60, 0.4);
+    border-color: rgba(100, 85, 60, 0.38);
   }
 
   .header.is-scrolled .header__cta:hover {
@@ -191,92 +193,190 @@ const navLinks = [
   .header__burger {
     display: none;
     flex-direction: column;
-    gap: 6px;
+    justify-content: center;
+    gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    z-index: 210;
+    position: relative;
   }
 
   .header__burger span {
     display: block;
-    width: 22px;
     height: 1px;
     background: #FAF9F6;
-    transition: transform 0.35s ease, opacity 0.35s ease, background 0.5s ease;
+    transition: transform 0.38s cubic-bezier(0.77, 0, 0.175, 1),
+                opacity 0.25s ease,
+                width 0.3s ease,
+                background 0.4s ease;
+    transform-origin: center;
   }
 
-  .header.is-scrolled .header__burger span {
-    background: #0a0a08;
-  }
+  .header__burger span:nth-child(1) { width: 22px; }
+  .header__burger span:nth-child(2) { width: 14px; }
+  .header__burger span:nth-child(3) { width: 18px; }
 
-  .header__burger.is-open span:first-child {
-    transform: translateY(3.5px) rotate(45deg);
-  }
+  /* Burger oscuro al hacer scroll (cuando menú está cerrado) */
+  .header.is-scrolled .header__burger span { background: #0a0a08; }
 
-  .header__burger.is-open span:last-child {
-    transform: translateY(-3.5px) rotate(-45deg);
-  }
+  /* Burger abierto — siempre claro porque el menú es oscuro */
+  .header__burger.is-open span               { background: #FAF9F6 !important; }
+  .header__burger.is-open span:nth-child(1)  { transform: translateY(6px) rotate(45deg); width: 22px; }
+  .header__burger.is-open span:nth-child(2)  { opacity: 0; transform: scaleX(0); }
+  .header__burger.is-open span:nth-child(3)  { transform: translateY(-6px) rotate(-45deg); width: 22px; }
 
-  /* ── MOBILE MENU ── */
-  .header__mobile {
-    display: none;
+  /* ══════════════════════════════════════
+     MOBILE MENU — panel full screen
+  ══════════════════════════════════════ */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    background: #0f0e0c;
+    display: flex;
     flex-direction: column;
-    max-height: 0;
-    overflow: hidden;
-    background: rgba(245, 242, 238, 0.97);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border-top: 1px solid rgba(160, 140, 110, 0.12);
-    transition: max-height 0.45s ease, padding 0.45s ease;
-    padding: 0 0;
+    justify-content: center;
+
+    /* Estado cerrado */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px);
+    transition:
+      opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      visibility 0.4s;
   }
 
-  .header__mobile.is-open {
-    max-height: 400px;
-    padding: 1.8rem 0 2rem;
+  .mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
   }
 
-  .header__mobile-link {
-    font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.78rem;
+  .mobile-menu__inner {
+    padding: 6rem 2.4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  /* ── Links de navegación ── */
+  .mobile-menu__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .mobile-menu__link {
+    font-family: 'Cormorant Garamond', 'Noto Serif', Georgia, serif;
+    font-size: clamp(2.2rem, 8vw, 3rem);
     font-weight: 400;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-style: italic;
+    letter-spacing: -0.01em;
     text-decoration: none;
-    color: rgba(20, 16, 12, 0.75);
-    padding: 0.7rem 0;
-    transition: color 0.3s ease;
+    color: rgba(250, 249, 246, 0.75);
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(250, 249, 246, 0.06);
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    /* Animación de entrada escalonada */
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s ease,
+      color 0.3s ease,
+      padding-left 0.3s ease;
   }
 
-  .header__mobile-link:hover { color: rgb(120, 95, 60); }
+  .mobile-menu.is-open .mobile-menu__link:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+  .mobile-menu.is-open .mobile-menu__link:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.13s; }
+  .mobile-menu.is-open .mobile-menu__link:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
+  .mobile-menu.is-open .mobile-menu__link:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.23s; }
 
-  .header__mobile-cta {
+  .mobile-menu__link:hover {
+    color: rgba(250, 249, 246, 1);
+    padding-left: 0.5rem;
+  }
+
+  .mobile-menu__link-num {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.55rem;
+    font-style: normal;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: rgba(164, 141, 120, 0.6);
+    counter-increment: nav-counter;
+  }
+
+  .mobile-menu__nav { counter-reset: nav-counter; }
+
+  .mobile-menu__link-num::before {
+    content: "0" counter(nav-counter);
+  }
+
+  /* ── Footer del menú ── */
+  .mobile-menu__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+  }
+
+  .mobile-menu.is-open .mobile-menu__footer {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-menu__cta {
     font-family: 'Jost', 'Manrope', sans-serif;
     font-size: 0.68rem;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     text-decoration: none;
-    color: rgb(100, 85, 60);
-    border: 1px solid rgba(100, 85, 60, 0.4);
-    padding: 0.6rem 1.4rem;
-    margin-top: 1rem;
+    color: rgb(164, 141, 120);
+    border: 1px solid rgba(164, 141, 120, 0.38);
+    padding: 0.75rem 1.6rem;
     align-self: flex-start;
     transition: color 0.3s ease, background 0.3s ease;
   }
 
-  .header__mobile-cta:hover {
-    color: #f5f2ee;
-    background: rgb(100, 85, 60);
+  .mobile-menu__cta:hover {
+    color: #0f0e0c;
+    background: rgb(164, 141, 120);
   }
 
-  /* ── RESPONSIVE ── */
+  .mobile-menu__brand {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(250, 249, 246, 0.18);
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════ */
   @media (max-width: 768px) {
-    .header { padding: 0 1.5rem; }
-    .header__nav, .header__cta { display: none; }
+    .header         { padding: 0 1.4rem; }
+    .header__nav    { display: none; }
+    .header__cta    { display: none; }
     .header__burger { display: flex; }
-    .header__mobile { display: flex; }
   }
 </style>
 
@@ -285,41 +385,46 @@ const navLinks = [
   const mobileMenu = document.getElementById('mobileMenu')
   const header     = document.getElementById('header')
   let lastScroll   = 0
+  let menuOpen     = false
 
-  // Burger toggle
-  burger?.addEventListener('click', () => {
-    burger.classList.toggle('is-open')
-    mobileMenu?.classList.toggle('is-open')
-  })
+  // ── Abrir / cerrar menú ──
+  function toggleMenu(force) {
+    menuOpen = force !== undefined ? force : !menuOpen
+    burger?.classList.toggle('is-open', menuOpen)
+    mobileMenu?.classList.toggle('is-open', menuOpen)
+    mobileMenu?.setAttribute('aria-hidden', String(!menuOpen))
+
+    // Bloquear scroll del body cuando el menú está abierto
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+  }
+
+  burger?.addEventListener('click', () => toggleMenu())
 
   // Cerrar al hacer click en un link
   mobileMenu?.querySelectorAll('a').forEach(l => {
-    l.addEventListener('click', () => {
-      burger?.classList.remove('is-open')
-      mobileMenu?.classList.remove('is-open')
-    })
+    l.addEventListener('click', () => toggleMenu(false))
   })
 
-  // Scroll — añade is-scrolled y oculta al bajar
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuOpen) toggleMenu(false)
+  })
+
+  // ── Scroll: is-scrolled + is-hidden ──
   window.addEventListener('scroll', () => {
     const c = window.scrollY
 
-    // Fondo al hacer scroll
-    if (c > 40) {
-      header?.classList.add('is-scrolled')
-    } else {
-      header?.classList.remove('is-scrolled')
-    }
+    header?.classList.toggle('is-scrolled', c > 40)
 
-    // Ocultar al bajar, mostrar al subir
     if (c <= 60) {
       header?.classList.remove('is-hidden')
     } else if (c > lastScroll + 8) {
-      header?.classList.add('is-hidden')
+      // Ocultar solo si el menú mobile está cerrado
+      if (!menuOpen) header?.classList.add('is-hidden')
     } else if (c < lastScroll - 8) {
       header?.classList.remove('is-hidden')
     }
 
     lastScroll = c
-  })
+  }, { passive: true })
 </script>
