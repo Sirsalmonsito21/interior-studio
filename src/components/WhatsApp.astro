@@ -4,9 +4,9 @@ const MENSAJE = encodeURIComponent("Hola Studio2810, me gustaría obtener inform
 const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
 ---
 
-<a class="wa-btn" href={href} target="_blank" rel="noopener noreferrer" aria-label="Escríbenos">
+<a class="wa-btn" href={href} target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
   <span class="wa-btn__inner">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="wa-btn__icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
     </svg>
     <span class="wa-btn__text">Escríbenos</span>
@@ -15,6 +15,7 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
 </a>
 
 <style is:global>
+  /* ── BASE ── */
   .wa-btn {
     position: fixed;
     bottom: 2rem;
@@ -37,10 +38,7 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    transition: border-color 0.3s ease,
-                color 0.3s ease,
-                background 0.3s ease;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
   }
 
   .wa-btn:hover .wa-btn__inner {
@@ -49,7 +47,7 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
     background: #111614;
   }
 
-  /* Punto verde vivo */
+  /* Punto verde */
   .wa-dot {
     position: absolute;
     top: -4px;
@@ -75,16 +73,122 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
     100% { transform: scale(2.8); opacity: 0; }
   }
 
-  @media (max-width: 1024px) {
-  .wa-btn {
-    bottom: 4rem;
-    right: 1.2rem;
-  }
-
+  /* ── MOBILE: pill compacto en la esquina inferior derecha ── */
+  @media (max-width: 768px) {
+    .wa-btn {
+      /*
+        Pegado al borde inferior respetando el safe area de iPhone
+        (la barra de gestos). env(safe-area-inset-bottom) suma el
+        espacio de la home bar automáticamente.
+      */
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+      right: 1rem;
+    }
 
     .wa-btn__inner {
-      padding: 0.65rem 1rem;
-      font-size: 0.65rem;
+      /* Pill circular — sólo el ícono visible por defecto */
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 50%;
+      justify-content: center;
+      overflow: hidden;
+      /* Animación de expansión */
+      transition:
+        width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        border-radius 0.35s ease,
+        border-color 0.3s ease,
+        color 0.3s ease,
+        background 0.3s ease;
+    }
+
+    .wa-btn__text {
+      /* Oculto por defecto, sin ocupar espacio */
+      max-width: 0;
+      opacity: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      transition:
+        max-width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        opacity 0.25s ease;
+    }
+
+    /* Al tocar: se expande mostrando el texto */
+    .wa-btn.is-expanded .wa-btn__inner {
+      width: 168px;
+      border-radius: 24px;
+      padding: 0 1.1rem;
+      gap: 0.55rem;
+    }
+
+    .wa-btn.is-expanded .wa-btn__text {
+      max-width: 120px;
+      opacity: 1;
+    }
+
+    /* Punto más pequeño y reposicionado en mobile */
+    .wa-dot {
+      width: 8px;
+      height: 8px;
+      top: 2px;
+      right: 2px;
+    }
+  }
+
+  /* ── iPhone muy pequeño (SE, mini) ── */
+  @media (max-width: 390px) {
+    .wa-btn {
+      bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+      right: 0.75rem;
+    }
+
+    .wa-btn__inner {
+      width: 44px;
+      height: 44px;
+    }
+
+    .wa-btn.is-expanded .wa-btn__inner {
+      width: 158px;
     }
   }
 </style>
+
+<script>
+  /*
+    En desktop: el botón funciona directo como link, sin JS.
+    En mobile: primer tap expande el pill mostrando el texto,
+    segundo tap (o tap fuera) navega / colapsa.
+    Se colapsa automáticamente a los 3s si no se navega.
+  */
+  const btn = document.querySelector('.wa-btn') as HTMLAnchorElement | null
+  if (!btn) return
+
+  const isMobile = () => window.innerWidth <= 768
+
+  let collapseTimer: ReturnType<typeof setTimeout> | null = null
+
+  function collapse() {
+    btn.classList.remove('is-expanded')
+    if (collapseTimer) clearTimeout(collapseTimer)
+  }
+
+  btn.addEventListener('click', (e) => {
+    if (!isMobile()) return // desktop: comportamiento normal
+
+    if (!btn.classList.contains('is-expanded')) {
+      // Primer tap: expandir y cancelar navegación
+      e.preventDefault()
+      btn.classList.add('is-expanded')
+      // Auto-colapsar a los 3s
+      collapseTimer = setTimeout(collapse, 3000)
+    }
+    // Segundo tap: navega normalmente (href se ejecuta)
+  })
+
+  // Colapsar al tocar fuera
+  document.addEventListener('touchstart', (e) => {
+    if (isMobile() && btn.classList.contains('is-expanded') && !btn.contains(e.target as Node)) {
+      collapse()
+    }
+  }, { passive: true })
+</script>

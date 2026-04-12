@@ -4,7 +4,6 @@
 <section class="contact" id="contacto">
   <div class="contact__inner">
 
-    <!-- Columna izquierda: texto -->
     <div class="contact__info">
       <span class="label contact__label">Contacto</span>
       <h2 class="contact__title">
@@ -15,28 +14,8 @@
         Cuéntanos tu visión. Nos pondremos en contacto
         en menos de 24 horas para agendar una primera conversación.
       </p>
-
-      <div class="contact__datos">
-        <div class="contact__dato">
-          <span class="label">Email</span>
-          <a href="mailto:hola@studio2810.com" class="contact__dato-val">
-            hola@studio2810.com
-          </a>
-        </div>
-        <div class="contact__dato">
-          <span class="label">Ubicación</span>
-          <span class="contact__dato-val">Lima, Perú</span>
-        </div>
-        <div class="contact__dato">
-          <span class="label">Instagram</span>
-          <a href="https://instagram.com/studio2810" target="_blank" class="contact__dato-val">
-            @studio2810
-          </a>
-        </div>
-      </div>
     </div>
 
-    <!-- Columna derecha: formulario -->
     <div class="contact__form-wrap">
       <form class="contact__form" id="contactForm" novalidate>
 
@@ -88,7 +67,11 @@
           ></textarea>
         </div>
 
-        <!-- Estado del envío -->
+        <!-- Honeypot anti-spam: campo oculto, bots lo llenan, humanos no -->
+        <div class="contact__hp" aria-hidden="true">
+          <input type="text" name="hp_field" tabindex="-1" autocomplete="off" />
+        </div>
+
         <div class="contact__feedback" id="contactFeedback" aria-live="polite"></div>
 
         <button class="contact__submit" type="submit" id="contactSubmit">
@@ -148,32 +131,6 @@
     max-width: 340px;
   }
 
-  .contact__datos {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    margin-top: var(--space-4);
-    padding-top: var(--space-6);
-    border-top: 1px solid rgba(240, 237, 232, 0.07);
-  }
-
-  .contact__dato {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .contact__dato-val {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: rgba(240, 237, 232, 0.75);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  a.contact__dato-val:hover { color: #f0ede8; }
-
   /* ── FORMULARIO ── */
   .contact__form-wrap {
     background: #0e1110;
@@ -206,7 +163,6 @@
     color: rgba(240, 237, 232, 0.35);
   }
 
-  /* Input base — solo underline */
   .contact__input {
     background: transparent;
     border: none;
@@ -233,7 +189,6 @@
     border-bottom-color: var(--secondary-fixed-dim);
   }
 
-  /* Select */
   .contact__select {
     cursor: pointer;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(240,237,232,0.3)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
@@ -247,13 +202,20 @@
     color: #f0ede8;
   }
 
-  /* Textarea */
   .contact__textarea {
     resize: none;
     line-height: 1.6;
   }
 
-  /* Feedback */
+  /* Honeypot — completamente invisible para humanos */
+  .contact__hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   .contact__feedback {
     font-family: var(--font-sans);
     font-size: 0.85rem;
@@ -265,7 +227,6 @@
   .contact__feedback.is-success { color: #7daa8a; }
   .contact__feedback.is-error   { color: var(--error); }
 
-  /* Submit */
   .contact__submit {
     display: flex;
     align-items: center;
@@ -309,75 +270,40 @@
   @media (max-width: 1024px) {
     .contact__inner {
       grid-template-columns: 1fr;
-      gap: var(--space-12);
+      gap: var(--space-8);
     }
 
     .contact__info {
       position: static;
+      text-align: center;
+      align-items: center;
     }
 
-    .contact__desc { max-width: 100%; }
+    .contact__desc {
+      max-width: 100%;
+      text-align: center;
+    }
   }
 
-  @media (max-width: 1024px) {
-  .contact__inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-  }
+  @media (max-width: 768px) {
+    .contact {
+      padding: var(--space-20) var(--space-6);
+    }
 
-  .contact__info {
-    position: static;
-    text-align: center;
-    align-items: center;
-  }
+    .contact__form-wrap {
+      padding: var(--space-6);
+    }
 
-  .contact__desc {
-    max-width: 100%;
-    text-align: center;
-  }
+    .contact__row {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
 
-  .contact__datos {
-    align-items: center;
-    text-align: center;
+    .contact__submit {
+      width: 100%;
+      justify-content: center;
+    }
   }
-}
-
-@media (max-width: 768px) {
-  .contact {
-    padding: var(--space-20) var(--space-6);
-  }
-
-  .contact__info {
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .contact__datos {
-    width: 100%;
-    align-items: center;
-  }
-
-  .contact__dato {
-    align-items: center;
-    text-align: center;
-  }
-
-  .contact__form-wrap {
-    padding: var(--space-6);
-  }
-
-  .contact__row {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  .contact__submit {
-    width: 100%;
-    justify-content: center;
-  }
-}
 </style>
 
 <script>
@@ -385,7 +311,6 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
-  // Animaciones entrada
   gsap.from('.contact__info > *', {
     scrollTrigger: { trigger: '.contact', start: 'top 75%' },
     opacity: 0,
@@ -405,17 +330,20 @@
   })
 
   // ── EMAILJS ──
-  // 1. Ve a https://www.emailjs.com y crea una cuenta gratis
-  // 2. Crea un "Email Service" conectando tu Gmail o correo
-  // 3. Crea un "Email Template" con estas variables:
-  //    {{nombre}}, {{email}}, {{servicio}}, {{mensaje}}
-  // 4. Reemplaza las 3 constantes de abajo con tus claves reales
+  // Pasos para configurar:
+  // 1. Crea cuenta gratis en https://www.emailjs.com
+  // 2. "Add New Service" → conecta el Gmail de la empresa → copia el Service ID
+  // 3. "Create New Template" → diseña el email con estas variables:
+  //      {{nombre}}  {{email}}  {{servicio}}  {{mensaje}}
+  //    El campo "To Email" debe ser el correo de la empresa.
+  //    Copia el Template ID.
+  // 4. En "Account" → "API Keys" → copia tu Public Key
+  // 5. Reemplaza las 3 constantes de abajo
 
-  const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY'   // Account > API Keys
-  const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID'   // Email Services > Service ID
-  const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID'  // Email Templates > Template ID
+  const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY'
+  const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID'
+  const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID'
 
-  // Carga EmailJS desde CDN
   const script = document.createElement('script')
   script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'
   script.onload = () => {
@@ -424,15 +352,27 @@
   }
   document.head.appendChild(script)
 
-  // Manejo del formulario
-  const form     = document.getElementById('contactForm') as HTMLFormElement
-  const feedback = document.getElementById('contactFeedback')
+  const form      = document.getElementById('contactForm') as HTMLFormElement
+  const feedback  = document.getElementById('contactFeedback')
   const submitBtn = document.getElementById('contactSubmit') as HTMLButtonElement
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault()
 
-    // Validación básica
+    // ── Anti-spam 1: Honeypot ──
+    // Si el campo oculto tiene contenido, es un bot. Silenciamos y salimos.
+    const hp = (form.elements.namedItem('hp_field') as HTMLInputElement).value
+    if (hp) return
+
+    // ── Anti-spam 2: Rate limiting en cliente ──
+    // Impedimos reenvíos en menos de 60 segundos
+    const lastSent = Number(sessionStorage.getItem('last_contact_send') ?? 0)
+    const now = Date.now()
+    if (now - lastSent < 60_000) {
+      setFeedback('Por favor espera un momento antes de volver a enviar.', 'error')
+      return
+    }
+
     const nombre  = (form.elements.namedItem('nombre')  as HTMLInputElement).value.trim()
     const email   = (form.elements.namedItem('email')   as HTMLInputElement).value.trim()
     const mensaje = (form.elements.namedItem('mensaje') as HTMLTextAreaElement).value.trim()
@@ -442,13 +382,19 @@
       return
     }
 
-    // Envío
+    // Validación de email con regex simple
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setFeedback('El email no parece válido.', 'error')
+      return
+    }
+
     submitBtn.disabled = true
     submitBtn.querySelector('.contact__submit-text')!.textContent = 'Enviando...'
 
     try {
       // @ts-ignore
       await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      sessionStorage.setItem('last_contact_send', String(Date.now()))
       setFeedback('Mensaje enviado. Te contactaremos pronto.', 'success')
       form.reset()
     } catch (err) {

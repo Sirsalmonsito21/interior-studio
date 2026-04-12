@@ -35,15 +35,10 @@ const servicios = [
 ]
 ---
 
-<!--
-  OPTIMIZACIÓN DE CARGA: Inyectamos <link rel="preload"> para las 4 imágenes
-  directamente en el <head> via un script de inicialización temprana.
-  Esto le dice al browser que las descargue ANTES de parsear el DOM,
-  eliminando el retraso que sufren las imágenes 3 y 4.
--->
+<!-- Preload de las 4 imágenes — igual que en Esencia -->
 <script is:inline>
   ;(function () {
-    const imgs = [
+    var imgs = [
       '/images/cocina3.jpeg',
       '/images/entrada1.jpeg',
       '/images/niña4.jpeg',
@@ -77,6 +72,11 @@ const servicios = [
 
           <div class="srv__image-col">
             <div class="srv__image-frame">
+              <!--
+                opacity: 0 y scale(1.06) están en el CSS desde el inicio.
+                JS sólo agrega .is-visible cuando entra al viewport.
+                Exactamente igual que en Esencia.
+              -->
               <img
                 class="srv__image"
                 src={s.imagen}
@@ -267,6 +267,11 @@ const servicios = [
   .srv__image-col:hover .srv__image-frame::after { transform: translate(6px, 6px); }
   .srv__item--reverse .srv__image-col:hover .srv__image-frame::after { transform: translate(-6px, 6px); }
 
+  /*
+    CLAVE — igual que Esencia:
+    opacity: 0 y transform están en CSS desde el inicio del render.
+    El browser nunca pinta la imagen visible. JS sólo agrega .is-visible.
+  */
   .srv__image {
     position: relative;
     z-index: 1;
@@ -275,7 +280,14 @@ const servicios = [
     object-fit: cover;
     object-position: center;
     display: block;
-    /* Sin opacity ni transform aquí — GSAP los pone via gsap.set() */
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 2s ease, transform 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .srv__image.is-visible {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .srv__image-tag {
@@ -304,6 +316,7 @@ const servicios = [
     right: 24px;
   }
 
+  /* Se activa cuando la imagen tiene .is-visible — igual que Esencia */
   .srv__image-frame:has(.srv__image.is-visible) .srv__image-tag {
     opacity: 1;
     transform: translateY(0);
@@ -316,11 +329,28 @@ const servicios = [
     background: rgba(0, 0, 0, 0.35);
   }
 
+  /*
+    TEXTO — empieza invisible vía CSS, .is-visible lo muestra.
+    Desktop: desliza horizontal. Mobile: desliza vertical.
+    JS nunca toca opacity directamente.
+  */
   .srv__text-col {
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
     min-width: 0;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 1.8s ease, transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .srv__item--reverse .srv__text-col {
+    transform: translateX(-30px);
+  }
+
+  .srv__text-col.is-visible {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .srv__num {
@@ -387,22 +417,23 @@ const servicios = [
 
     .srv__image { height: 400px; }
 
-    .srv__image-tag {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-
     .srv__item--reverse .srv__image-tag { left: 24px; right: auto; }
 
-    .srv__text-col {
-      gap: 0.8rem;
+    /* En mobile el texto sólo hace fade+up, no lateral */
+    .srv__text-col,
+    .srv__item--reverse .srv__text-col {
+      transform: translateY(28px);
+      transition: opacity 1.4s ease, transform 1.4s ease;
       padding: 2.2rem 2rem 0;
-      text-align: left;
+      gap: 0.8rem;
       align-items: flex-start;
     }
 
-    .srv__label-wrap { justify-content: flex-start; }
+    .srv__text-col.is-visible {
+      transform: translateY(0);
+    }
 
+    .srv__label-wrap { justify-content: flex-start; }
     .srv__num { font-size: 3.8rem; margin-bottom: -0.4rem; }
     .srv__title { font-size: 2.4rem; text-align: left; }
     .srv__desc { max-width: 100%; font-size: 0.95rem; text-align: justify; }
@@ -434,8 +465,6 @@ const servicios = [
       padding: 0.45em 0.8em;
       bottom: 14px;
       left: 14px;
-      opacity: 0;
-      transform: translateY(8px);
     }
 
     .srv__item--reverse .srv__image-tag { left: 14px; right: auto; }
@@ -443,8 +472,6 @@ const servicios = [
     .srv__text-col {
       gap: 0.7rem;
       padding: 1.8rem 1rem 0;
-      text-align: left;
-      align-items: flex-start;
     }
 
     .srv__label-wrap { justify-content: flex-start; }
@@ -469,134 +496,77 @@ const servicios = [
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
   gsap.registerPlugin(ScrollTrigger)
 
+  /*
+    PATRÓN IDÉNTICO A ESENCIA:
+    - CSS pone opacity: 0 desde el inicio en imágenes y textos.
+    - JS sólo agrega .is-visible cuando el elemento entra al viewport.
+    - GSAP sólo anima el deslizamiento X de la columna imagen en desktop.
+    - Nunca se llama gsap.set(img, { opacity: 0 }) — eso causaba el flash.
+  */
+
   const isMobile = window.innerWidth <= 820
 
-  /**
-   * Retorna una Promise que se resuelve cuando la imagen está completamente cargada.
-   * Si ya está cacheada (complete = true), resuelve de inmediato.
-   */
-  function waitForImage(img: HTMLImageElement): Promise<void> {
-    return new Promise((resolve) => {
-      if (img.complete && img.naturalWidth > 0) {
-        resolve()
-      } else {
-        img.addEventListener('load',  () => resolve(), { once: true })
-        img.addEventListener('error', () => resolve(), { once: true })
-      }
-    })
-  }
+  document.querySelectorAll('.srv__item').forEach((item) => {
+    const img       = item.querySelector('.srv__image') as HTMLImageElement | null
+    const imgCol    = item.querySelector('.srv__image-col') as HTMLElement | null
+    const textCol   = item.querySelector('.srv__text-col') as HTMLElement | null
+    const isReverse = item.classList.contains('srv__item--reverse')
 
-  function initAnimations() {
-    if (isMobile) {
-      // ── MOBILE: CSS transition + IntersectionObserver ──
-      document.querySelectorAll('.srv__image').forEach(img => {
-        const el = img as HTMLElement
-        el.style.opacity = '0'
-        el.style.transform = 'scale(1.05)'
-        el.style.transition = 'opacity 2s ease, transform 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-      })
-
-      document.querySelectorAll('.srv__text-col').forEach(col => {
-        const el = col as HTMLElement
-        el.style.opacity = '0'
-        el.style.transform = 'translateY(28px)'
-        el.style.transition = 'opacity 1.4s ease, transform 1.4s ease'
-      })
-
-      const imgObserver = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
+    // Imagen: IntersectionObserver agrega .is-visible
+    // CSS transition maneja el fade+scale. Sin tocar opacity en JS.
+    if (img) {
+      const imgObs = new IntersectionObserver(
+        ([e]) => {
           if (e.isIntersecting) {
-            const el = e.target as HTMLImageElement
-            // Esperar a que la imagen esté lista antes de disparar la transición
-            waitForImage(el).then(() => {
-              el.style.opacity = '1'
-              el.style.transform = 'scale(1)'
-              el.classList.add('is-visible')
-            })
-            imgObserver.unobserve(e.target)
+            img.classList.add('is-visible')
+            imgObs.disconnect()
           }
-        })
-      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' })
-
-      const textObserver = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            const el = e.target as HTMLElement
-            el.style.opacity = '1'
-            el.style.transform = 'translateY(0)'
-            textObserver.unobserve(e.target)
-          }
-        })
-      }, { threshold: 0, rootMargin: '0px 0px -40px 0px' })
-
-      document.querySelectorAll('.srv__image').forEach(img => imgObserver.observe(img))
-      document.querySelectorAll('.srv__text-col').forEach(col => textObserver.observe(col))
-
-    } else {
-      // ── DESKTOP: GSAP — espera a que cada imagen esté cargada antes de animar ──
-      document.querySelectorAll('.srv__item').forEach((item) => {
-        const textCol   = item.querySelector('.srv__text-col') as HTMLElement | null
-        const imgCol    = item.querySelector('.srv__image-col') as HTMLElement | null
-        const img       = item.querySelector('.srv__image') as HTMLImageElement | null
-        const isReverse = item.classList.contains('srv__item--reverse')
-
-        // Poner en opacity 0 inmediatamente vía GSAP
-        if (img)     gsap.set(img,     { opacity: 0, scale: 1.06 })
-        if (textCol) gsap.set(textCol, { opacity: 0, x: isReverse ? -30 : 30 })
-
-        ScrollTrigger.create({
-          trigger: item,
-          start: 'top 78%',
-          onEnter: () => {
-            // Esperar a que la imagen esté descargada antes de disparar GSAP
-            if (img) {
-              waitForImage(img).then(() => {
-                gsap.to(img, {
-                  opacity: 1,
-                  scale: 1,
-                  duration: 2,
-                  ease: 'power2.out',
-                  onComplete() { img.classList.add('is-visible') },
-                })
-              })
-            }
-
-            // La columna imagen puede deslizarse aunque la img no esté lista
-            if (imgCol) {
-              gsap.fromTo(imgCol,
-                { x: isReverse ? 36 : -36 },
-                { x: 0, duration: 2, ease: 'power3.out' }
-              )
-            }
-
-            // Texto: no depende de la imagen, puede animar en paralelo
-            if (textCol) {
-              gsap.to(textCol, {
-                opacity: 1,
-                x: 0,
-                duration: 1.8,
-                ease: 'power3.out',
-              })
-            }
-          }
-        })
-      })
-
-      gsap.from('.srv__intro > *', {
-        scrollTrigger: { trigger: '.srv__intro', start: 'top 82%' },
-        opacity: 0,
-        y: 20,
-        duration: 1.6,
-        stagger: 0.2,
-        ease: 'power3.out',
-      })
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      )
+      imgObs.observe(img)
     }
-  }
 
-  // Esperar a que TODO esté cargado antes de inicializar
-  if (document.readyState === 'complete') {
-    initAnimations()
-  } else {
-    window.addEventListener('load', initAnimations)
-  }
+    // Texto: IntersectionObserver agrega .is-visible
+    if (textCol) {
+      const textObs = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            textCol.classList.add('is-visible')
+            textObs.disconnect()
+          }
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      )
+      textObs.observe(textCol)
+    }
+
+    // Deslizamiento lateral de la columna imagen — sólo desktop, sólo GSAP.
+    // GSAP no toca opacity, sólo la posición X. Sin conflicto con el CSS fade.
+    if (!isMobile && imgCol) {
+      gsap.fromTo(
+        imgCol,
+        { x: isReverse ? 36 : -36 },
+        {
+          x: 0,
+          duration: 2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 78%',
+          },
+        }
+      )
+    }
+  })
+
+  // Intro heading
+  gsap.from('.srv__intro > *', {
+    scrollTrigger: { trigger: '.srv__intro', start: 'top 82%' },
+    opacity: 0,
+    y: 20,
+    duration: 1.6,
+    stagger: 0.2,
+    ease: 'power3.out',
+  })
 </script>
