@@ -19,405 +19,267 @@ const slides = [
 ---
 
 <section class="hero" id="hero">
-
-  <!-- Slides de fondo -->
-  <div class="hero__slides" id="heroSlides">
-    {slides.map((s, i) => (
-      <div
-        class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
-        data-index={i}
-        aria-hidden={i !== 0}
-      >
-        <img
-          class="hero__slide-img"
-          src={s.img}
-          alt={s.label}
-          loading={i === 0 ? 'eager' : 'lazy'}
-          decoding="async"
-        />
-        <div class="hero__slide-overlay"></div>
-      </div>
-    ))}
-  </div>
-
-  <!-- Contenido centrado -->
-  <div class="hero__content">
-    <p class="hero__eyebrow" id="heroEyebrow">{slides[0].sub}</p>
-    <h1 class="hero__title" id="heroTitle">{slides[0].label}</h1>
-    <div class="hero__actions">
-      <a href="#portafolio" class="hero__btn hero__btn--primary">Ver proyectos</a>
-      <a href="#contacto"   class="hero__btn hero__btn--ghost">Conversemos</a>
+  <div class="hero__container">
+    <div class="hero__slides" id="heroSlides">
+      {slides.map((s, i) => (
+        <div
+          class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
+          data-index={i}
+        >
+          <img
+            class="hero__slide-img"
+            src={s.img}
+            alt={s.label}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+          <div class="hero__slide-overlay"></div>
+        </div>
+      ))}
     </div>
   </div>
 
-  <!-- Indicadores de slide -->
-  <div class="hero__dots" id="heroDots">
-    {slides.map((_, i) => (
-      <button
-        class={`hero__dot ${i === 0 ? 'is-active' : ''}`}
-        data-index={i}
-        aria-label={`Slide ${i + 1}`}
-      ></button>
-    ))}
+  <div class="hero__content">
+    <div class="hero__mask">
+      <p class="hero__eyebrow" id="heroEyebrow">{slides[0].sub}</p>
+    </div>
+    <div class="hero__mask">
+      <h1 class="hero__title" id="heroTitle">{slides[0].label}</h1>
+    </div>
+    
+    <div class="hero__bottom">
+      <div class="hero__pagination">
+        <span id="heroCurrent">01</span>
+        <div class="hero__progress-bg">
+          <div class="hero__progress-bar" id="heroProgress"></div>
+        </div>
+        <span>0{slides.length}</span>
+      </div>
+    </div>
   </div>
-
-  <!-- Barra de progreso -->
-  <div class="hero__progress" id="heroProgress">
-    <div class="hero__progress-bar" id="heroProgressBar"></div>
-  </div>
-
-  <!-- Número de slide -->
-  <div class="hero__counter">
-    <span id="heroCurrent">01</span>
-    <span class="hero__counter-sep"></span>
-    <span id="heroTotal">0{slides.length}</span>
-  </div>
-
-  <!-- Flecha scroll down -->
-  <div class="hero__scroll-hint">
-    <svg width="1" height="48" viewBox="0 0 1 48">
-      <line x1="0.5" y1="0" x2="0.5" y2="48" stroke="rgba(250,249,246,0.35)" stroke-width="1"/>
-    </svg>
-  </div>
-
 </section>
 
 <style>
   .hero {
     position: relative;
+    height: 100vh;
     width: 100%;
-    height: 100svh;
-    min-height: 600px;
     overflow: hidden;
-    background: #0f0e0c;
+    background: #000;
   }
 
-  /* ── Slides ── */
-  .hero__slides {
+  .hero__container {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* Altura extra para el efecto parallax */
+    will-change: transform;
+  }
+
+  .hero__slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
   }
 
   .hero__slide {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
-    transition: opacity 1.4s cubic-bezier(0.4,0,0.2,1);
-    will-change: opacity;
+    visibility: hidden;
+    transition: visibility 0s 1.2s;
+    overflow: hidden;
   }
 
-  .hero__slide.is-active { opacity: 1; }
+  .hero__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.2s ease-in-out;
+  }
 
   .hero__slide-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    display: block;
-    transform: scale(1.04);
-    transition: transform 7s cubic-bezier(0.25,0.46,0.45,0.94);
+    transform: scale(1.1); /* Preparado para el efecto Zoom */
     will-change: transform;
-  }
-
-  .hero__slide.is-active .hero__slide-img {
-    transform: scale(1);
   }
 
   .hero__slide-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(10,9,8,0.28) 0%,
-      rgba(10,9,8,0.15) 40%,
-      rgba(10,9,8,0.55) 100%
-    );
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
   }
 
-  /* ── Contenido ── */
+  /* ── Contenido y Máscaras ── */
   .hero__content {
     position: absolute;
-    bottom: 12vh;
-    left: 5vw;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
     z-index: 10;
-    max-width: 620px;
+    padding: 0 5vw;
+  }
+
+  .hero__mask {
+    overflow: hidden;
+    margin-bottom: 10px;
   }
 
   .hero__eyebrow {
     font-family: 'Jost', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(250,249,246,0.55);
-    margin: 0 0 1rem;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    letter-spacing: 0.3em;
+    font-size: 0.8rem;
+    margin: 0;
   }
 
   .hero__title {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(2.8rem, 5.5vw, 6rem);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    color: #FAF9F6;
-    margin: 0 0 2.2rem;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin: 0;
   }
 
-  .hero__actions {
+  /* ── Progreso y Pagina ── */
+  .hero__bottom {
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+  }
+
+  .hero__pagination {
     display: flex;
-    gap: 1rem;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
-  }
-
-  /* Animación al cambiar slide */
-  .hero__content.is-animating .hero__eyebrow,
-  .hero__content.is-animating .hero__title,
-  .hero__content.is-animating .hero__actions {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  .hero__content.is-visible .hero__eyebrow,
-  .hero__content.is-visible .hero__title,
-  .hero__content.is-visible .hero__actions {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── Botones ── */
-  .hero__btn {
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
     font-family: 'Jost', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 400;
+    font-size: 0.75rem;
     letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.75rem 1.8rem;
-    transition: all 0.3s ease;
-    display: inline-block;
-    white-space: nowrap;
   }
 
-  .hero__btn--primary {
-    background: rgba(250,249,246,0.92);
-    color: #0a0a08;
-    border: 1px solid transparent;
-  }
-
-  .hero__btn--primary:hover {
-    background: #FAF9F6;
-  }
-
-  .hero__btn--ghost {
-    background: transparent;
-    color: rgba(250,249,246,0.8);
-    border: 1px solid rgba(250,249,246,0.3);
-  }
-
-  .hero__btn--ghost:hover {
-    background: rgba(250,249,246,0.1);
-    border-color: rgba(250,249,246,0.6);
-    color: #FAF9F6;
-  }
-
-  /* ── Dots ── */
-  .hero__dots {
-    position: absolute;
-    right: 2.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .hero__dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: rgba(250,249,246,0.28);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.4s ease, transform 0.4s ease;
-  }
-
-  .hero__dot.is-active {
-    background: rgba(250,249,246,0.9);
-    transform: scale(1.5);
-  }
-
-  /* ── Barra de progreso ── */
-  .hero__progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  .hero__progress-bg {
+    width: 100px;
     height: 1px;
-    background: rgba(250,249,246,0.08);
-    z-index: 10;
+    background: rgba(255,255,255,0.2);
+    position: relative;
   }
 
   .hero__progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    background: rgba(250,249,246,0.4);
     width: 0%;
-    transition: width linear;
-  }
-
-  /* ── Contador ── */
-  .hero__counter {
-    position: absolute;
-    bottom: 2rem;
-    right: 2.5rem;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 300;
-    letter-spacing: 0.14em;
-    color: rgba(250,249,246,0.3);
-  }
-
-  .hero__counter-sep {
-    display: block;
-    width: 20px;
-    height: 1px;
-    background: rgba(250,249,246,0.2);
-  }
-
-  /* ── Scroll hint ── */
-  .hero__scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    animation: scrollPulse 2.5s ease-in-out infinite;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
-    50%       { opacity: 0.7; transform: translateX(-50%) translateY(6px); }
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 768px) {
-    .hero__content {
-      bottom: 10vh;
-      left: 1.6rem;
-      right: 1.6rem;
-      max-width: 100%;
-    }
-
-    .hero__dots  { right: 1rem; }
-    .hero__counter { display: none; }
-
-    .hero__title { font-size: 2.6rem; }
+    background: #fff;
   }
 </style>
 
 <script>
-  const INTERVAL_MS = 5500
-  const COLORS      = ['0', '1', '2']   // debe coincidir con data-slide en Header
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  const slides      = Array.from(document.querySelectorAll('.hero__slide'))
-  const dots        = Array.from(document.querySelectorAll('.hero__dot'))
-  const progressBar = document.getElementById('heroProgressBar') as HTMLElement
-  const content     = document.querySelector('.hero__content') as HTMLElement
-  const eyebrow     = document.getElementById('heroEyebrow') as HTMLElement
-  const titleEl     = document.getElementById('heroTitle') as HTMLElement
-  const currentEl   = document.getElementById('heroCurrent') as HTMLElement
+  gsap.registerPlugin(ScrollTrigger);
 
   const slideData = [
-    { label: "Espacios que inspiran",  sub: "Diseño de interiores · Lima, Perú" },
-    { label: "Cada detalle cuenta",    sub: "Cocinas · Residencial" },
-    { label: "Materiales nobles",      sub: "Acabados · Mobiliario a medida" },
-  ]
+    { label: "Espacios que inspiran", sub: "Diseño de interiores · Lima, Perú" },
+    { label: "Cada detalle cuenta", sub: "Cocinas · Residencial" },
+    { label: "Materiales nobles", sub: "Acabados · Mobiliario a medida" }
+  ];
 
-  let current  = 0
-  let timer: ReturnType<typeof setTimeout>
-  let progTimer: ReturnType<typeof requestAnimationFrame>
+  let current = 0;
+  const duration = 6; // Segundos por slide
+  const slides = document.querySelectorAll('.hero__slide');
+  const images = document.querySelectorAll('.hero__slide-img');
+  const progressBar = document.getElementById('heroProgress');
+  
+  function initHero() {
+    // 1. Efecto Parallax del Hero completo al hacer scroll
+    gsap.to('.hero__container', {
+      yPercent: 15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
 
-  function goTo(idx: number) {
-    if (idx === current) return
+    // 2. Animación de entrada inicial (Text Masking)
+    const tl = gsap.timeline();
+    tl.from('.hero__mask > *', {
+      y: 100,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power4.out",
+      stagger: 0.2
+    });
 
-    // Salir del slide actual
-    slides[current].classList.remove('is-active')
-    slides[current].setAttribute('aria-hidden', 'true')
-    dots[current].classList.remove('is-active')
-
-    current = idx
-
-    // Entrar al nuevo slide
-    slides[current].classList.add('is-active')
-    slides[current].setAttribute('aria-hidden', 'false')
-    dots[current].classList.add('is-active')
-
-    // Cambiar color del logo en el header
-    ;(window as any).setHeroSlide?.(idx)
-
-    // Animar texto
-    content.classList.remove('is-visible')
-    content.classList.add('is-animating')
-
-    setTimeout(() => {
-      if (eyebrow) eyebrow.textContent = slideData[idx].sub
-      if (titleEl) titleEl.textContent = slideData[idx].label
-      if (currentEl) currentEl.textContent = String(idx + 1).padStart(2, '0')
-      content.classList.remove('is-animating')
-      content.classList.add('is-visible')
-    }, 350)
-
-    // Reiniciar progreso
-    startProgress()
+    startSlideshow();
   }
 
-  function next() {
-    goTo((current + 1) % slides.length)
+  function startSlideshow() {
+    // Animación de la barra de progreso
+    gsap.to(progressBar, {
+      width: '100%',
+      duration: duration,
+      ease: "none",
+      onComplete: nextSlide
+    });
+
+    // Efecto Zoom sutil constante (Ken Burns) en la imagen activa
+    gsap.to(images[current], {
+      scale: 1.2,
+      duration: duration + 1,
+      ease: "sine.inOut"
+    });
   }
 
-  function startProgress() {
-    clearTimeout(timer)
-    cancelAnimationFrame(progTimer)
+  function nextSlide() {
+    const next = (current + 1) % slides.length;
+    
+    // Fade Out actual / Fade In siguiente
+    const outImg = images[current];
+    const inImg = images[next];
+    
+    // Reiniciar escala de la que entra
+    gsap.set(inImg, { scale: 1.1 });
 
-    if (progressBar) {
-      progressBar.style.transition = 'none'
-      progressBar.style.width = '0%'
-    }
+    slides[current].classList.remove('is-active');
+    slides[next].classList.add('is-active');
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (progressBar) {
-          progressBar.style.transition = `width ${INTERVAL_MS}ms linear`
-          progressBar.style.width = '100%'
-        }
-      })
-    })
+    // Cambiar textos con animación suave
+    gsap.to('.hero__mask > *', {
+      y: -20,
+      opacity: 0,
+      duration: 0.4,
+      onComplete: () => {
+        document.getElementById('heroTitle')!.textContent = slideData[next].label;
+        document.getElementById('heroEyebrow')!.textContent = slideData[next].sub;
+        document.getElementById('heroCurrent')!.textContent = `0${next + 1}`;
+        
+        gsap.fromTo('.hero__mask > *', 
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }
+        );
+      }
+    });
 
-    timer = setTimeout(next, INTERVAL_MS)
+    current = next;
+    gsap.set(progressBar, { width: '0%' });
+    startSlideshow();
   }
 
-  // Clicks en dots
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => goTo(i))
-  })
-
-  // Iniciar
-  window.addEventListener('load', () => {
-    content.classList.add('is-visible')
-    ;(window as any).setHeroSlide?.(0)
-    startProgress()
-  })
+  // Ejecutar
+  initHero();
 </script>
