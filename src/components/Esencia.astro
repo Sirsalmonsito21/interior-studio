@@ -7,391 +7,221 @@ const indicadores = [
 ---
 
 <section class="esencia" id="esencia">
-  <div class="esencia__inner">
+  <div class="esencia__container">
+    
+    <div class="esencia__content">
+      <div class="esencia__mask">
+        <h2 class="esencia__title">
+          Diseño que<br />
+          <em class="esencia__italic">transforma espacios</em>
+        </h2>
+      </div>
 
-    <div class="esencia__image-col">
-      <div class="esencia__image-frame">
+      <div class="esencia__text-blocks">
+        <div class="esencia__mask">
+          <p class="esencia__body">
+            En Studio2810 diseñamos espacios con intención, sensibilidad y claridad.
+            Entendemos el diseño como una experiencia cercana, donde escuchar y comprender
+            al cliente es tan importante como proponer.
+          </p>
+        </div>
+        <div class="esencia__mask">
+          <p class="esencia__body">
+            Nuestro enfoque combina la funcionalidad arquitectónica con una curaduría 
+            meticulosa de materiales, logrando ambientes que no solo se ven bien, 
+            sino que se sienten propios.
+          </p>
+        </div>
+      </div>
+
+      <div class="esencia__stats">
+        {indicadores.map((ind) => (
+          <div class="esencia__stat-item esencia__mask">
+            <div class="esencia__stat-inner">
+              <span class="esencia__number" data-target={ind.numero}>0</span>
+              <span class="esencia__suffix">{ind.plus ? '+' : ''}{ind.suffix || ''}</span>
+              <p class="esencia__stat-label">{ind.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="esencia__image-wrapper">
+      <div class="esencia__parallax-container">
         <img
           class="esencia__image"
           src="/images/comedor3.jpeg"
           alt="Proyecto Studio2810"
           loading="eager"
-          decoding="async"
-          fetchpriority="high"
         />
       </div>
-    </div>
-
-    <div class="esencia__right-col">
-
-      <div class="esencia__text-col">
-        <h2 class="esencia__title">
-          Diseño que<br />
-          <em>transforma espacios</em>
-        </h2>
-      </div>
-
-      <div class="esencia__body-col">
-        <p class="esencia__body">
-          En Studio2810 diseñamos espacios con intención, sensibilidad y claridad.
-          Entendemos el diseño como una experiencia cercana, donde escuchar y comprender
-          al cliente es tan importante como proponer.
-        </p>
-        <p class="esencia__body">
-          Desarrollamos conceptos sólidos, funcionales y atemporales, cuidando cada detalle
-          desde la idea inicial hasta la definición técnica del proyecto. Nuestro enfoque
-          combina estética, materiales nobles y soluciones pensadas para adaptarse a
-          distintos contextos y lugares.
-        </p>
-        <p class="esencia__body">
-          Además, diseñamos y fabricamos mobiliario a medida, trabajando con materiales
-          cuidadosamente seleccionados y procesos precisos que garantizan piezas únicas,
-          duraderas y coherentes con cada proyecto.
-        </p>
-        <div class="esencia__indicadores">
-          {indicadores.map(ind => (
-            <div class="esencia__ind">
-              <span
-                class="esencia__ind-num"
-                data-val={ind.numero}
-                data-plus={String(ind.plus)}
-                data-suffix={ind.suffix ?? ''}
-              >
-                {ind.plus ? '+' : ''}{ind.numero}{ind.suffix ?? ''}
-              </span>
-              <span class="esencia__ind-label">{ind.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
     </div>
 
   </div>
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
-
   .esencia {
-    background: #f5f2ee;
+    padding: 120px 0;
+    background-color: #F9F8F5;
     overflow: hidden;
   }
 
-  .esencia__inner {
+  .esencia__container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 5vw;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 780px;
-    align-items: stretch;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 100px;
+    align-items: center;
   }
 
-  /* ── IMAGEN pegada al borde izquierdo ── */
-  .esencia__image-col {
-    position: relative;
+  /* ── Texto y Máscaras ── */
+  .esencia__mask {
     overflow: hidden;
-  }
-
-  .esencia__image-frame {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .esencia__image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;        /* ← AQUÍ se controla el tamaño de la imagen */
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    opacity: 0;
-    transform: scale(1.04);
-    transition: opacity 1.4s ease, transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .esencia__image.is-visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  /* ── COLUMNA DERECHA ── */
-  .esencia__right-col {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2.5rem;
-    padding: 6rem 5vw 6rem 6vw;
-  }
-
-  /* ── TEXTO ── */
-  .esencia__text-col {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    margin-bottom: 5px;
   }
 
   .esencia__title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 4.5vw, 5rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    color: #0a0a08;
-    margin: 0;
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: #1a1a1a;
+    margin-bottom: 40px;
   }
 
-  .esencia__title em {
+  .esencia__italic {
     font-style: italic;
-    color: rgb(110, 90, 55);
-  }
-
-  /* ── BODY COL ── */
-  .esencia__body-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid rgba(100, 85, 60, 0.15);
+    color: #a07846; /* Color de acento */
   }
 
   .esencia__body {
     font-family: 'Jost', sans-serif;
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1.85;
-    color: rgba(20, 18, 14, 0.82);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #444;
+    max-width: 500px;
+    margin-bottom: 1.5rem;
   }
 
-  /* ── INDICADORES ── */
-  .esencia__indicadores {
+  /* ── Indicadores ── */
+  .esencia__stats {
     display: flex;
-    gap: 3.5rem;
-    margin-top: 0.5rem;
-    padding-top: 2.5rem;
+    gap: 40px;
+    margin-top: 50px;
   }
 
-  .esencia__ind {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  .esencia__number {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #1a1a1a;
   }
 
-  .esencia__ind-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 3.5vw, 4rem);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    color: #0a0a08;
-    line-height: 1;
+  .esencia__suffix {
+    font-size: 1.5rem;
+    color: #a07846;
+    margin-left: 2px;
   }
 
-  .esencia__ind-label {
+  .esencia__stat-label {
     font-family: 'Jost', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 400;
-    letter-spacing: 0.14em;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    color: rgba(20, 18, 14, 0.65);
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-top: 5px;
   }
 
-  /* ── TABLET ── */
+  /* ── Imagen y Parallax ── */
+  .esencia__image-wrapper {
+    position: relative;
+    height: 650px; /* Altura fija para mayor impacto */
+    overflow: hidden;
+    clip-path: inset(0); /* Contenedor limpio */
+  }
+
+  .esencia__parallax-container {
+    position: absolute;
+    top: -15%; /* Espacio extra para el movimiento */
+    left: 0;
+    width: 100%;
+    height: 130%; /* La imagen es más alta que el marco */
+  }
+
+  .esencia__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+  }
+
+  /* Responsive */
   @media (max-width: 1024px) {
-    .esencia__inner {
-      grid-template-columns: 1fr 1fr;
-      min-height: 640px;
-    }
-
-    .esencia__right-col {
-      padding: 4rem 4vw 4rem 4vw;
-    }
-
-    .esencia__title {
-      font-size: clamp(2.4rem, 3.8vw, 3.6rem);
-    }
-  }
-
-  /* ── MOBILE ── */
-  @media (max-width: 860px) {
-    .esencia__inner {
+    .esencia__container {
       grid-template-columns: 1fr;
-      grid-template-rows: 420px auto;
-      min-height: unset;
+      gap: 60px;
     }
-
-    .esencia__image-col {
-      width: 100%;
+    .esencia__image-wrapper {
+      height: 500px;
     }
-
-    .esencia__image {
-      opacity: 0;
-      transform: scale(1.04);
-    }
-
-    .esencia__image.is-visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .esencia__right-col {
-      padding: 3.5rem 1.6rem 4rem;
-      gap: 2rem;
-    }
-
-    .esencia__title {
-      font-size: 2.4rem;
-    }
-
-    .esencia__body-col {
-      gap: 1.2rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
-    }
-
-    .esencia__body-col.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .esencia__body {
-      font-size: 0.93rem;
-    }
-
-    .esencia__text-col {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.9s ease, transform 0.9s ease;
-    }
-
-    .esencia__text-col.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .esencia__indicadores {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      padding-top: 1.5rem;
-      text-align: center;
-    }
-
-    .esencia__ind {
-      align-items: center;
-      padding: 0 0.5rem;
-    }
-
-    .esencia__ind + .esencia__ind {
-      border-left: 1px solid rgba(100, 85, 60, 0.15);
-    }
-
-    .esencia__ind-num { font-size: 2.2rem; }
-
-    .esencia__ind-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.08em;
-      text-align: center;
-    }
-  }
-
-  @media (max-width: 390px) {
-    .esencia__inner {
-      grid-template-rows: 300px auto;
-    }
-
-    .esencia__title { font-size: 2rem; }
-    .esencia__ind-num { font-size: 1.9rem; }
-    .esencia__ind-label { font-size: 0.55rem; }
   }
 </style>
 
 <script>
-  import gsap from 'gsap'
-  import { ScrollTrigger } from 'gsap/ScrollTrigger'
-  gsap.registerPlugin(ScrollTrigger)
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  const isDesktop = window.innerWidth > 860
+  gsap.registerPlugin(ScrollTrigger);
 
-  if (isDesktop) {
-    const img = document.querySelector('.esencia__image')
-    if (img) {
-      const obs = new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) { img.classList.add('is-visible'); obs.disconnect() }
-        },
-        { threshold: 0.1 }
-      )
-      obs.observe(img)
-    }
+  function initEsencia() {
+    // 1. Revelación de Textos (Masking)
+    const itemsToReveal = document.querySelectorAll('.esencia__mask > *');
+    
+    gsap.from(itemsToReveal, {
+      y: 80, // Un poco más de recorrido para que se note el efecto
+      opacity: 0,
+      duration: 1.4,
+      ease: "power4.out",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".esencia",
+        start: "top 75%",
+      }
+    });
 
-    gsap.from('.esencia__text-col > *', {
-      scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
-      opacity: 0, x: 30, duration: 1.1, stagger: 0.13, ease: 'power3.out',
-    })
+    // 2. Parallax de la Imagen (Más Notorio)
+    gsap.to('.esencia__image', {
+      yPercent: 25, // Incrementado para que el movimiento sea más obvio
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".esencia__image-wrapper",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true
+      }
+    });
 
-    gsap.from('.esencia__body-col > *', {
-      scrollTrigger: { trigger: '.esencia', start: 'top 60%' },
-      opacity: 0, x: 30, duration: 1.1, stagger: 0.13, ease: 'power3.out',
-    })
-
-    gsap.from('.esencia__image-col', {
-      scrollTrigger: { trigger: '.esencia', start: 'top 70%' },
-      opacity: 0, x: -36, duration: 1.2, ease: 'power3.out',
-    })
-
-  } else {
-    const img = document.querySelector('.esencia__image')
-    if (img) {
-      const imgObs = new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) { img.classList.add('is-visible'); imgObs.disconnect() }
-        },
-        { threshold: 0.15 }
-      )
-      imgObs.observe(img)
-    }
-
-    const textCol = document.querySelector('.esencia__text-col')
-    if (textCol) {
-      const textObs = new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) { textCol.classList.add('is-visible'); textObs.disconnect() }
-        },
-        { threshold: 0.2 }
-      )
-      textObs.observe(textCol)
-    }
-
-    const bodyCol = document.querySelector('.esencia__body-col')
-    if (bodyCol) {
-      const bodyObs = new IntersectionObserver(
-        ([e]) => {
-          if (e.isIntersecting) { bodyCol.classList.add('is-visible'); bodyObs.disconnect() }
-        },
-        { threshold: 0.15 }
-      )
-      bodyObs.observe(bodyCol)
-    }
+    // 3. Animación de Contadores (Numbers)
+    const numbers = document.querySelectorAll('.esencia__number');
+    numbers.forEach(num => {
+      const target = parseInt(num.getAttribute('data-target') || "0");
+      
+      gsap.to(num, {
+        innerText: target,
+        duration: 2.5,
+        snap: { innerText: 1 }, // Asegura números enteros
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: num,
+          start: "top 90%",
+        }
+      });
+    });
   }
 
-  document.querySelectorAll('.esencia__ind-num').forEach(el => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { animateCounter(el); obs.disconnect() } },
-      { threshold: 0.3 }
-    )
-    obs.observe(el)
-  })
-
-  function animateCounter(el: Element) {
-    const val    = parseInt(el.getAttribute('data-val') ?? '0')
-    const plus   = el.getAttribute('data-plus') === 'true'
-    const suffix = el.getAttribute('data-suffix') ?? ''
-    const obj    = { v: 0 }
-    gsap.to(obj, {
-      v: val, duration: 2, ease: 'power3.out',
-      onUpdate() { el.textContent = (plus ? '+' : '') + Math.round(obj.v) + suffix },
-      onComplete() { el.textContent = (plus ? '+' : '') + val + suffix },
-    })
-  }
+  // Inicializar
+  initEsencia();
 </script>

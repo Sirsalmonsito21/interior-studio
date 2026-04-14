@@ -14,11 +14,53 @@ const { title } = Astro.props
   </head>
   <body>
     <slot />
+    
     <script is:inline>
       if (history.scrollRestoration) {
         history.scrollRestoration = 'manual'
       }
       window.scrollTo(0, 0)
     </script>
+
+    <script>
+      import Lenis from 'lenis'
+      import gsap from 'gsap'
+      import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+      // Registramos ScrollTrigger
+      gsap.registerPlugin(ScrollTrigger)
+
+      // Inicializamos Lenis
+      const lenis = new Lenis({
+        duration: 1.2, // El tiempo que tarda en frenar (fluidez premium)
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+      })
+
+      // Sincronizamos Lenis con GSAP ScrollTrigger (vital para tus líneas SVG)
+      lenis.on('scroll', ScrollTrigger.update)
+
+      // Conectamos Lenis al ticker interno de GSAP
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000)
+      })
+
+      gsap.ticker.lagSmoothing(0)
+    </script>
   </body>
 </html>
+
+<style is:global>
+  html {
+    /* Desactiva el scroll nativo a tirones del navegador */
+    scroll-behavior: auto !important; 
+  }
+  html, body {
+    min-height: 100%;
+    height: auto;
+  }
+</style>
