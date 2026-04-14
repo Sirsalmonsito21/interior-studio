@@ -1,285 +1,188 @@
 ---
+// AQUÍ ELIGES LAS IMÁGENES Y EL ORDEN
+// El primer bloque que pongas aquí será el primero en cargar en el video.
+// Puedes cambiar el orden copiando y pegando los bloques { ... }
 const slides = [
   {
-    img: "/images/oficina1.png",
-    label: "Espacios que inspiran",
-    sub: "Diseño de interiores · Lima, Perú",
+    img: "/images/heroimagen.png",
+    typed: "definen tu estilo.",
   },
   {
-    img: "/images/cocina1.PNG",
-    label: "Cada detalle cuenta",
-    sub: "Cocinas · Residencial",
+    img: "/images/cocina1.png", // Aquí estaba el error, ya lo limpié
+    typed: "crean armonía.",
   },
   {
-    img: "/images/cocina3.jpeg",
-    label: "Materiales nobles",
-    sub: "Acabados · Mobiliario a medida",
+    img: "/images/niño1.jpeg",
+    typed: "perduran en el tiempo.",
   },
 ]
 ---
 
 <section class="hero" id="hero">
-  <div class="hero__container">
-    <div class="hero__slides" id="heroSlides">
-      {slides.map((s, i) => (
-        <div
-          class={`hero__slide ${i === 0 ? 'is-active' : ''}`}
-          data-index={i}
-        >
-          <img
-            class="hero__slide-img"
-            src={s.img}
-            alt={s.label}
-            loading={i === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-          />
-          <div class="hero__slide-overlay"></div>
-        </div>
-      ))}
-    </div>
+  <div class="hero__slides">
+    {slides.map((s, i) => (
+      <div 
+        class="hero__slide" 
+        data-index={i} 
+        style={i === 0 ? "opacity: 1; z-index: 1;" : "opacity: 0; z-index: 0;"}
+      >
+        <img class="hero__slide-img" src={s.img} alt="Fondo Studio2810" />
+        <div class="hero__slide-overlay"></div>
+      </div>
+    ))}
   </div>
 
   <div class="hero__content">
-    <div class="hero__mask">
-      <p class="hero__eyebrow" id="heroEyebrow">{slides[0].sub}</p>
-    </div>
-    <div class="hero__mask">
-      <h1 class="hero__title" id="heroTitle">{slides[0].label}</h1>
-    </div>
-    
-    <div class="hero__bottom">
-      <div class="hero__pagination">
-        <span id="heroCurrent">01</span>
-        <div class="hero__progress-bg">
-          <div class="hero__progress-bar" id="heroProgress"></div>
-        </div>
-        <span>0{slides.length}</span>
+    <div class="hero__content-wrapper" id="heroTextWrapper">
+      <p class="hero__eyebrow">DISEÑO DE INTERIORES · LIMA, PERÚ</p>
+      
+      <h1 class="hero__title">
+        <span>Espacios que </span><br>
+        <span id="heroTyped" class="hero__typed"></span><span class="hero__cursor">|</span>
+      </h1>
+      
+      <p class="hero__desc">Transformamos ambientes en experiencias. Cada proyecto es una conversación entre quien lo habita y el espacio que lo contiene.</p>
+      
+      <div class="hero__action">
+        <a href="#portafolio" class="hero__btn">VER PORTAFOLIO</a>
       </div>
     </div>
   </div>
+
+  <div class="hero__progress-container">
+    <div class="hero__progress-bar" id="heroProgress"></div>
+  </div>
 </section>
 
+<script is:inline define:vars={{ slidesData: slides }}>
+  window.heroSlidesData = slidesData;
+</script>
+
 <style>
-  .hero {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    background: #000;
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400;500&display=swap');
+
+  .hero { position: relative; height: 100vh; width: 100%; overflow: hidden; background-color: #111; }
+
+  /* IMÁGENES Y CAPAS */
+  .hero__slides { position: absolute; inset: 0; }
+  .hero__slide { position: absolute; inset: 0; }
+  .hero__slide-img { width: 100%; height: 100%; object-fit: cover; transform-origin: center; will-change: transform; }
+  .hero__slide-overlay { 
+    position: absolute; inset: 0; 
+    background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%); 
   }
 
-  .hero__container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 120%; /* Altura extra para el efecto parallax */
-    will-change: transform;
-  }
+  /* TEXTOS FIJOS */
+  .hero__content { position: absolute; top: 50%; left: 8vw; transform: translateY(-50%); z-index: 10; width: 90%; max-width: 700px; }
+  .hero__content-wrapper { opacity: 0; /* Inicia oculto solo al recargar la web */ }
+  
+  .hero__eyebrow { font-family: 'Jost', sans-serif; font-size: 0.8rem; color: white; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; opacity: 0.85; }
+  
+  .hero__title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 6vw, 6.5rem); color: white; font-weight: 400; line-height: 1.1; margin: 0; }
+  
+  /* NUEVO ESTILO: Color madera/crema sin cursiva */
+  .hero__typed { color: #C8A97E; font-weight: 400; }
+  .hero__cursor { font-weight: 300; animation: blink 1s step-end infinite; color: #C8A97E; }
+  
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  .hero__slides {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
+  .hero__desc { font-family: 'Jost', sans-serif; font-size: 1rem; color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-top: 1.5rem; max-width: 550px; }
 
-  .hero__slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: visibility 0s 1.2s;
-    overflow: hidden;
-  }
+  .hero__action { margin-top: 2.5rem; }
+  .hero__btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(255, 255, 255, 0.6); background: transparent; color: white; font-family: 'Jost', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s ease; }
+  .hero__btn:hover { background: white; color: black; border-color: white; }
 
-  .hero__slide.is-active {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 1.2s ease-in-out;
-  }
-
-  .hero__slide-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.1); /* Preparado para el efecto Zoom */
-    will-change: transform;
-  }
-
-  .hero__slide-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
-  }
-
-  /* ── Contenido y Máscaras ── */
-  .hero__content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #fff;
-    z-index: 10;
-    padding: 0 5vw;
-  }
-
-  .hero__mask {
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-
-  .hero__eyebrow {
-    font-family: 'Jost', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.8rem;
-    margin: 0;
-  }
-
-  .hero__title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 300;
-    line-height: 1.1;
-    margin: 0;
-  }
-
-  /* ── Progreso y Pagina ── */
-  .hero__bottom {
-    position: absolute;
-    bottom: 10%;
-    width: 100%;
-  }
-
-  .hero__pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-  }
-
-  .hero__progress-bg {
-    width: 100px;
-    height: 1px;
-    background: rgba(255,255,255,0.2);
-    position: relative;
-  }
-
-  .hero__progress-bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0%;
-    background: #fff;
+  /* PROGRESO */
+  .hero__progress-container { position: absolute; bottom: 2.5rem; left: 8vw; right: 8vw; height: 2px; background: rgba(255,255,255,0.2); z-index: 10; }
+  .hero__progress-bar { height: 100%; width: 0%; background: white; }
+  
+  @media (max-width: 768px) {
+    .hero__content { left: 5vw; max-width: 90%; }
+    .hero__progress-container { left: 5vw; right: 5vw; }
+    .hero__title { font-size: 3rem; }
   }
 </style>
 
 <script>
   import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  gsap.registerPlugin(ScrollTrigger);
-
-  const slideData = [
-    { label: "Espacios que inspiran", sub: "Diseño de interiores · Lima, Perú" },
-    { label: "Cada detalle cuenta", sub: "Cocinas · Residencial" },
-    { label: "Materiales nobles", sub: "Acabados · Mobiliario a medida" }
-  ];
-
-  let current = 0;
-  const duration = 6; // Segundos por slide
-  const slides = document.querySelectorAll('.hero__slide');
-  const images = document.querySelectorAll('.hero__slide-img');
-  const progressBar = document.getElementById('heroProgress');
-  
-  function initHero() {
-    // 1. Efecto Parallax del Hero completo al hacer scroll
-    gsap.to('.hero__container', {
-      yPercent: 15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true
-      }
-    });
-
-    // 2. Animación de entrada inicial (Text Masking)
-    const tl = gsap.timeline();
-    tl.from('.hero__mask > *', {
-      y: 100,
-      opacity: 0,
-      duration: 1.5,
-      ease: "power4.out",
-      stagger: 0.2
-    });
-
-    startSlideshow();
-  }
-
-  function startSlideshow() {
-    // Animación de la barra de progreso
-    gsap.to(progressBar, {
-      width: '100%',
-      duration: duration,
-      ease: "none",
-      onComplete: nextSlide
-    });
-
-    // Efecto Zoom sutil constante (Ken Burns) en la imagen activa
-    gsap.to(images[current], {
-      scale: 1.2,
-      duration: duration + 1,
-      ease: "sine.inOut"
-    });
-  }
-
-  function nextSlide() {
-    const next = (current + 1) % slides.length;
+  document.addEventListener('DOMContentLoaded', () => {
+    const slideData = window.heroSlidesData;
+    const slidesEls = document.querySelectorAll('.hero__slide');
+    const images = document.querySelectorAll('.hero__slide-img');
+    const wrapper = document.getElementById('heroTextWrapper');
+    const progressBar = document.getElementById('heroProgress');
+    const elTyped = document.getElementById('heroTyped');
     
-    // Fade Out actual / Fade In siguiente
-    const outImg = images[current];
-    const inImg = images[next];
+    let current = 0;
+    let typingInterval;
+
+    // 1. APARECEN TODOS LOS TEXTOS JUNTOS AL ENTRAR A LA WEB (Una sola vez)
+    gsap.fromTo(wrapper, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
     
-    // Reiniciar escala de la que entra
-    gsap.set(inImg, { scale: 1.1 });
+    // Zoom inicial de la primera imagen
+    gsap.fromTo(images[0], { scale: 1 }, { scale: 1.1, duration: 15, ease: "none" });
+    
+    // Inicia el tipeo de la primera frase
+    typeText(slideData[0].typed);
 
-    slides[current].classList.remove('is-active');
-    slides[next].classList.add('is-active');
+    // 2. EFECTO TECLADO
+    function typeText(text) {
+      let i = 0;
+      elTyped.textContent = '';
+      gsap.set(elTyped, { opacity: 1 }); // Nos aseguramos que sea visible
+      
+      typingInterval = setInterval(() => {
+        elTyped.textContent += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+          clearInterval(typingInterval);
+          startWait(); // Arrancan los 5 segundos fijos
+        }
+      }, 70); 
+    }
 
-    // Cambiar textos con animación suave
-    gsap.to('.hero__mask > *', {
-      y: -20,
-      opacity: 0,
-      duration: 0.4,
-      onComplete: () => {
-        document.getElementById('heroTitle')!.textContent = slideData[next].label;
-        document.getElementById('heroEyebrow')!.textContent = slideData[next].sub;
-        document.getElementById('heroCurrent')!.textContent = `0${next + 1}`;
-        
-        gsap.fromTo('.hero__mask > *', 
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power4.out" }
-        );
-      }
-    });
+    // 3. LOS 5 SEGUNDOS DE ESPERA
+    function startWait() {
+      gsap.fromTo(progressBar, 
+        { width: '0%' }, 
+        { width: '100%', duration: 5, ease: "none", onComplete: eraseAndTransition }
+      );
+    }
 
-    current = next;
-    gsap.set(progressBar, { width: '0%' });
-    startSlideshow();
-  }
+    // 4. TRANSICIÓN DE FONDO Y BORRADO SUAVE
+    function eraseAndTransition() {
+      // Solo el texto escrito se borra (con un fade out muy rápido y premium)
+      gsap.to(elTyped, { opacity: 0, duration: 0.4 });
+      gsap.set(progressBar, { width: '0%' });
 
-  // Ejecutar
-  initHero();
+      const next = (current + 1) % slidesEls.length;
+      const prevSlide = slidesEls[current];
+      const nextSlide = slidesEls[next];
+      const nextImg = images[next];
+
+      // Crossfade de imágenes
+      gsap.set(nextSlide, { zIndex: 2, opacity: 0 }); 
+      gsap.set(prevSlide, { zIndex: 1 }); 
+
+      // MAGIA ANTI-SALTO: El zoom inicia al mismo tiempo que la transición de opacidad
+      gsap.set(nextImg, { scale: 1 });
+      gsap.to(nextImg, { scale: 1.1, duration: 15, ease: "none" });
+
+      // Mezcla de fotos
+      gsap.to(nextSlide, {
+        opacity: 1,
+        duration: 1.5, 
+        ease: "power2.inOut",
+        onComplete: () => {
+          gsap.set(prevSlide, { opacity: 0, zIndex: 0 });
+          gsap.set(nextSlide, { zIndex: 1 });
+          
+          current = next;
+          // Escribe la nueva frase
+          typeText(slideData[current].typed); 
+        }
+      });
+    }
+  });
 </script>
