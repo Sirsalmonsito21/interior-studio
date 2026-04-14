@@ -8,423 +8,333 @@ const navLinks = [
 ---
 
 <header class="header" id="header">
-  <div class="header__inner">
-    <a href="/" class="header__logo">
-      <span class="header__logo-main">STUDIO</span>
-      <span class="header__logo-sub">2810</span>
+
+  <div class="header__top">
+    
+    <div class="header__top-left">
+      <button class="header__burger" id="menuToggle" aria-label="Abrir menú">
+        <span></span><span></span>
+      </button>
+    </div>
+
+    <a href="/" class="header__logo" id="headerLogoLink" aria-label="Studio2810">
+      <img
+        src="/images/studioLOGO.jpeg"
+        alt="Studio2810"
+        class="header__logo-img"
+        id="headerLogoImg"
+      />
     </a>
-    <nav class="header__nav">
-      {navLinks.map(link => (
-        <a href={link.href} class="header__nav-link">{link.label}</a>
-      ))}
-    </nav>
-    <a href="#contacto" class="header__cta">Conversemos</a>
-    <button class="header__burger" id="burger" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
+
+    <div class="header__top-actions">
+      <button class="header__lang" id="langToggle" aria-label="Cambiar idioma">
+        <span class="header__lang-active" id="langLabel">ES</span>
+        <span class="header__lang-sep">/</span>
+        <span class="header__lang-other" id="langOther">EN</span>
+      </button>
+      <a href="#shop" class="header__shop">Shop Studio2810</a>
+    </div>
+
   </div>
+
+  <div class="header__bottom" id="mobileMenu">
+    <nav class="header__nav">
+      <ul class="header__nav-list">
+        {navLinks.map((link) => (
+          <li class="header__nav-item">
+            <a href={link.href} class="header__nav-link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+      
+      <div class="header__mobile-extra">
+        <button class="header__lang-mobile" id="langToggleBottom">
+          <span id="langMobile">ES / EN</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
 </header>
 
-<!-- Mobile menu fuera del header — cubre toda la pantalla -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <div class="mobile-menu__inner">
-    <nav class="mobile-menu__nav">
-      {navLinks.map(link => (
-        <a href={link.href} class="mobile-menu__link">
-          <span class="mobile-menu__link-num"></span>
-          {link.label}
-        </a>
-      ))}
-    </nav>
-    <div class="mobile-menu__footer">
-      <a href="#contacto" class="mobile-menu__cta">Conversemos</a>
-      <span class="mobile-menu__brand">Studio2810 · Lima, Perú</span>
-    </div>
-  </div>
-</div>
-
 <style>
-  /* ══════════════════════════════════════
-     HEADER
-  ══════════════════════════════════════ */
+  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap');
+
+  /* ── Contenedor Principal ── */
   .header {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    z-index: 200;
-    padding: 0 2rem;
-    background: transparent;
-    transition:
-      transform 0.45s cubic-bezier(0.77, 0, 0.175, 1),
-      background 0.5s ease,
-      border-color 0.5s ease,
-      box-shadow 0.5s ease;
-    border-bottom: 1px solid transparent;
+    width: 100%;
+    background-color: #F9F8F5; /* Tono claro sólido, no transparente */
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Línea muy sutil para separar del resto de la web */
   }
 
   .header.is-scrolled {
-    background: rgba(245, 242, 238, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(160, 140, 110, 0.15);
-    box-shadow: 0 2px 40px rgba(20, 16, 10, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   }
 
   .header.is-hidden {
-    transform: translateY(-110%);
+    transform: translateY(-100%);
   }
 
-  /* ── INNER ── */
-  .header__inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    height: 70px;
+  /* ── Fila 1: Top (Logo) ── */
+  .header__top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Clave para centrar perfectamente el logo */
+    align-items: center;
+    padding: 0.5rem 4vw; /* Padding vertical muy pequeño para no robar altura */
+    min-height: 100px;
+  }
+
+  .header__top-left {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    justify-content: flex-start;
   }
 
-  /* ── LOGO ── */
   .header__logo {
-    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+
+  /* El Logo: Más grande y optimizado */
+  .header__logo-img {
+    height: 85px; /* MUCHO más grande */
+    width: auto;
+    max-width: 280px;
+    object-fit: contain; /* Evita que se deforme */
+    display: block;
+    margin: 0 auto;
+    /* Si la imagen tiene fondo blanco y no combina con el crema, descomenta la siguiente línea: */
+    /* mix-blend-mode: multiply; */
+  }
+
+  .header__top-actions {
     display: flex;
-    flex-direction: column;
-    line-height: 1;
-    gap: 3px;
-    transition: opacity 0.3s ease;
-    flex-shrink: 0;
-  }
-
-  .header__logo:hover { opacity: 0.7; }
-
-  .header__logo-main {
-    font-family: 'Cormorant Garamond', 'Noto Serif', Georgia, serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    letter-spacing: 0.22em;
-    color: #FAF9F6;
-    transition: color 0.5s ease;
-  }
-
-  .header__logo-sub {
-    font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.52rem;
-    font-weight: 300;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: rgba(250, 249, 246, 0.45);
-    transition: color 0.5s ease;
-  }
-
-  .header.is-scrolled .header__logo-main { color: #0a0a08; }
-  .header.is-scrolled .header__logo-sub  { color: rgba(100, 85, 60, 0.6); }
-
-  /* ── NAV ── */
-  .header__nav {
-    display: flex;
-    gap: 2.2rem;
     align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
   }
 
-  .header__nav-link {
-    font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 400;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: rgba(250, 249, 246, 0.85);
-    transition: color 0.4s ease;
-    position: relative;
-  }
-
-  .header__nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: currentColor;
-    transition: width 0.3s ease;
-  }
-
-  .header__nav-link:hover::after { width: 100%; }
-
-  .header.is-scrolled .header__nav-link       { color: rgba(20, 16, 12, 0.72); }
-  .header.is-scrolled .header__nav-link:hover { color: rgb(110, 90, 55); }
-
-  /* ── CTA ── */
-  .header__cta {
-    font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: rgba(250, 249, 246, 0.85);
-    border: 1px solid rgba(250, 249, 246, 0.3);
-    padding: 0.52rem 1.3rem;
-    transition: color 0.4s ease, background 0.3s ease, border-color 0.4s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .header__cta:hover {
-    color: #0a0a08;
-    background: #FAF9F6;
-    border-color: #FAF9F6;
-  }
-
-  .header.is-scrolled .header__cta {
-    color: rgb(100, 85, 60);
-    border-color: rgba(100, 85, 60, 0.38);
-  }
-
-  .header.is-scrolled .header__cta:hover {
-    color: #f5f2ee;
-    background: rgb(100, 85, 60);
-    border-color: rgb(100, 85, 60);
-  }
-
-  /* ── BURGER ── */
-  .header__burger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+  .header__lang {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #111;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px;
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    z-index: 210;
-    position: relative;
-  }
-
-  .header__burger span {
-    display: block;
-    height: 1px;
-    background: #FAF9F6;
-    transition: transform 0.38s cubic-bezier(0.77, 0, 0.175, 1),
-                opacity 0.25s ease,
-                width 0.3s ease,
-                background 0.4s ease;
-    transform-origin: center;
-  }
-
-  .header__burger span:nth-child(1) { width: 22px; }
-  .header__burger span:nth-child(2) { width: 14px; }
-  .header__burger span:nth-child(3) { width: 18px; }
-
-  /* Burger oscuro al hacer scroll (cuando menú está cerrado) */
-  .header.is-scrolled .header__burger span { background: #0a0a08; }
-
-  /* Burger abierto — siempre claro porque el menú es oscuro */
-  .header__burger.is-open span               { background: #FAF9F6 !important; }
-  .header__burger.is-open span:nth-child(1)  { transform: translateY(6px) rotate(45deg); width: 22px; }
-  .header__burger.is-open span:nth-child(2)  { opacity: 0; transform: scaleX(0); }
-  .header__burger.is-open span:nth-child(3)  { transform: translateY(-6px) rotate(-45deg); width: 22px; }
-
-  /* ══════════════════════════════════════
-     MOBILE MENU — panel full screen
-  ══════════════════════════════════════ */
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    z-index: 190;
-    background: #0f0e0c;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .header__lang-other {
+    color: #888;
+  }
+
+  .header__shop {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #111;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  /* ── Fila 2: Navegación Inferior ── */
+  .header__bottom {
+    border-top: 1px solid rgba(0,0,0,0.06);
+    padding: 1rem 0;
+    background-color: #F9F8F5;
+  }
+
+  .header__nav-list {
+    display: flex;
     justify-content: center;
-
-    /* Estado cerrado */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-12px);
-    transition:
-      opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      visibility 0.4s;
+    align-items: center;
+    gap: 4rem; /* Separación amplia y elegante */
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
-  .mobile-menu.is-open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  .mobile-menu__inner {
-    padding: 6rem 2.4rem 3rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-between;
-  }
-
-  /* ── Links de navegación ── */
-  .mobile-menu__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .mobile-menu__link {
-    font-family: 'Cormorant Garamond', 'Noto Serif', Georgia, serif;
-    font-size: clamp(2.2rem, 8vw, 3rem);
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: -0.01em;
-    text-decoration: none;
-    color: rgba(250, 249, 246, 0.75);
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(250, 249, 246, 0.06);
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    transition: color 0.3s ease, padding-left 0.3s ease;
-    position: relative;
-    overflow: hidden;
-
-    /* Animación de entrada escalonada */
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-      opacity 0.45s ease,
-      transform 0.45s ease,
-      color 0.3s ease,
-      padding-left 0.3s ease;
-  }
-
-  .mobile-menu.is-open .mobile-menu__link:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
-  .mobile-menu.is-open .mobile-menu__link:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.13s; }
-  .mobile-menu.is-open .mobile-menu__link:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
-  .mobile-menu.is-open .mobile-menu__link:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.23s; }
-
-  .mobile-menu__link:hover {
-    color: rgba(250, 249, 246, 1);
-    padding-left: 0.5rem;
-  }
-
-  .mobile-menu__link-num {
+  .header__nav-link {
     font-family: 'Jost', sans-serif;
-    font-size: 0.55rem;
-    font-style: normal;
-    font-weight: 300;
-    letter-spacing: 0.18em;
-    color: rgba(164, 141, 120, 0.6);
-    counter-increment: nav-counter;
-  }
-
-  .mobile-menu__nav { counter-reset: nav-counter; }
-
-  .mobile-menu__link-num::before {
-    content: "0" counter(nav-counter);
-  }
-
-  /* ── Footer del menú ── */
-  .mobile-menu__footer {
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
-  }
-
-  .mobile-menu.is-open .mobile-menu__footer {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-menu__cta {
-    font-family: 'Jost', 'Manrope', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.85rem; /* Tamaño legible */
     font-weight: 400;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.15em; /* Espaciado que da look premium */
     text-transform: uppercase;
+    color: #1a1a1a;
     text-decoration: none;
-    color: rgb(164, 141, 120);
-    border: 1px solid rgba(164, 141, 120, 0.38);
-    padding: 0.75rem 1.6rem;
-    align-self: flex-start;
-    transition: color 0.3s ease, background 0.3s ease;
+    transition: color 0.3s ease;
   }
 
-  .mobile-menu__cta:hover {
-    color: #0f0e0c;
-    background: rgb(164, 141, 120);
+  .header__nav-link:hover {
+    color: #a07846; /* Color de acento al pasar el mouse */
   }
 
-  .mobile-menu__brand {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.58rem;
-    font-weight: 300;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(250, 249, 246, 0.18);
+  /* Ocultar elementos mobile en desktop */
+  .header__burger,
+  .header__mobile-extra {
+    display: none;
   }
 
-  /* ══════════════════════════════════════
-     RESPONSIVE
-  ══════════════════════════════════════ */
-  @media (max-width: 768px) {
-    .header         { padding: 0 1.4rem; }
-    .header__nav    { display: none; }
-    .header__cta    { display: none; }
-    .header__burger { display: flex; }
+  /* ── RESPONSIVE (Móviles y Tablets) ── */
+  @media (max-width: 900px) {
+    .header__top {
+      grid-template-columns: auto 1fr auto; /* Burger izquierda, Logo centro, Vacio derecha */
+      padding: 0.5rem 5vw;
+      min-height: 80px;
+    }
+
+    .header__logo-img {
+      height: 60px; /* Un poco más pequeño en móviles */
+    }
+
+    .header__top-actions {
+      display: none; /* Ocultamos idioma y shop en top para mobile */
+    }
+
+    .header__burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 30px;
+      height: 30px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 200;
+    }
+
+    .header__burger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #111;
+      transition: all 0.3s ease;
+    }
+
+    /* Menú Mobile desplegable */
+    .header__bottom {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: #F9F8F5;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 2rem;
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      transition: clip-path 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .header__bottom.is-open {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .header__nav-list {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .header__nav-link {
+      font-size: 1.2rem;
+    }
+
+    .header__mobile-extra {
+      display: flex;
+      justify-content: center;
+      margin-top: 3rem;
+    }
+
+    .header__lang-mobile {
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Animación de la X del menú */
+    .header__burger.is-active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .header__burger.is-active span:nth-child(2) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
   }
 </style>
 
 <script>
-  const burger     = document.getElementById('burger')
-  const mobileMenu = document.getElementById('mobileMenu')
-  const header     = document.getElementById('header')
-  let lastScroll   = 0
-  let menuOpen     = false
+  // ── Lógica de Scroll (Ocultar/Mostrar) ──
+  let lastScroll = 0
+  const header = document.getElementById('header')
+  let menuOpen = false
 
-  // ── Abrir / cerrar menú ──
-  function toggleMenu(force) {
-    menuOpen = force !== undefined ? force : !menuOpen
-    burger?.classList.toggle('is-open', menuOpen)
-    mobileMenu?.classList.toggle('is-open', menuOpen)
-    mobileMenu?.setAttribute('aria-hidden', String(!menuOpen))
-
-    // Bloquear scroll del body cuando el menú está abierto
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-  }
-
-  burger?.addEventListener('click', () => toggleMenu())
-
-  // Cerrar al hacer click en un link
-  mobileMenu?.querySelectorAll('a').forEach(l => {
-    l.addEventListener('click', () => toggleMenu(false))
-  })
-
-  // Cerrar con Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuOpen) toggleMenu(false)
-  })
-
-  // ── Scroll: is-scrolled + is-hidden ──
   window.addEventListener('scroll', () => {
-    const c = window.scrollY
-
-    header?.classList.toggle('is-scrolled', c > 40)
-
-    if (c <= 60) {
+    const currentScroll = window.scrollY
+    
+    // Sombra sutil al bajar
+    header?.classList.toggle('is-scrolled', currentScroll > 40)
+    
+    // Lógica de esconder el header al bajar y mostrar al subir
+    if (currentScroll <= 60) {
       header?.classList.remove('is-hidden')
-    } else if (c > lastScroll + 8) {
-      // Ocultar solo si el menú mobile está cerrado
-      if (!menuOpen) header?.classList.add('is-hidden')
-    } else if (c < lastScroll - 8) {
+    } else if (currentScroll > lastScroll + 10) {
+      if (!menuOpen) header?.classList.add('is-hidden') // Solo oculta si el menú mobile está cerrado
+    } else if (currentScroll < lastScroll - 10) {
       header?.classList.remove('is-hidden')
     }
-
-    lastScroll = c
+    
+    lastScroll = currentScroll
   }, { passive: true })
+
+  // ── Menú Móvil ──
+  const burger = document.getElementById('menuToggle')
+  const mobileMenu = document.getElementById('mobileMenu')
+
+  burger?.addEventListener('click', () => {
+    menuOpen = !menuOpen
+    burger.classList.toggle('is-active')
+    mobileMenu?.classList.toggle('is-open')
+  })
+
+  // Cerrar menú al hacer click en un link
+  document.querySelectorAll('.header__nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false
+      burger?.classList.remove('is-active')
+      mobileMenu?.classList.remove('is-open')
+    })
+  })
+
+  // ── Idioma ──
+  let currentLang = 'ES'
+  function toggleLang() {
+    currentLang = currentLang === 'ES' ? 'EN' : 'ES'
+    const other = currentLang === 'ES' ? 'EN' : 'ES'
+    
+    const lb = document.getElementById('langLabel')
+    const ob = document.getElementById('langOther')
+    const lm = document.getElementById('langMobile')
+    
+    if (lb) lb.textContent = currentLang
+    if (ob) ob.textContent = other
+    if (lm) lm.textContent = `${currentLang} / ${other}`
+
+    document.documentElement.lang = currentLang.toLowerCase()
+  }
+
+  document.getElementById('langToggle')?.addEventListener('click', toggleLang)
+  document.getElementById('langToggleBottom')?.addEventListener('click', toggleLang)
 </script>
