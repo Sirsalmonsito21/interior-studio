@@ -78,11 +78,29 @@ const slides = [
   
   .hero__eyebrow { font-family: 'Jost', sans-serif; font-size: 0.8rem; color: white; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; opacity: 0.85; }
   
-  .hero__title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 6vw, 6.5rem); color: white; font-weight: 400; line-height: 1.1; margin: 0; }
-  
+  .hero__title { 
+    font-family: 'Cormorant Garamond', serif; 
+    /* Cambiamos de 3.5 a 3.0 y de 6.5 a 5.0 */
+    font-size: clamp(3rem, 5.5vw, 5rem); 
+    color: white; 
+    font-weight: 400; 
+    line-height: 1.1; 
+    margin: 0; 
+  }
   /* NUEVO ESTILO: Color madera/crema sin cursiva */
-  .hero__typed { color: #C8A97E; font-weight: 400; }
-  .hero__cursor { font-weight: 300; animation: blink 1s step-end infinite; color: #C8A97E; }
+  .hero__typed {
+  background: linear-gradient(120deg, #aa8570 0%, #bda677 50%, #bdb59d 100%);
+  /*background: linear-gradient(120deg, #8A9A95 0%, #BCC6C2 50%, #8A9A95 100%); */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  font-weight: 500;
+}
+  .hero__cursor { 
+  font-weight: 300; 
+  animation: blink 1s step-end infinite; 
+  color: #8A9A95; 
+}
   
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 

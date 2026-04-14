@@ -26,34 +26,13 @@ const servicios = [
   },
 ]
 
-// Colores de las líneas separadoras entre servicios
 const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 ---
-
-<script is:inline>
-  ;(function () {
-    var imgs = ['/images/cocina3.png', '/images/entrada1.jpeg', '/images/niña4.jpeg', '/images/oficina2.png']
-    imgs.forEach(function (src) {
-      var link = document.createElement('link')
-      link.rel = 'preload'
-      link.as = 'image'
-      link.href = src
-      link.fetchpriority = 'high'
-      document.head.appendChild(link)
-    })
-  })()
-</script>
 
 <section class="srv" id="servicios">
 
   <div class="srv__intro">
-    <div class="srv__mask">
-      <div class="srv__label-wrap">
-        <span class="srv__label-line"></span>
-        <span class="srv__label">Lo Que Hacemos</span>
-      </div>
-    </div>
-    <div class="srv__mask">
+    <div class="srv__mask" style="text-align: center;">
       <h2 class="srv__heading">Nuestros <em>Servicios</em></h2>
     </div>
   </div>
@@ -61,18 +40,11 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
   <div class="srv__items">
     {servicios.map((s, i) => (
       <div class="srv__item-wrap">
-
         <div class={`srv__item ${i % 2 === 0 ? 'srv__item--normal' : 'srv__item--reverse'}`}>
-
+          
           <div class="srv__image-col">
             <div class="srv__parallax-inner">
-              <img
-                class="srv__image"
-                src={s.imagen}
-                alt={s.titulo}
-                loading="eager"
-                decoding={i < 2 ? 'async' : 'sync'}
-              />
+              <img class="srv__image" src={s.imagen} alt={s.titulo} loading="eager" />
             </div>
           </div>
 
@@ -98,155 +70,85 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 
         {i < servicios.length - 1 && (
           <div class="srv__wave-wrap" data-index={i}>
-            <svg
-              class="srv__wave"
-              viewBox="0 0 1200 350"
-              preserveAspectRatio="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              {i === 0 && (
-                <path
-                  class="srv__wave-path"
-                  d="M 250, 0 C 250, 250 800, -50 950, 350"
-                  fill="none" stroke={lineaColores[0]} stroke-width="5" stroke-linecap="round"
-                />
-              )}
-              {i === 1 && (
-                <path
-                  class="srv__wave-path"
-                  d="M 950, 0 C 950, 250 400, -50 250, 350"
-                  fill="none" stroke={lineaColores[1]} stroke-width="5" stroke-linecap="round"
-                />
-              )}
-              {i === 2 && (
-                <path
-                  class="srv__wave-path"
-                  d="M 250, 0 C 250, 250 800, -50 950, 350"
-                  fill="none" stroke={lineaColores[2]} stroke-width="5" stroke-linecap="round"
-                />
-              )}
+            <svg class="srv__wave" viewBox="0 0 1200 350" preserveAspectRatio="none">
+              <path class="srv__wave-path" d={i % 2 === 0 ? "M 250, 0 C 250, 250 800, -50 950, 350" : "M 950, 0 C 950, 250 400, -50 250, 350"} fill="none" stroke={lineaColores[i]} stroke-width="5" stroke-linecap="round" />
             </svg>
           </div>
         )}
-
       </div>
     ))}
   </div>
-
-  <div class="srv__section-line"></div>
-
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap');
 
   .srv { background: #f5f2ee; padding: 4rem 0 10rem; overflow: hidden; }
-  .srv__section-line { max-width: 1300px; margin: 0 auto; height: 1px; background: rgba(100, 85, 60, 0.15); }
   
-  .srv__intro { max-width: 1300px; margin: 0 auto 3rem; padding: 0 5vw; display: flex; flex-direction: column; gap: 1.2rem; }
-  .srv__label-wrap { display: flex; align-items: center; gap: 14px; }
-  .srv__label-line { display: inline-block; width: 32px; height: 1px; background: rgba(100, 85, 60, 0.4); }
-  .srv__label { font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgb(120, 95, 60); }
-  .srv__heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 3.8vw, 3.6rem); font-weight: 500; color: #0a0a08; margin: 0; }
-  .srv__heading em { font-style: italic; color: rgb(110, 90, 55); }
-
-  /* MÁSCARAS (Clave para la animación premium del texto) */
-  .srv__mask {
-    overflow: hidden;
-    padding-bottom: 5px; /* Evita cortar letras que bajan como la 'p', 'q', 'y' */
+  .srv__intro { max-width: 1300px; margin: 0 auto 5rem; padding: 0 5vw; }
+  
+  /* CAMBIO: Fuente Inter y alineación central */
+  .srv__heading { 
+    font-family: 'Inter', sans-serif; 
+    font-size: clamp(2.4rem, 3.8vw, 3.6rem); 
+    font-weight: 300; 
+    color: #0a0a08; 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em;
+    margin: 0;
+  }
+  .srv__heading em { 
+    font-family: 'Inter', sans-serif; 
+    font-size: clamp(2.4rem, 3.8vw, 3.6rem); 
+    font-weight: 300; 
+    color: #8a7053; 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em;
+    margin: 0;
   }
 
+  .srv__mask { overflow: hidden; padding-bottom: 5px; }
   .srv__items { display: flex; flex-direction: column; gap: 0; }
-  .srv__item-wrap { display: flex; flex-direction: column; }
-
-  .srv__item {
-    display: grid;
-    grid-template-columns: 55fr 45fr;
-    align-items: center;
-    min-height: 560px;
-    position: relative;
-    z-index: 5; /* Por encima de las líneas SVG */
-  }
-
+  .srv__item { display: grid; grid-template-columns: 55fr 45fr; align-items: center; min-height: 560px; position: relative; z-index: 5; }
   .srv__item--reverse { grid-template-columns: 45fr 55fr; }
   .srv__item--reverse .srv__image-col { order: 2; }
   .srv__item--reverse .srv__text-col  { order: 1; }
 
-  /* CONTENEDOR PARALLAX DE IMAGEN */
-  .srv__image-col {
-    position: relative;
-    align-self: stretch;
-    overflow: hidden;
-    clip-path: inset(0); /* Corta bordes limpiamente */
-    z-index: 5;
-    min-height: 560px;
+  .srv__image-col { position: relative; align-self: stretch; overflow: hidden; clip-path: inset(0); min-height: 560px; }
+  .srv__parallax-inner { position: absolute; top: -15%; left: 0; width: 100%; height: 130%; }
+  .srv__image { width: 100%; height: 100%; object-fit: cover; }
+
+  .srv__text-col { display: flex; flex-direction: column; gap: 1.6rem; padding: 4rem 5vw; }
+
+  /* CAMBIO: Ajuste de line-height y margin para que no choque el 03/04 */
+  .srv__num { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: clamp(4.5rem, 9vw, 8rem);
+    line-height: 1; /* Aumentado de 0.85 para evitar el corte */
+    color: rgba(160, 120, 70, 0.28); 
+    margin-bottom: 0.5rem; 
   }
 
-  .srv__parallax-inner {
-    position: absolute;
-    top: -15%; /* Margen invisible arriba para permitir el movimiento hacia abajo */
-    left: 0;
-    width: 100%;
-    height: 130%; /* La imagen real es más alta que su contenedor */
+  .srv__title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.4vw, 3.2rem); font-weight: 500; line-height: 1.1; color: #0a0a08; }
+  
+  /* CAMBIO: Tamaño de descripción aumentado */
+  .srv__desc { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 1.2rem; 
+    font-weight: 300; 
+    line-height: 1.6; 
+    color: rgba(20, 18, 14, 0.82); 
+    max-width: 420px; 
+    text-align: justify; 
   }
 
-  .srv__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    will-change: transform;
-  }
-
-  .srv__text-col {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    padding: 4rem 5vw;
-    z-index: 2;
-  }
-
-  .srv__num { font-family: 'Cormorant Garamond', serif; font-size: clamp(4.5rem, 9vw, 8rem); line-height: 0.85; color: rgba(160, 120, 70, 0.28); margin-bottom: -1rem; margin-top: 1rem; }
-  .srv__title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.4vw, 3.2rem); font-weight: 500; line-height: 1.1; color: #0a0a08; margin: 0; }
-  .srv__desc { font-family: 'Jost', sans-serif; font-size: 0.97rem; font-weight: 300; line-height: 1.85; color: rgba(20, 18, 14, 0.82); max-width: 380px; text-align: justify; margin: 0; }
-
-  /* LÍNEAS ONDULADAS */
-  .srv__wave-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: -140px; 
-    margin-bottom: -140px;
-    position: relative;
-    z-index: 1; /* Detrás de las fotos */
-    pointer-events: none;
-  }
-  .srv__wave { width: 100%; max-width: 1200px; height: 350px; overflow: visible; }
+  .srv__wave-wrap { width: 100%; display: flex; justify-content: center; margin-top: -140px; margin-bottom: -140px; position: relative; z-index: 1; }
+  .srv__wave { width: 100%; max-width: 1200px; height: 350px; }
   .srv__wave-path { stroke-dasharray: 2000; stroke-dashoffset: 2000; }
 
-  /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .srv__item { grid-template-columns: 52fr 48fr; min-height: 460px; }
-    .srv__item--reverse { grid-template-columns: 48fr 52fr; }
-    .srv__image-col { min-height: 460px; }
-    .srv__wave-wrap { margin-top: -100px; margin-bottom: -100px; }
-    .srv__wave { height: 280px; }
-  }
-
-  @media (max-width: 820px) {
-    .srv__item, .srv__item--reverse { display: flex; flex-direction: column; min-height: unset; }
-    .srv__item--reverse .srv__image-col, .srv__item--reverse .srv__text-col { order: unset; }
-    .srv__image-col { width: 100%; min-height: 400px; height: 400px; }
-    .srv__text-col { padding: 3rem 2rem; }
-    .srv__wave-wrap { margin-top: -60px; margin-bottom: -60px; }
-    .srv__wave { height: 180px; }
-  }
-
-  @media (max-width: 768px) {
-    .srv__image-col { min-height: 320px; height: 320px; }
-    .srv__wave-wrap { margin-top: -50px; margin-bottom: -50px; }
-    .srv__wave { height: 140px; }
+    .srv__item { grid-template-columns: 1fr; min-height: unset; }
+    .srv__image-col { min-height: 400px; }
   }
 </style>
 
@@ -256,73 +158,30 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
   gsap.registerPlugin(ScrollTrigger)
 
   function initServicios() {
-    // 1. Animación Intro (Aparición de textos desde abajo cortando la máscara)
-    const introElements = document.querySelectorAll('.srv__intro .srv__mask > *')
-    gsap.from(introElements, {
-      y: 80,
-      opacity: 0,
-      duration: 1.2,
-      ease: "power4.out",
-      stagger: 0.15,
-      scrollTrigger: { trigger: ".srv__intro", start: "top 85%" }
+    gsap.from('.srv__heading', {
+      y: 50, opacity: 0, duration: 1, scrollTrigger: { trigger: ".srv__intro", start: "top 90%" }
     })
 
-    // 2. Animación de los Ítems (Servicios individuales)
     document.querySelectorAll('.srv__item').forEach((item) => {
-      
-      // Enmascaramiento de Textos (Número, Título, Párrafo)
-      const textElements = item.querySelectorAll('.srv__text-col .srv__mask > *')
-      gsap.from(textElements, {
-        y: 80,
-        opacity: 0,
-        duration: 1.4,
-        ease: "power4.out",
-        stagger: 0.15,
-        scrollTrigger: {
-          trigger: item,
-          start: "top 75%", // Se activa cuando el contenedor entra al 75% de la pantalla
-        }
+      gsap.from(item.querySelectorAll('.srv__mask > *'), {
+        y: 60, opacity: 0, duration: 1, stagger: 0.2, scrollTrigger: { trigger: item, start: "top 80%" }
       })
 
-      // Parallax de la Imagen (Efecto "Ventana" al bajar)
       const img = item.querySelector('.srv__image')
-      const imgCol = item.querySelector('.srv__image-col')
-      if (img && imgCol) {
+      if (img) {
         gsap.to(img, {
-          yPercent: 20, // Cantidad de inercia
-          ease: "none",
-          scrollTrigger: {
-            trigger: imgCol,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true // Crucial: vincula la animación 1:1 con el scroll de Lenis
-          }
+          yPercent: 20, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
         })
       }
     })
 
-    // 3. Animación de las Líneas Conectoras
-    document.querySelectorAll('.srv__wave-wrap').forEach((wrap) => {
-      const path = wrap.querySelector('.srv__wave-path') as SVGPathElement | null
-      if (!path) return
-
+    document.querySelectorAll('.srv__wave-path').forEach((path: any) => {
       const length = path.getTotalLength()
-      path.style.strokeDasharray  = String(length)
-      path.style.strokeDashoffset = String(length)
-
-      ScrollTrigger.create({
-        trigger: wrap,
-        start: 'top 55%', // Comienza cuando la línea llega al medio de la pantalla
-        end: 'bottom 30%', 
-        scrub: 1.5, // Suavidad extra en el dibujo (lag smoothing respecto al scroll)
-        onUpdate(self) {
-          const offset = length * (1 - self.progress)
-          path.style.strokeDashoffset = String(offset)
-        },
+      gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
+      gsap.to(path, {
+        strokeDashoffset: 0, scrollTrigger: { trigger: path, start: "top 70%", end: "bottom 20%", scrub: 1 }
       })
     })
   }
-
-  // Ejecutamos la lógica una vez que el DOM está listo
   initServicios()
 </script>
