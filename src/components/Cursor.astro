@@ -19,47 +19,60 @@
     pointer-events: none;
   }
 
-  /* Punto central */
+  /* Punto central — más grande y sólido */
   .cursor__dot {
     position: fixed;
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
     background: #2C2420;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.15s ease, height 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    transition: width 0.12s ease, height 0.12s ease, background 0.12s ease, opacity 0.12s ease;
     will-change: left, top;
+    /* Sombra para que nunca se pierda sobre cualquier fondo */
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.45),
+      0 0 7px rgba(0,0,0,0.25);
   }
 
-  /* Anillo exterior */
+  /* Anillo exterior — más grueso y visible */
   .cursor__ring {
     position: fixed;
-    width: 32px;
-    height: 32px;
-    border: 1px solid rgba(44, 36, 32, 0.35);
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid rgba(44, 36, 32, 0.55);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition:
-      width 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      height 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      border-color 0.25s ease,
-      background 0.25s ease,
-      opacity 0.25s ease;
+      width 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      height 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.22s ease,
+      border-width 0.22s ease,
+      background 0.22s ease,
+      opacity 0.22s ease;
     will-change: left, top;
+    /* Sombra doble: oscura + clara para contrastar sobre cualquier fondo */
+    box-shadow:
+      0 0 0 0.5px rgba(255,255,255,0.2),
+      0 0 8px rgba(0,0,0,0.12);
   }
 
   /* ── Hover en links/botones ── */
   .cursor--hovering .cursor__dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     background: rgb(100, 85, 60);
+    box-shadow:
+      0 0 0 1.5px rgba(255,255,255,0.45),
+      0 0 6px rgba(100, 85, 60, 0.3);
   }
 
   .cursor--hovering .cursor__ring {
-    width: 44px;
-    height: 44px;
-    border-color: rgba(100, 85, 60, 0.5);
-    background: rgba(100, 85, 60, 0.04);
+    width: 46px;
+    height: 46px;
+    border-color: rgba(100, 85, 60, 0.65);
+    border-width: 1.5px;
+    background: rgba(100, 85, 60, 0.05);
   }
 
   /* ── Hover sobre cards/imágenes → círculo "VER" ── */
@@ -70,10 +83,14 @@
   }
 
   .cursor--image .cursor__ring {
-    width: 68px;
-    height: 68px;
-    border-color: rgba(44, 36, 32, 0.55);
-    background: rgba(44, 36, 32, 0.06);
+    width: 72px;
+    height: 72px;
+    border-color: rgba(44, 36, 32, 0.6);
+    border-width: 1px;
+    background: rgba(44, 36, 32, 0.05);
+    box-shadow:
+      0 0 0 0.5px rgba(255,255,255,0.15),
+      0 0 12px rgba(0,0,0,0.1);
   }
 
   .cursor--image .cursor__ring::after {
@@ -84,47 +101,57 @@
     transform: translate(-50%, -50%);
     font-family: 'Jost', 'Manrope', system-ui, sans-serif;
     font-size: 0.5rem;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    color: rgba(44, 36, 32, 0.75);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: rgba(44, 36, 32, 0.8);
   }
 
-  /* ── Sobre fondo oscuro (lightbox abierto) ── */
+  /* ── Sobre fondo oscuro ── */
   .cursor--dark .cursor__dot {
-    background: rgba(240, 237, 232, 0.9);
+    background: rgba(240, 237, 232, 0.95);
+    box-shadow:
+      0 0 0 1.5px rgba(0,0,0,0.3),
+      0 0 6px rgba(240,237,232,0.2);
   }
 
   .cursor--dark .cursor__ring {
-    border-color: rgba(240, 237, 232, 0.35);
+    border-color: rgba(240, 237, 232, 0.5);
+    box-shadow:
+      0 0 0 0.5px rgba(0,0,0,0.2),
+      0 0 8px rgba(240,237,232,0.08);
   }
 
   .cursor--dark.cursor--hovering .cursor__dot {
-    background: #A48D78;
+    background: #C4A882;
+    box-shadow:
+      0 0 0 1.5px rgba(0,0,0,0.3),
+      0 0 8px rgba(196,168,130,0.35);
   }
 
   .cursor--dark.cursor--hovering .cursor__ring {
-    border-color: rgba(164, 141, 120, 0.55);
-    background: rgba(164, 141, 120, 0.06);
+    border-color: rgba(196, 168, 130, 0.65);
+    background: rgba(196, 168, 130, 0.07);
   }
 
   .cursor--dark.cursor--image .cursor__ring {
-    border-color: rgba(240, 237, 232, 0.5);
+    border-color: rgba(240, 237, 232, 0.55);
     background: rgba(240, 237, 232, 0.06);
   }
 
   .cursor--dark.cursor--image .cursor__ring::after {
-    color: rgba(240, 237, 232, 0.85);
+    color: rgba(240, 237, 232, 0.9);
   }
 
   /* ── Click ── */
   .cursor--clicking .cursor__dot {
-    width: 8px;
-    height: 8px;
+    width: 9px;
+    height: 9px;
   }
 
   .cursor--clicking .cursor__ring {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
+    border-color: rgba(44, 36, 32, 0.8);
   }
 
   /* Solo desktop */
@@ -154,17 +181,17 @@
       dot.style.top  = mouseY + 'px'
     }, { passive: true })
 
-    // ── Ring: lag muy reducido (0.18 → más rápido, menos delay) ──
+    // ── Ring: lag reducido a 0.28 — más rápido, menos pérdida ──
     function animateRing() {
-      ringX += (mouseX - ringX) * 0.18
-      ringY += (mouseY - ringY) * 0.18
+      ringX += (mouseX - ringX) * 0.24
+      ringY += (mouseY - ringY) * 0.24
       ring.style.left = ringX + 'px'
       ring.style.top  = ringY + 'px'
       requestAnimationFrame(animateRing)
     }
     animateRing()
 
-    // ── Detectar si el lightbox está abierto (fondo oscuro) ──
+    // ── Detectar si el lightbox está abierto ──
     function checkDarkContext() {
       const lb = document.getElementById('lightbox')
       const isOpen = lb && lb.classList.contains('is-open')
@@ -174,7 +201,6 @@
       }
     }
 
-    // Observer para detectar apertura/cierre del lightbox
     const lb = document.getElementById('lightbox')
     if (lb) {
       new MutationObserver(checkDarkContext).observe(lb, {
@@ -192,10 +218,8 @@
         root.classList.remove('cursor--hovering', 'cursor--image')
         return
       }
-
       const isCard = target.classList.contains('port__card')
       root.classList.remove('cursor--hovering', 'cursor--image')
-
       if (isCard) {
         root.classList.add('cursor--image')
       } else {
