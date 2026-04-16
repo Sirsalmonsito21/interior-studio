@@ -44,7 +44,15 @@ const navLinks = [
       <a href="#contacto" class="header__cta">Conversemos</a>
 
       <button class="header__burger" id="menuToggle" aria-label="Menu">
-        <span></span><span></span>
+        <svg id="iconOpen" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <svg id="iconClose" style="display: none;" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
       </button>
     </div>
 
@@ -68,11 +76,15 @@ const navLinks = [
     top: 0; left: 0; width: 100%;
     z-index: 1000;
     background: transparent;
-    transition: all 0.4s ease;
-    color: white; /* Base blanco */
+    transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    color: white; 
   }
 
-  /* Estado Scroll: Fondo crema, texto negro, sombra */
+  /* NUEVO: Clase para esconder el header cuando se scrollea hacia abajo */
+  .header.is-hidden {
+    transform: translateY(-100%);
+  }
+
   .header.is-scrolled {
     background: rgba(249, 248, 245, 0.95);
     backdrop-filter: blur(10px);
@@ -84,14 +96,13 @@ const navLinks = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px; /* Altura inicial en el Hero */
+    height: 100px; 
     padding: 0 2vw;
     max-width: 98%;
     margin: 0 auto;
-    transition: height 0.4s ease; /* Transición suave para encogerse */
+    transition: height 0.4s ease; 
   }
 
-  /* Cuando hay scroll, el header se hace más delgado para no ocupar pantalla */
   .header.is-scrolled .header__container {
     height: 65px;
   }
@@ -99,56 +110,45 @@ const navLinks = [
   /* LOGO */
   .header__left { flex: 1; display: flex; align-items: center; justify-content: flex-start; }
   .header__logo { 
-    text-decoration: none !important; /* Adiós raya morada */
+    text-decoration: none !important; 
     color: transparent; 
     border: none;
     outline: none;
     display: inline-block;
   }
   .header__logo-img {
-    height: 50px; /* Logo ligeramente más chico como pediste */
+    height: 50px; 
     width: auto;
     display: block;
     mix-blend-mode: screen;
-    filter: brightness(0) invert(1); /* Lo vuelve blanco */
+    filter: brightness(0) invert(1); 
     transition: filter 0.4s ease, transform 0.4s ease, height 0.4s ease;
     transform: scale(1.3);
-    transform-origin: left center; /* Lo ancla a la izquierda */
+    transform-origin: left center; 
   }
 
   .header.is-scrolled .header__logo-img {
     filter: none;
     mix-blend-mode: multiply;
-    height: 40px; /* Se encoge un poco más al hacer scroll */
+    height: 40px; 
   }
 
   /* NAV LINKS */
   .header__nav-desktop { flex: 2; }
   .header__nav-list {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    list-style: none;
-    padding: 0; margin: 0;
+    display: flex; justify-content: center; gap: 3rem;
+    list-style: none; padding: 0; margin: 0;
   }
   .header__nav-link {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: inherit;
-    text-decoration: none;
-    transition: opacity 0.3s;
+    font-family: 'Jost', sans-serif; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: inherit; text-decoration: none; transition: opacity 0.3s;
   }
   .header__nav-link.is-shop { font-weight: 500; border-bottom: 1px solid currentColor; }
 
   /* DERECHA */
   .header__right {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 2.5rem;
+    flex: 1; display: flex; justify-content: flex-end; align-items: center; gap: 2.5rem;
   }
   .header__lang {
     background: none; border: none; cursor: pointer;
@@ -159,63 +159,63 @@ const navLinks = [
 
   /* BOTÓN CONVERSEMOS */
   .header__cta {
-    background: white; 
-    color: black;
-    padding: 12px 24px;
+    background: white; color: black; padding: 12px 24px;
     font-family: 'Jost', sans-serif; font-size: 0.75rem;
     text-transform: uppercase; letter-spacing: 0.1em;
-    text-decoration: none; 
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    border: 1px solid white;
+    text-decoration: none; border-radius: 2px;
+    transition: all 0.3s ease; border: 1px solid white;
   }
+  .header__cta:hover { background: black; color: white; border-color: black; }
 
-  .header__cta:hover {
-    background: black;
-    color: white;
-    border-color: black;
-  }
+  .header.is-scrolled .header__cta { background: #111; color: white; border-color: #111; }
+  .header.is-scrolled .header__cta:hover { background: transparent; color: #111; }
 
-  .header.is-scrolled .header__cta {
-    background: #111;
-    color: white;
-    border-color: #111;
-  }
-  .header.is-scrolled .header__cta:hover {
-    background: transparent;
-    color: #111;
-  }
-
-  /* BURGER (Adiós punto blanco) */
+  /* BURGER ICON (Elegante y Color heredado) */
   .header__burger {
-    display: none; /* Totalmente oculto en computadora */
-    flex-direction: column; 
-    gap: 5px; 
+    display: none; 
     background: none; 
     border: none; 
     cursor: pointer;
-  }
-  .header__burger span { 
-    background: currentColor; 
-    width: 25px; 
-    height: 1.5px; 
+    color: inherit; /* Hereda blanco o negro automáticamente */
+    z-index: 1001; /* Asegura que quede por encima del menú móvil */
   }
 
-  /* MENÚ MÓVIL (OCULTO POR DEFECTO) */
+  /* MENÚ MÓVIL */
   .header__mobile-menu {
     position: fixed; top: 0; right: 0; width: 100%; height: 100vh;
-    background: #F9F8F5; display: none; 
-    align-items: center; justify-content: center;
+    background: #F9F8F5; 
+    display: flex; align-items: center; justify-content: center;
     z-index: 999;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
   }
-  .header__mobile-menu.is-open { display: flex; }
-  .header__mobile-nav { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
-  .header__mobile-link { font-family: 'Jost', sans-serif; font-size: 1.2rem; text-decoration: none; color: #111; text-transform: uppercase; }
+  .header__mobile-menu.is-open { opacity: 1; pointer-events: auto; }
+  
+  .header__mobile-nav { display: flex; flex-direction: column; gap: 2.5rem; align-items: center; }
+  .header__mobile-link { font-family: 'Jost', sans-serif; font-size: 1.4rem; font-weight: 400; text-decoration: none; color: #111; text-transform: uppercase; letter-spacing: 0.1em; }
 
-  /* RESPONSIVE */
+  /* =========================================
+     RESPONSIVE: Reducción de Tamaños Móviles
+     ========================================= */
   @media (max-width: 1024px) {
     .header__nav-desktop, .header__cta, .header__lang-wrapper { display: none; }
-    .header__burger { display: flex; } /* Solo aparece en tablet/celular */
+    .header__burger { display: flex; align-items: center; justify-content: center; }
+  }
+
+  /* Tablets / Celulares Grandes */
+  @media (max-width: 768px) {
+    .header__container { height: 75px; } /* Header más angosto */
+    .header.is-scrolled .header__container { height: 60px; }
+    
+    .header__logo-img { height: 35px; transform: scale(1); } /* Logo más pequeño, sin zoom extraño */
+    .header.is-scrolled .header__logo-img { height: 30px; }
+  }
+
+  /* Celulares pequeños (iPhone, etc.) */
+  @media (max-width: 480px) {
+    .header__container { height: 65px; padding: 0 4vw; }
+    .header__logo-img { height: 28px; }
+    .header.is-scrolled .header__logo-img { height: 24px; }
   }
 </style>
 
@@ -228,7 +228,7 @@ const navLinks = [
       const actions = document.getElementById('headerActions');
       const langContainer = document.getElementById('langContainer');
 
-      // 1. ANIMACIÓN DE ENTRADA (GSAP)
+      // Animación de entrada PC
       if (window.gsap && window.innerWidth > 1024 && logoLink && nav && actions) {
         const logoRect = logoLink.getBoundingClientRect();
         const xOffset = (window.innerWidth / 2) - (logoRect.left + logoRect.width / 2);
@@ -236,51 +236,97 @@ const navLinks = [
         gsap.set(logoLink, { x: xOffset });
         gsap.set([nav, actions], { opacity: 0, y: 10 });
 
-        const tl = gsap.timeline({ delay: 1.5 }); // Espera a que termine el Loader
+        const tl = gsap.timeline({ delay: 1.5 }); 
         
         tl.to(logoLink, { x: 0, duration: 1.6, ease: "power3.inOut" })
           .to([nav, actions], { opacity: 1, y: 0, duration: 0.8, stagger: 0.15 }, "-=0.6");
       }
 
-      // 2. SCROLL LOGIC (Encoger header)
+      // =========================================
+      // SMART SCROLL (Ocultar al bajar, mostrar al subir)
+      // =========================================
+      let lastScroll = 0;
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 60) {
+        const currentScroll = window.scrollY;
+        
+        // 1. Color de fondo (Scrolled)
+        if (currentScroll > 60) {
           header?.classList.add('is-scrolled');
         } else {
           header?.classList.remove('is-scrolled');
         }
+
+        // 2. Ocultar/Mostrar (Smart Header)
+        // No ocultamos si el menú móvil está abierto
+        const isMenuOpen = document.getElementById('mobileMenu')?.classList.contains('is-open');
+        if (!isMenuOpen) {
+          if (currentScroll > lastScroll && currentScroll > 150) {
+            header?.classList.add('is-hidden'); // Desliza abajo: oculta
+          } else {
+            header?.classList.remove('is-hidden'); // Desliza arriba: muestra
+          }
+        }
+        
+        lastScroll = currentScroll;
       });
 
-      // 3. CAMBIO DE IDIOMA
+      // Cambio de idioma
       const langBtn = document.getElementById('langToggle');
       let currentLang = 'ES';
-      
       langBtn?.addEventListener('click', () => {
-        // Cambiamos el idioma inmediatamente
         currentLang = currentLang === 'ES' ? 'EN' : 'ES';
         document.getElementById('langLabel').textContent = currentLang;
         document.getElementById('langOther').textContent = currentLang === 'ES' ? 'EN' : 'ES';
-        
-        // Efecto visual suave y rápido
-        if (window.gsap) {
-          gsap.fromTo(langContainer, { scale: 1 }, { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1 });
-        }
+        if (window.gsap) gsap.fromTo(langContainer, { scale: 1 }, { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1 });
       });
 
-      // 4. SCROLL SUAVE PARA LOS LINKS
+      // =========================================
+      // LÓGICA DE MENÚ MÓVIL (Abrir, Cerrar y Enlaces)
+      // =========================================
+      const burger = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const iconOpen = document.getElementById('iconOpen');
+      const iconClose = document.getElementById('iconClose');
+
+      function toggleMobileMenu() {
+        if(!mobileMenu) return;
+        const isOpen = mobileMenu.classList.contains('is-open');
+
+        if (isOpen) {
+          // CERRAR
+          mobileMenu.classList.remove('is-open');
+          iconOpen.style.display = 'block';
+          iconClose.style.display = 'none';
+          document.body.style.overflow = ''; // Devuelve el scroll al body
+          if (window.scrollY <= 60) header.style.color = 'white'; // Restaura el color blanco si está arriba
+        } else {
+          // ABRIR
+          mobileMenu.classList.add('is-open');
+          iconOpen.style.display = 'none';
+          iconClose.style.display = 'block';
+          document.body.style.overflow = 'hidden'; // Bloquea el scroll del fondo
+          header.style.color = '#111'; // Fuerza que la X se vea negra sobre el menú claro
+        }
+      }
+
+      burger?.addEventListener('click', toggleMobileMenu);
+
+      // Scroll suave y CERRAR MENÚ AL TOCAR ENLACES
       document.querySelectorAll('.header__nav-link, .header__mobile-link, .header__cta').forEach(link => {
         link.addEventListener('click', function(e) {
           const href = this.getAttribute('href');
           
-          // Solo aplicar smooth scroll si es un anclaje interno (#)
           if (href && href.startsWith('#')) {
             e.preventDefault();
-            const targetSection = document.querySelector(href);
             
+            // Si el menú móvil está abierto, lo cerramos
+            if (mobileMenu?.classList.contains('is-open')) {
+              toggleMobileMenu();
+            }
+
+            const targetSection = document.querySelector(href);
             if (targetSection) {
-              // Calculamos la posición considerando que el header encogido mide 65px
               const offsetPosition = targetSection.getBoundingClientRect().top + window.scrollY - 65;
-              
               window.scrollTo({
                 top: offsetPosition,
                 behavior: 'smooth'
@@ -290,16 +336,8 @@ const navLinks = [
         });
       });
 
-      // 5. MENÚ MÓVIL
-      const burger = document.getElementById('menuToggle');
-      const mobileMenu = document.getElementById('mobileMenu');
-      burger?.addEventListener('click', () => {
-        mobileMenu?.classList.toggle('is-open');
-      });
-
     } catch (e) { console.error("Error en Header:", e); }
   }
 
-  // Ejecutamos cuando cargue la página
   window.addEventListener('load', initHeader);
 </script>
