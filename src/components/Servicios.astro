@@ -4,25 +4,25 @@ const servicios = [
     numero: "01",
     titulo: "Diseño de\nInteriores",
     descripcion: "Desde la concepción hasta el detalle final. Creamos espacios que equilibran estética y funcionalidad con intención en cada decisión.",
-    imagen: "/images/cocina3.png",
+    imagen: "/images/cocina3.webp",
   },
   {
     numero: "02",
     titulo: "Remodelación",
     descripcion: "Transformamos ambientes existentes respetando su esencia y elevando su potencial al máximo.",
-    imagen: "/images/entrada1.jpeg",
+    imagen: "/images/entrada2.webp",
   },
   {
     numero: "03",
     titulo: "Mobiliario\na Medida",
     descripcion: "Piezas únicas que se integran perfectamente al espacio. Cada mueble es una extensión del ambiente.",
-    imagen: "/images/niña4.jpeg",
+    imagen: "/images/niña4.webp",
   },
   {
     numero: "04",
     titulo: "Consultoría",
     descripcion: "Una mirada experta para decisiones clave: paletas, materiales, distribución y estilo.",
-    imagen: "/images/oficina2.png",
+    imagen: "/images/oficina2.webp",
   },
 ]
 
@@ -33,7 +33,7 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 
   <div class="srv__intro">
     <div class="srv__mask" style="text-align: center;">
-      <h2 class="srv__heading">Nuestros <em>Servicios</em></h2>
+      <h2 class="srv__heading">NUESTROS <em>SERVICIOS</em></h2>
     </div>
   </div>
 
@@ -68,10 +68,15 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 
         </div>
 
+        {/* LÍNEA VERTICAL CONECTORA ENTRE IMÁGENES */}
         {i < servicios.length - 1 && (
           <div class="srv__wave-wrap" data-index={i}>
-            <svg class="srv__wave" viewBox="0 0 1200 350" preserveAspectRatio="none">
-              <path class="srv__wave-path" d={i % 2 === 0 ? "M 250, 0 C 250, 250 800, -50 950, 350" : "M 950, 0 C 950, 250 400, -50 250, 350"} fill="none" stroke={lineaColores[i]} stroke-width="5" stroke-linecap="round" />
+            <svg class="srv__wave" viewBox="0 0 1000 150" preserveAspectRatio="none">
+              <path class="srv__wave-path" 
+                d={i % 2 === 0 
+                  ? "M 250,0 C 250,80 750,70 750,150" 
+                  : "M 750,0 C 750,80 250,70 250,150"} 
+                fill="none" stroke={lineaColores[i]} stroke-width="3" stroke-linecap="round" />
             </svg>
           </div>
         )}
@@ -82,7 +87,7 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap');
-
+  
   .srv { background: #f5f2ee; padding: 4rem 0 10rem; overflow: hidden; }
   
   .srv__intro { max-width: 1300px; margin: 0 auto 5rem; padding: 0 5vw; }
@@ -96,25 +101,28 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
     letter-spacing: 0.1em;
     margin: 0;
   }
+  
+  /* AQUÍ RECUPERAMOS EL COLOR Y ESTILO DE LA PALABRA "SERVICIOS" */
   .srv__heading em { 
-    font-family: 'Inter', sans-serif; 
-    font-size: clamp(2.4rem, 3.8vw, 3.6rem); 
-    font-weight: 300; 
-    color: #8a7053;
-    text-transform: uppercase; 
-    letter-spacing: 0.1em;
-    margin: 0;
+    font-family: 'Inter', serif; 
+    font-size: clamp(2.6rem, 4vw, 4rem); 
+    font-weight: 500; 
+    color: #8a7053; 
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: normal;
   }
 
   .srv__mask { overflow: hidden; padding-bottom: 5px; }
   .srv__items { display: flex; flex-direction: column; gap: 0; }
+  
   .srv__item { display: grid; grid-template-columns: 55fr 45fr; align-items: center; min-height: 560px; position: relative; z-index: 5; }
   
   .srv__item--reverse { grid-template-columns: 45fr 55fr; }
   .srv__item--reverse .srv__image-col { order: 2; }
   .srv__item--reverse .srv__text-col  { order: 1; }
 
-  .srv__image-col { position: relative; align-self: stretch; overflow: hidden; clip-path: inset(0); min-height: 560px; }
+  .srv__image-col { position: relative; align-self: stretch; overflow: hidden; min-height: 560px; }
   .srv__parallax-inner { position: absolute; top: -15%; left: 0; width: 100%; height: 130%; }
   .srv__image { width: 100%; height: 100%; object-fit: cover; }
 
@@ -128,71 +136,48 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
     margin-bottom: 0.5rem; 
   }
 
-  .srv__title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 3.4vw, 3.2rem); font-weight: 500; line-height: 1.1; color: #0a0a08; }
+  /* FUENTE INTER APLICADA A LOS TÍTULOS */
+  .srv__title { 
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.2rem, 3.4vw, 3.2rem); 
+    font-weight: 400; 
+    line-height: 1.15; 
+    color: #0a0a08;
+    letter-spacing: -0.02em;
+  }
   
   .srv__desc { 
     font-family: 'Inter', sans-serif; 
-    font-size: 1.2rem; 
+    font-size: 1.15rem; 
     font-weight: 300; 
-    line-height: 1.6; 
+    line-height: 1.6;
     color: rgba(20, 18, 14, 0.82); 
     max-width: 420px; 
     text-align: justify; 
   }
 
-  .srv__wave-wrap { width: 100%; display: flex; justify-content: center; margin-top: -140px; margin-bottom: -140px; position: relative; z-index: 1; }
-  .srv__wave { width: 100%; max-width: 1200px; height: 350px; }
+  /* NUEVO ESPACIO VERTICAL PARA LAS LÍNEAS */
+  .srv__wave-wrap { 
+    width: 100%; 
+    height: 120px; 
+    display: flex; 
+    justify-content: center;
+    margin: 2rem 0; 
+    position: relative; 
+    z-index: 1; 
+  }
+  .srv__wave { width: 100%; max-width: 1000px; height: 100%; overflow: visible; }
   .srv__wave-path { stroke-dasharray: 2000; stroke-dashoffset: 2000; }
 
-  /* ========================================================
-     REDISEÑO REACTIVE (iPads y Móviles)
-     ======================================================== */
   @media (max-width: 1024px) {
     .srv__wave-wrap { display: none; }
-
-    .srv__item, .srv__item--reverse { 
-      display: flex; 
-      flex-direction: column; 
-      min-height: unset; 
-      gap: 0;
-      margin-bottom: 5rem; 
-    }
-
+    .srv__item, .srv__item--reverse { display: flex; flex-direction: column; min-height: unset; gap: 0; margin-bottom: 5rem; }
     .srv__text-col { display: contents; }
-
-    /* ORDEN 1 y 2: Forzamos la prioridad agregando .srv__item */
-    .srv__item .srv__mask-num { 
-      order: 1; 
-      text-align: center; 
-      margin-top: 1rem;
-    }
-    .srv__item .srv__mask-title { 
-      order: 2; 
-      text-align: center; 
-      padding: 0 5vw;
-      margin-bottom: 2.5rem; 
-    }
-
-    /* ORDEN 3: AQUÍ ESTÁ LA CORRECCIÓN. Aseguramos que le gane a las reglas de PC */
-    .srv__item .srv__image-col,
-    .srv__item--reverse .srv__image-col { 
-      order: 3;
-      width: 100%;
-      min-height: 450px; 
-      margin-bottom: 2.5rem; 
-    }
-
-    /* ORDEN 4: Texto */
-    .srv__item .srv__mask-desc { 
-      order: 4; 
-      text-align: center; 
-      padding: 0 5vw;
-    }
-    .srv__desc { 
-      margin-left: auto; 
-      margin-right: auto; 
-      text-align: center; 
-    }
+    .srv__item .srv__mask-num { order: 1; text-align: center; margin-top: 1rem; }
+    .srv__item .srv__mask-title { order: 2; text-align: center; padding: 0 5vw; margin-bottom: 2.5rem; }
+    .srv__item .srv__image-col, .srv__item--reverse .srv__image-col { order: 3; width: 100%; min-height: 450px; margin-bottom: 2.5rem; }
+    .srv__item .srv__mask-desc { order: 4; text-align: center; padding: 0 5vw; }
+    .srv__desc { margin-left: auto; margin-right: auto; text-align: center; }
   }
 </style>
 
@@ -206,29 +191,46 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
       y: 50, opacity: 0, duration: 1, scrollTrigger: { trigger: ".srv__intro", start: "top 90%" }
     })
 
-    document.querySelectorAll('.srv__item').forEach((item) => {
+    document.querySelectorAll('.srv__item-wrap').forEach((wrap) => {
+      const item = wrap.querySelector('.srv__item');
+      if (!item) return;
+
+      // 1. Textos: Entrada más fluida
       gsap.from(item.querySelectorAll('.srv__mask > *'), {
-        y: 60, opacity: 0, duration: 1, stagger: 0.2, scrollTrigger: { trigger: item, start: "top 80%" }
+        y: 80, opacity: 0, duration: 1.2, ease: "power3.out", stagger: 0.2, 
+        scrollTrigger: { trigger: item, start: "top 80%" }
       })
 
-      const img = item.querySelector('.srv__image')
-      if (img) {
+      // 2. Imágenes: Efecto Revelado "Cortina" + Parallax
+      const imgCol = item.querySelector('.srv__image-col');
+      const img = item.querySelector('.srv__image');
+
+      if (imgCol && img) {
+        // Revelado de la caja
+        gsap.fromTo(imgCol, 
+          { clipPath: "inset(100% 0 0 0)" },
+          { clipPath: "inset(0% 0 0 0)", duration: 1.5, ease: "power3.inOut", scrollTrigger: { trigger: item, start: "top 75%" } }
+        )
+        // Parallax de la foto
         gsap.to(img, {
-          yPercent: 20, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
+          yPercent: 25, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
         })
       }
     })
 
+    // 3. Líneas verticales bajando
     if(window.innerWidth > 1024) {
       document.querySelectorAll('.srv__wave-path').forEach((path: any) => {
         const length = path.getTotalLength()
         gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
         gsap.to(path, {
-          strokeDashoffset: 0, scrollTrigger: { trigger: path, start: "top 70%", end: "bottom 20%", scrub: 1 }
+          strokeDashoffset: 0, 
+          scrollTrigger: { trigger: path, start: "top 65%", end: "bottom 35%", scrub: 1 }
         })
       })
     }
   }
   
   initServicios()
+  document.addEventListener('astro:after-swap', initServicios);
 </script>

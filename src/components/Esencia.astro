@@ -55,7 +55,7 @@ const indicadores = [
       <div class="esencia__parallax-container">
         <img
           class="esencia__image"
-          src="/images/comedor3UP.png"
+          src="/images/comedor3UP.webp"
           alt="Proyecto Studio2810"
           loading="eager"
         />
@@ -84,10 +84,18 @@ const indicadores = [
     padding-right: 0;  
   }
 
+  /* NUEVO: Forzamos a que toda la columna izquierda se centre sobre sí misma */
+  .esencia__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .esencia__mask { overflow: hidden; margin-bottom: 5px; }
 
   .esencia__title {
     font-family: 'Inter', sans-serif;
+    text-align: center;
     font-size: clamp(2.5rem, 4.5vw, 4.5rem);
     font-weight: 300;
     line-height: 1.1;
@@ -105,13 +113,18 @@ const indicadores = [
     line-height: 1.7;
     color: #444;
     max-width: 600px; 
-    margin-bottom: 1.5rem;
+    /* NUEVO: Centra el bloque de texto horizontalmente */
+    margin: 0 auto 1.5rem auto; 
+    text-align: center;
   }
 
   .esencia__stats {
     display: flex;
+    /* NUEVO: Centra los números horizontalmente */
+    justify-content: center; 
     gap: 50px;
     margin-top: 50px;
+    text-align: center;
   }
 
   .esencia__number {
@@ -170,23 +183,20 @@ const indicadores = [
     .esencia__container {
       display: flex;
       flex-direction: column;
-      padding: 0; /* Quitamos padding para que la imagen ocupe 100% del ancho */
+      padding: 0; 
       gap: 0; 
     }
 
-    /* Rompemos el contenedor izquierdo para ordenar sus hijos libremente */
     .esencia__content { display: contents; }
 
-    /* ORDEN 1: TÍTULO ARRIBA Y CENTRADO */
     .esencia__title-col {
       order: 1;
-      padding: 0 6vw; /* Le devolvemos el espacio a los lados al texto */
+      padding: 0 6vw; 
       text-align: center;
       margin-bottom: 40px;
     }
     .esencia__title { margin-bottom: 0; }
 
-    /* ORDEN 2: IMAGEN OCUPANDO TODO EL ANCHO */
     .esencia__image-wrapper {
       order: 2;
       width: 100%;
@@ -195,7 +205,6 @@ const indicadores = [
       margin-bottom: 40px;
     }
 
-    /* ORDEN 3: TEXTOS Y STATS CENTRADOS */
     .esencia__text-col {
       order: 3;
       padding: 0 6vw;
@@ -209,7 +218,7 @@ const indicadores = [
 
     .esencia__stats {
       justify-content: center;
-      flex-wrap: wrap; /* Permite que los stats bajen si no caben (para iPhone Mini) */
+      flex-wrap: wrap; 
       gap: 30px;
       margin-top: 10px;
     }

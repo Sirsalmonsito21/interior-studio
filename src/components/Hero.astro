@@ -4,16 +4,17 @@
 // Puedes cambiar el orden copiando y pegando los bloques { ... }
 const slides = [
   {
-    img: "/images/heroimagen.png",
-    typed: "definen tu estilo.",
+    img: "/images/heroimagen.webp",
+    typed: "tienen estilo.",
   },
   {
-    img: "/images/cocina1-1.png", // Aquí estaba el error, ya lo limpié
+    img: "/images/cocina1-1.webp", 
     typed: "crean armonía.",
   },
   {
-    img: "/images/niño1.jpeg",
-    typed: "perduran en el tiempo.",
+    img: "/images/niño1.webp",
+    // FRASE MÁS CORTA PARA QUE NO ROMPA LA LÍNEA
+    typed: "perduran.",
   },
 ]
 ---
@@ -34,14 +35,13 @@ const slides = [
 
   <div class="hero__content">
     <div class="hero__content-wrapper" id="heroTextWrapper">
-      <p class="hero__eyebrow">DISEÑO DE INTERIORES · LIMA, PERÚ</p>
+      
       
       <h1 class="hero__title">
         <span>Espacios que </span><br>
         <span id="heroTyped" class="hero__typed"></span><span class="hero__cursor">|</span>
       </h1>
       
-      <p class="hero__desc">Transformamos ambientes en experiencias. Cada proyecto es una conversación entre quien lo habita y el espacio que lo contiene.</p>
       
       <div class="hero__action">
         <a href="#portafolio" class="hero__btn">VER PORTAFOLIO</a>
@@ -59,7 +59,8 @@ const slides = [
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400;500&display=swap');
+  /* Importamos Inter y Jost juntas */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap');
 
   .hero { position: relative; height: 100vh; width: 100%; overflow: hidden; background-color: #111; }
 
@@ -69,44 +70,45 @@ const slides = [
   .hero__slide-img { width: 100%; height: 100%; object-fit: cover; transform-origin: center; will-change: transform; }
   .hero__slide-overlay { 
     position: absolute; inset: 0; 
-    background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%); 
+    background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
   }
 
   /* TEXTOS FIJOS */
-  .hero__content { position: absolute; top: 50%; left: 8vw; transform: translateY(-50%); z-index: 10; width: 90%; max-width: 700px; }
+  .hero__content { position: absolute; top: 50%; left: 8vw; transform: translateY(-50%); z-index: 10; width: 90%; max-width: 750px; }
   .hero__content-wrapper { opacity: 0; /* Inicia oculto solo al recargar la web */ }
   
   .hero__eyebrow { font-family: 'Jost', sans-serif; font-size: 0.8rem; color: white; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; opacity: 0.85; }
   
+  /* NUEVA TIPOGRAFÍA Y TAMAÑO PARA EL TÍTULO */
   .hero__title { 
-    font-family: 'Cormorant Garamond', serif; 
-    /* Cambiamos de 3.5 a 3.0 y de 6.5 a 5.0 */
-    font-size: clamp(3rem, 5.5vw, 5rem); 
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(3.8rem, 7vw, 6.2rem); /* Más grande */
     color: white; 
     font-weight: 400; 
     line-height: 1.1; 
+    letter-spacing: -0.03em; /* Ajuste para que Inter se vea más premium */
     margin: 0; 
   }
-  /* NUEVO ESTILO: Color madera/crema sin cursiva */
+  
   .hero__typed {
-  background: linear-gradient(120deg, #aa8570 0%, #bda677 50%, #bdb59d 100%);
-  /*background: linear-gradient(120deg, #8A9A95 0%, #BCC6C2 50%, #8A9A95 100%); */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-  font-weight: 500;
-}
+    background: linear-gradient(120deg, #aa8570 0%, #bda677 50%, #bdb59d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    font-weight: 500;
+  }
   .hero__cursor { 
-  font-weight: 300; 
-  animation: blink 1s step-end infinite; 
-  color: #8A9A95; 
-}
+    font-weight: 300; 
+    animation: blink 1s step-end infinite; 
+    color: #8A9A95;
+  }
   
   @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
   .hero__desc { font-family: 'Jost', sans-serif; font-size: 1rem; color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-top: 1.5rem; max-width: 550px; }
 
-  .hero__action { margin-top: 2.5rem; }
+  /* BOTÓN MÁS ABAJO */
+  .hero__action { margin-top: 4.5rem; } 
   .hero__btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(255, 255, 255, 0.6); background: transparent; color: white; font-family: 'Jost', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s ease; }
   .hero__btn:hover { background: white; color: black; border-color: white; }
 
@@ -118,12 +120,10 @@ const slides = [
      REDISEÑO REACTIVE (iPads y Tablets max 1024px)
      ======================================================== */
   @media (max-width: 1024px) {
-    /* Ocultamos el eyebrow y la descripción. Solo queda Título y Botón */
     .hero__eyebrow,
     .hero__desc {
       display: none;
     }
-    /* El contenido sigue pegado a la izquierda (heredado de PC) */
   }
 
   /* ========================================================
@@ -131,33 +131,29 @@ const slides = [
      ======================================================== */
   @media (max-width: 768px) {
     .hero__content { 
-      left: 50%; 
-      transform: translate(-50%, -50%); /* Forzamos el centrado absoluto en la pantalla */
-      width: 100%; 
+      left: 50%;
+      transform: translate(-50%, -50%); 
+      width: 100%;
       padding: 0 5vw;
-      text-align: center; /* Centramos el texto del título */
+      text-align: center; 
     }
     
     .hero__action {
       display: flex;
-      justify-content: center; /* Centramos el botón de portafolio */
-      margin-top: 2rem;
+      justify-content: center; 
+      margin-top: 3rem; /* En celular no hace falta tanta separación */
     }
 
-    .hero__progress-container { 
-      left: 5vw; 
-      right: 5vw; 
-    }
+    .hero__progress-container { left: 5vw; right: 5vw; }
     
     .hero__title { 
-      font-size: clamp(2.5rem, 8vw, 3rem); /* Tamaño ajustado para que no desborde en cel */
+      font-size: clamp(3rem, 9vw, 4rem); /* Proporcionalmente más grande en celular */
     }
   }
 </style>
 
 <script>
   import gsap from 'gsap';
-
   document.addEventListener('DOMContentLoaded', () => {
     const slideData = window.heroSlidesData;
     const slidesEls = document.querySelectorAll('.hero__slide');
@@ -169,32 +165,30 @@ const slides = [
     let current = 0;
     let typingInterval;
 
-    // 1. APARECEN TODOS LOS TEXTOS JUNTOS AL ENTRAR A LA WEB (Una sola vez)
+    // APARECEN TODOS LOS TEXTOS JUNTOS AL ENTRAR A LA WEB
     gsap.fromTo(wrapper, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
-    
+ 
     // Zoom inicial de la primera imagen
     gsap.fromTo(images[0], { scale: 1 }, { scale: 1.1, duration: 15, ease: "none" });
     
     // Inicia el tipeo de la primera frase
     typeText(slideData[0].typed);
 
-    // 2. EFECTO TECLADO
     function typeText(text) {
       let i = 0;
       elTyped.textContent = '';
-      gsap.set(elTyped, { opacity: 1 }); // Nos aseguramos que sea visible
+      gsap.set(elTyped, { opacity: 1 });
       
       typingInterval = setInterval(() => {
         elTyped.textContent += text.charAt(i);
         i++;
         if (i >= text.length) {
           clearInterval(typingInterval);
-          startWait(); // Arrancan los 5 segundos fijos
+          startWait(); 
         }
-      }, 70); 
+      }, 70);
     }
 
-    // 3. LOS 5 SEGUNDOS DE ESPERA
     function startWait() {
       gsap.fromTo(progressBar, 
         { width: '0%' }, 
@@ -202,9 +196,7 @@ const slides = [
       );
     }
 
-    // 4. TRANSICIÓN DE FONDO Y BORRADO SUAVE
     function eraseAndTransition() {
-      // Solo el texto escrito se borra (con un fade out muy rápido y premium)
       gsap.to(elTyped, { opacity: 0, duration: 0.4 });
       gsap.set(progressBar, { width: '0%' });
 
@@ -213,15 +205,12 @@ const slides = [
       const nextSlide = slidesEls[next];
       const nextImg = images[next];
 
-      // Crossfade de imágenes
-      gsap.set(nextSlide, { zIndex: 2, opacity: 0 }); 
+      gsap.set(nextSlide, { zIndex: 2, opacity: 0 });
       gsap.set(prevSlide, { zIndex: 1 }); 
 
-      // MAGIA ANTI-SALTO: El zoom inicia al mismo tiempo que la transición de opacidad
       gsap.set(nextImg, { scale: 1 });
       gsap.to(nextImg, { scale: 1.1, duration: 15, ease: "none" });
 
-      // Mezcla de fotos
       gsap.to(nextSlide, {
         opacity: 1,
         duration: 1.5, 
@@ -231,8 +220,28 @@ const slides = [
           gsap.set(nextSlide, { zIndex: 1 });
           
           current = next;
-          // Escribe la nueva frase
           typeText(slideData[current].typed); 
+        }
+      });
+    }
+
+    // ==========================================
+    // SCROLL ULTRA SUAVE PARA EL BOTÓN
+    // ==========================================
+    const heroBtn = document.querySelector('.hero__btn');
+    if (heroBtn) {
+      heroBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          // El -65 es para descontar el tamaño de tu header pegajoso
+          const targetPos = targetSection.getBoundingClientRect().top + window.scrollY - 65;
+          window.scrollTo({
+            top: targetPos,
+            behavior: 'smooth'
+          });
         }
       });
     }

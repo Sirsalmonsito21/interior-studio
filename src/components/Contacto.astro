@@ -46,39 +46,37 @@
 
         <div class="contact__field">
           <label class="contact__field-label" for="servicio">Servicio de interés</label>
-          <select class="contact__input contact__select" id="servicio" name="servicio">
-            <option value="" disabled selected>Selecciona un servicio</option>
+          <select class="contact__input" id="servicio" name="servicio" required>
+            <option value="" disabled selected>Selecciona un servicio...</option>
             <option value="Diseño de Interiores">Diseño de Interiores</option>
             <option value="Remodelación">Remodelación</option>
             <option value="Mobiliario a Medida">Mobiliario a Medida</option>
             <option value="Consultoría">Consultoría</option>
+            <option value="Otro">Otro</option>
           </select>
         </div>
 
         <div class="contact__field">
           <label class="contact__field-label" for="mensaje">Mensaje</label>
           <textarea
-            class="contact__input contact__textarea"
+            class="contact__textarea"
             id="mensaje"
             name="mensaje"
-            placeholder="Cuéntanos sobre tu espacio, tus ideas, tu visión..."
-            rows="5"
+            rows="4"
+            placeholder="Detalles sobre tu espacio, ideas o presupuesto..."
             required
           ></textarea>
         </div>
 
-        <!-- Honeypot anti-spam: campo oculto, bots lo llenan, humanos no -->
-        <div class="contact__hp" aria-hidden="true">
-          <input type="text" name="hp_field" tabindex="-1" autocomplete="off" />
-        </div>
-
-        <div class="contact__feedback" id="contactFeedback" aria-live="polite"></div>
-
-        <button class="contact__submit" type="submit" id="contactSubmit">
+        <button class="contact__submit" type="submit" id="submitBtn">
           <span class="contact__submit-text">Enviar mensaje</span>
-          <span class="contact__submit-icon">→</span>
+          <svg class="contact__submit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
         </button>
 
+        <div class="contact__msg" id="formMsg"></div>
       </form>
     </div>
 
@@ -86,219 +84,203 @@
 </section>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
   .contact {
-    background: #0a0d0b;
-    padding: var(--space-24) var(--space-8);
+    background-color: #111614;
+    color: #F0EDE8;
+    padding: 120px 0;
+    overflow: hidden;
   }
 
   .contact__inner {
     max-width: 1400px;
     margin: 0 auto;
+    padding: 0 5vw;
     display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: var(--space-24);
+    grid-template-columns: 1fr 1.2fr;
+    gap: 8vw;
     align-items: start;
   }
 
-  /* ── INFO ── */
-  .contact__info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    position: sticky;
-    top: 120px;
+  /* --- INFO COL --- */
+  .contact__label {
+    font-family: 'Inter', sans-serif;
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    color: rgba(240, 237, 232, 0.6);
+    font-weight: 500;
   }
-
-  .contact__label { color: var(--secondary-fixed-dim); }
 
   .contact__title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
     font-weight: 300;
-    letter-spacing: -0.02em;
     line-height: 1.1;
-    color: #f0ede8;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
   }
 
-  .contact__title em { font-style: italic; }
+  .contact__title em {
+    font-style: italic;
+    color: #a07846;
+  }
 
   .contact__desc {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(240, 237, 232, 0.7);
+    max-width: 400px;
     font-weight: 300;
-    line-height: 1.7;
-    color: rgba(240, 237, 232, 0.5);
-    max-width: 340px;
   }
 
-  /* ── FORMULARIO ── */
+  /* --- FORM COL --- */
   .contact__form-wrap {
-    background: #0e1110;
-    padding: var(--space-8);
+    width: 100%;
+    margin-top: 1rem;
   }
 
   .contact__form {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: 2.5rem;
   }
 
   .contact__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
+    gap: 2rem;
   }
 
   .contact__field {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.8rem;
+    position: relative;
   }
 
   .contact__field-label {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(240, 237, 232, 0.35);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: rgba(240, 237, 232, 0.9);
+    font-weight: 500;
   }
 
-  .contact__input {
+  .contact__input,
+  .contact__textarea {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(240, 237, 232, 0.15);
+    border-bottom: 1px solid rgba(240, 237, 232, 0.2);
+    color: #F0EDE8;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    transition: border-color 0.4s ease;
     border-radius: 0;
-    padding: 0.75rem 0;
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 300;
-    color: #f0ede8;
-    outline: none;
-    width: 100%;
-    transition: border-color 0.3s ease;
-    appearance: none;
-    -webkit-appearance: none;
   }
 
-  .contact__input::placeholder {
-    color: rgba(240, 237, 232, 0.2);
-    font-weight: 300;
-  }
-
-  .contact__input:focus {
-    border-bottom-color: var(--secondary-fixed-dim);
-  }
-
-  .contact__select {
+  /* Estilos específicos para el selector desplegable (options) */
+  select.contact__input {
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(240,237,232,0.3)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 4px center;
-    padding-right: 24px;
+    appearance: none; /* Oculta la flecha por defecto en algunos navegadores */
+  }
+  
+  select.contact__input option {
+    background-color: #111614; /* Fondo oscuro para que se vea bien al abrir */
+    color: #F0EDE8;
+    padding: 10px;
   }
 
-  .contact__select option {
-    background: #0e1110;
-    color: #f0ede8;
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: rgba(240, 237, 232, 0.3);
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    outline: none;
+    border-color: #F0EDE8;
   }
 
   .contact__textarea {
-    resize: none;
-    line-height: 1.6;
+    resize: vertical;
+    min-height: 100px;
   }
 
-  /* Honeypot — completamente invisible para humanos */
-  .contact__hp {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-  }
-
-  .contact__feedback {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 300;
-    min-height: 1.2rem;
-    transition: opacity 0.3s ease;
-  }
-
-  .contact__feedback.is-success { color: #7daa8a; }
-  .contact__feedback.is-error   { color: var(--error); }
-
+  /* SUBMIT BUTTON */
   .contact__submit {
+    align-self: flex-start;
     display: flex;
     align-items: center;
-    gap: var(--space-4);
-    align-self: flex-start;
-    background: none;
+    gap: 1rem;
+    background: transparent;
     border: 1px solid rgba(240, 237, 232, 0.2);
-    color: rgba(240, 237, 232, 0.75);
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
+    color: #F0EDE8;
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
     text-transform: uppercase;
-    padding: 0.9rem 2rem;
+    letter-spacing: 0.1em;
     cursor: pointer;
-    transition: border-color 0.3s ease, color 0.3s ease,
-                background 0.3s ease, gap 0.3s ease;
+    transition: all 0.4s ease;
+    margin-top: 1rem;
+    font-weight: 500;
   }
 
-  .contact__submit:hover {
-    border-color: rgba(240, 237, 232, 0.6);
-    color: #f0ede8;
-    background: rgba(240, 237, 232, 0.05);
-    gap: var(--space-6);
-  }
-
-  .contact__submit:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  .contact__submit:hover:not(:disabled) {
+    background: #F0EDE8;
+    color: #111614;
   }
 
   .contact__submit-icon {
-    font-style: normal;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
   }
 
-  .contact__submit:hover .contact__submit-icon {
+  .contact__submit:hover:not(:disabled) .contact__submit-icon {
     transform: translateX(4px);
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1024px) {
+  .contact__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .contact__msg {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    min-height: 1.5em;
+    font-weight: 400;
+  }
+  .contact__msg.error { color: #ff6b6b; }
+  .contact__msg.success { color: #51cf66; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 900px) {
+    .contact {
+      padding: 80px 0;
+    }
     .contact__inner {
       grid-template-columns: 1fr;
-      gap: var(--space-8);
+      gap: 4rem;
     }
-
-    .contact__info {
-      position: static;
-      text-align: center;
-      align-items: center;
-    }
-
     .contact__desc {
       max-width: 100%;
-      text-align: center;
     }
   }
 
-  @media (max-width: 768px) {
-    .contact {
-      padding: var(--space-20) var(--space-6);
-    }
-
-    .contact__form-wrap {
-      padding: var(--space-6);
-    }
-
+  @media (max-width: 600px) {
     .contact__row {
       grid-template-columns: 1fr;
-      gap: var(--space-6);
+      gap: 2.5rem;
     }
-
     .contact__submit {
       width: 100%;
       justify-content: center;
@@ -307,112 +289,112 @@
 </style>
 
 <script>
-  import { gsap } from 'gsap'
-  import { ScrollTrigger } from 'gsap/ScrollTrigger'
-  gsap.registerPlugin(ScrollTrigger)
+  // IMPORTACIONES SIEMPRE ARRIBA
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  gsap.from('.contact__info > *', {
-    scrollTrigger: { trigger: '.contact', start: 'top 75%' },
-    opacity: 0,
-    x: -24,
-    duration: 0.9,
-    stagger: 0.12,
-    ease: 'power2.out'
-  })
+  gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from('.contact__form-wrap', {
-    scrollTrigger: { trigger: '.contact', start: 'top 75%' },
-    opacity: 0,
-    y: 30,
-    duration: 0.9,
-    delay: 0.2,
-    ease: 'power2.out'
-  })
+  // IMPORTANTE: Reemplaza con tus IDs reales de EmailJS
+  const EMAILJS_SERVICE_ID = 'service_XXXXXXXX';
+  const EMAILJS_TEMPLATE_ID = 'template_XXXXXXXX';
+  const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY_XXXXX';
 
-  // ── EMAILJS ──
-  // Pasos para configurar:
-  // 1. Crea cuenta gratis en https://www.emailjs.com
-  // 2. "Add New Service" → conecta el Gmail de la empresa → copia el Service ID
-  // 3. "Create New Template" → diseña el email con estas variables:
-  //      {{nombre}}  {{email}}  {{servicio}}  {{mensaje}}
-  //    El campo "To Email" debe ser el correo de la empresa.
-  //    Copia el Template ID.
-  // 4. En "Account" → "API Keys" → copia tu Public Key
-  // 5. Reemplaza las 3 constantes de abajo
+  function initContact() {
+    // Inicializar EmailJS (asegúrate de que window.emailjs exista)
+    if (typeof window !== 'undefined' && window.emailjs) {
+      window.emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
 
-  const EMAILJS_PUBLIC_KEY  = 'TU_PUBLIC_KEY'
-  const EMAILJS_SERVICE_ID  = 'TU_SERVICE_ID'
-  const EMAILJS_TEMPLATE_ID = 'TU_TEMPLATE_ID'
+    // Animaciones de entrada
+    gsap.from('.contact__info > *', {
+      y: 40,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.contact',
+        start: 'top 80%'
+      }
+    });
 
-  const script = document.createElement('script')
-  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'
-  script.onload = () => {
-    // @ts-ignore
-    emailjs.init(EMAILJS_PUBLIC_KEY)
+    gsap.from('.contact__field, .contact__submit', {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      stagger: 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.contact__form',
+        start: 'top 85%'
+      }
+    });
   }
-  document.head.appendChild(script)
 
-  const form      = document.getElementById('contactForm') as HTMLFormElement
-  const feedback  = document.getElementById('contactFeedback')
-  const submitBtn = document.getElementById('contactSubmit') as HTMLButtonElement
+  // Ejecutar animación inicial
+  initContact();
+  document.addEventListener('astro:after-swap', initContact);
 
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault()
+  // Lógica del formulario
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const msgEl = document.getElementById('formMsg');
 
-    // ── Anti-spam 1: Honeypot ──
-    // Si el campo oculto tiene contenido, es un bot. Silenciamos y salimos.
-    const hp = (form.elements.namedItem('hp_field') as HTMLInputElement).value
-    if (hp) return
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!submitBtn || !msgEl) return;
 
-    // ── Anti-spam 2: Rate limiting en cliente ──
-    // Impedimos reenvíos en menos de 60 segundos
-    const lastSent = Number(sessionStorage.getItem('last_contact_send') ?? 0)
-    const now = Date.now()
-    if (now - lastSent < 60_000) {
-      setFeedback('Por favor espera un momento antes de volver a enviar.', 'error')
-      return
-    }
+      // Prevenir spam (limite de 1 envio por minuto)
+      const lastSend = sessionStorage.getItem('last_contact_send');
+      if (lastSend && Date.now() - parseInt(lastSend) < 60000) {
+        setFeedback('Por favor espera un momento antes de enviar otro mensaje.', 'error');
+        return;
+      }
 
-    const nombre  = (form.elements.namedItem('nombre')  as HTMLInputElement).value.trim()
-    const email   = (form.elements.namedItem('email')   as HTMLInputElement).value.trim()
-    const mensaje = (form.elements.namedItem('mensaje') as HTMLTextAreaElement).value.trim()
+      const nombre = form.elements['nombre'].value.trim();
+      const email = form.elements['email'].value.trim();
+      const servicio = form.elements['servicio'].value;
+      const mensaje = form.elements['mensaje'].value.trim();
 
-    if (!nombre || !email || !mensaje) {
-      setFeedback('Por favor completa todos los campos requeridos.', 'error')
-      return
-    }
+      if (!nombre || !email || !servicio || !mensaje) {
+        setFeedback('Por favor completa todos los campos requeridos.', 'error');
+        return;
+      }
 
-    // Validación de email con regex simple
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setFeedback('El email no parece válido.', 'error')
-      return
-    }
+      // Validación de email con regex simple
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setFeedback('El email no parece válido.', 'error');
+        return;
+      }
 
-    submitBtn.disabled = true
-    submitBtn.querySelector('.contact__submit-text')!.textContent = 'Enviando...'
+      submitBtn.disabled = true;
+      const btnText = submitBtn.querySelector('.contact__submit-text');
+      if (btnText) btnText.textContent = 'Enviando...';
 
-    try {
-      // @ts-ignore
-      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
-      sessionStorage.setItem('last_contact_send', String(Date.now()))
-      setFeedback('Mensaje enviado. Te contactaremos pronto.', 'success')
-      form.reset()
-    } catch (err) {
-      setFeedback('Hubo un error al enviar. Intenta de nuevo.', 'error')
-      console.error(err)
-    } finally {
-      submitBtn.disabled = false
-      submitBtn.querySelector('.contact__submit-text')!.textContent = 'Enviar mensaje'
-    }
-  })
+      try {
+        await window.emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form);
+        sessionStorage.setItem('last_contact_send', String(Date.now()));
+        setFeedback('Mensaje enviado. Te contactaremos pronto.', 'success');
+        form.reset();
+      } catch (err) {
+        setFeedback('Hubo un error al enviar. Intenta de nuevo.', 'error');
+        console.error(err);
+      } finally {
+        submitBtn.disabled = false;
+        if (btnText) btnText.textContent = 'Enviar mensaje';
+      }
+    });
+  }
 
-  function setFeedback(msg: string, type: 'success' | 'error') {
-    if (!feedback) return
-    feedback.textContent = msg
-    feedback.className = `contact__feedback is-${type}`
+  function setFeedback(msg, type) {
+    if (!msgEl) return;
+    msgEl.textContent = msg;
+    msgEl.className = `contact__msg ${type}`;
     setTimeout(() => {
-      feedback.textContent = ''
-      feedback.className = 'contact__feedback'
-    }, 5000)
+      msgEl.textContent = '';
+      msgEl.className = 'contact__msg';
+    }, 5000);
   }
 </script>
