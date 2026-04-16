@@ -86,7 +86,8 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap');
+  /* Importación corregida para incluir Playfair Display, Inter y Cormorant */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:wght@500&display=swap');
   
   .srv { background: #f5f2ee; padding: 4rem 0 10rem; overflow: hidden; }
   
@@ -102,7 +103,6 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
     margin: 0;
   }
   
-  /* AQUÍ RECUPERAMOS EL COLOR Y ESTILO DE LA PALABRA "SERVICIOS" */
   .srv__heading em { 
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.5rem, 4.5vw, 4.5rem); 
@@ -131,12 +131,11 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
   .srv__num { 
     font-family: 'Cormorant Garamond', serif; 
     font-size: clamp(4.5rem, 9vw, 8rem);
-    line-height: 1; 
+    line-height: 1;
     color: rgba(160, 120, 70, 0.28); 
     margin-bottom: 0.5rem; 
   }
 
-  /* FUENTE INTER APLICADA A LOS TÍTULOS */
   .srv__title { 
     font-family: 'Playfair Display', serif;
     font-size: clamp(2.2rem, 3.4vw, 3.2rem); 
@@ -156,9 +155,8 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
     text-align: justify; 
   }
 
-  /* NUEVO ESPACIO VERTICAL PARA LAS LÍNEAS */
   .srv__wave-wrap { 
-    width: 100%; 
+    width: 100%;
     height: 120px; 
     display: flex; 
     justify-content: center;
@@ -175,7 +173,23 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
     .srv__text-col { display: contents; }
     .srv__item .srv__mask-num { order: 1; text-align: center; margin-top: 1rem; }
     .srv__item .srv__mask-title { order: 2; text-align: center; padding: 0 5vw; margin-bottom: 2.5rem; }
-    .srv__item .srv__image-col, .srv__item--reverse .srv__image-col { order: 3; width: 100%; min-height: 450px; margin-bottom: 2.5rem; }
+    
+    /* CAMBIO CLAVE: Ajuste de imagen para móviles para evitar el mega-zoom */
+    .srv__item .srv__image-col, .srv__item--reverse .srv__image-col { 
+      order: 3; 
+      width: 100%; 
+      min-height: unset;
+      aspect-ratio: 4/5; /* Mantiene una proporción elegante tipo retrato sin cortar tanto */
+      max-height: 60vh;
+      margin-bottom: 2.5rem; 
+    }
+    
+    /* CAMBIO CLAVE: Quitamos el 130% de altura en móviles */
+    .srv__parallax-inner {
+      top: 0;
+      height: 100%;
+    }
+
     .srv__item .srv__mask-desc { order: 4; text-align: center; padding: 0 5vw; }
     .srv__desc { margin-left: auto; margin-right: auto; text-align: center; }
   }
@@ -211,10 +225,13 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
           { clipPath: "inset(100% 0 0 0)" },
           { clipPath: "inset(0% 0 0 0)", duration: 1.5, ease: "power3.inOut", scrollTrigger: { trigger: item, start: "top 75%" } }
         )
-        // Parallax de la foto
-        gsap.to(img, {
-          yPercent: 25, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
-        })
+        
+        // Parallax de la foto: SOLO EN COMPUTADORAS PARA EVITAR PROBLEMAS EN CELULAR
+        if (window.innerWidth > 1024) {
+          gsap.to(img, {
+            yPercent: 25, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
+          })
+        }
       }
     })
 
