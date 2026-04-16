@@ -114,10 +114,44 @@ const slides = [
   .hero__progress-container { position: absolute; bottom: 2.5rem; left: 8vw; right: 8vw; height: 2px; background: rgba(255,255,255,0.2); z-index: 10; }
   .hero__progress-bar { height: 100%; width: 0%; background: white; }
   
+  /* ========================================================
+     REDISEÑO REACTIVE (iPads y Tablets max 1024px)
+     ======================================================== */
+  @media (max-width: 1024px) {
+    /* Ocultamos el eyebrow y la descripción. Solo queda Título y Botón */
+    .hero__eyebrow,
+    .hero__desc {
+      display: none;
+    }
+    /* El contenido sigue pegado a la izquierda (heredado de PC) */
+  }
+
+  /* ========================================================
+     REDISEÑO REACTIVE (Celulares max 768px)
+     ======================================================== */
   @media (max-width: 768px) {
-    .hero__content { left: 5vw; max-width: 90%; }
-    .hero__progress-container { left: 5vw; right: 5vw; }
-    .hero__title { font-size: 3rem; }
+    .hero__content { 
+      left: 50%; 
+      transform: translate(-50%, -50%); /* Forzamos el centrado absoluto en la pantalla */
+      width: 100%; 
+      padding: 0 5vw;
+      text-align: center; /* Centramos el texto del título */
+    }
+    
+    .hero__action {
+      display: flex;
+      justify-content: center; /* Centramos el botón de portafolio */
+      margin-top: 2rem;
+    }
+
+    .hero__progress-container { 
+      left: 5vw; 
+      right: 5vw; 
+    }
+    
+    .hero__title { 
+      font-size: clamp(2.5rem, 8vw, 3rem); /* Tamaño ajustado para que no desborde en cel */
+    }
   }
 </style>
 

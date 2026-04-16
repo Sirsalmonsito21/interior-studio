@@ -4,899 +4,356 @@ const categorias = [
     id: "sala",
     label: "Sala de Estar",
     tipo: "RESIDENCIAL",
+    filtro: "residencial",
     cover: "/images/sala1.jpeg",
     imagenes: [
-      "/images/sala1.jpeg",
-      "/images/sala2.jpeg",
-      "/images/sala3.jpeg",
-      "/images/sala4.jpeg",
-      "/images/sala5.jpeg",
-      "/images/sala6.jpeg",
-      "/images/sala7.jpeg",
-      "/images/sala8.jpeg",
+      "/images/sala1.jpeg", "/images/sala2.jpeg", "/images/sala3.jpeg", "/images/sala4.jpeg",
+      "/images/sala5.jpeg", "/images/sala6.jpeg", "/images/sala7.jpeg", "/images/sala8.png",
     ]
   },
   {
     id: "comedor",
     label: "Comedor",
     tipo: "RESIDENCIAL",
+    filtro: "residencial",
     cover: "/images/comedor1.jpeg",
     imagenes: [
-      "/images/comedor1.jpeg",
-      "/images/comedor2.jpeg",
-      "/images/comedor3.jpeg",
+      "/images/comedor1.jpeg", "/images/comedor2.jpeg", "/images/comedor3.jpeg",
     ]
   },
   {
     id: "cocina",
     label: "Cocina",
     tipo: "RESIDENCIAL",
+    filtro: "residencial",
     cover: "/images/cocina1-1.png",
     imagenes: [
-      "/images/cocina1-1.png",
-      "/images/cocina2.jpeg",
-      "/images/cocina3.png",
-      "/images/cocina4.jpeg",
-      "/images/cocina5.jpeg",
+      "/images/cocina1-1.png", "/images/cocina2.jpeg", "/images/cocina3.png", "/images/cocina4.jpeg", "/images/cocina5.jpeg",
     ]
   },
   {
-    id: "bano",
-    label: "Baño de Diseño",
+    id: "dormitorio",
+    label: "Dormitorio",
     tipo: "RESIDENCIAL",
+    filtro: "residencial",
+    cover: "/images/dormitorio1.jpeg",
+    imagenes: [
+      "/images/dormitorio1.jpeg", "/images/dormitorio2.jpeg", "/images/dormitorio3.jpeg", "/images/dormitorio4.jpeg",
+    ]
+  },
+  {
+    id: "banio",
+    label: "Baño",
+    tipo: "RESIDENCIAL",
+    filtro: "residencial",
     cover: "/images/baño1.jpeg",
     imagenes: [
-      "/images/baño1.jpeg",
-      "/images/baño2.jpeg",
+      "/images/baño1.jpeg", "/images/baño2.jpeg", "/images/baño3.jpeg",
     ]
   },
   {
-    id: "oficina",
-    label: "Oficina Ejecutiva",
+    id: "comercial",
+    label: "Comercial",
     tipo: "COMERCIAL",
-    cover: "/images/oficina1.png",
+    filtro: "comercial",
+    cover: "/images/oficina2.png",
     imagenes: [
-      "/images/oficina1.png",
-      "/images/oficina2.png",
+      "/images/oficina1.png", "/images/oficina2.png"
     ]
   },
   {
     id: "ninos",
-    label: "Espacio Niños",
-    tipo: "RESIDENCIAL",
-    cover: "/images/niño1.jpeg",
+    label: "Niños",
+    tipo: "INFANTIL",
+    filtro: "ninos",
+    cover: "/images/niña4.jpeg",
     imagenes: [
-      "/images/niño1.jpeg",
-      "/images/niño2.jpeg",
-      "/images/niño3.jpeg",
-      "/images/niña1.jpeg",
-      "/images/niña2.PNG",
-      "/images/niña3.jpeg",
-      "/images/niña4.jpeg",
-      "/images/niña5.jpeg",
-      "/images/niña6.jpeg",
-      "/images/niña7.jpeg",
-      "/images/niña8.jpeg",
-      "/images/niña9.jpeg",
+      "/images/niña1.jpeg", "/images/niña2.jpeg", "/images/niña3.jpeg", "/images/niña4.jpeg",
     ]
-  },
-  {
-    id: "entrada",
-    label: "Entrada",
-    tipo: "RESIDENCIAL",
-    cover: "/images/entrada1.jpeg",
-    imagenes: [
-      "/images/entrada1.jpeg",
-      "/images/entrada2.jpeg",
-    ]
-  },
+  }
 ]
 ---
 
-<!-- ══════════════════════════════════════
-     SECCIÓN PORTAFOLIO
-══════════════════════════════════════ -->
-<section class="port" id="portafolio">
-
-  <!-- Encabezado -->
-  <div class="port__head">
-    <div class="port__head-left">
-      <p class="port__eyebrow">Nuestro Trabajo</p>
-      <h2 class="port__title">Proyectos</h2>
-    </div>
-    <div class="port__filtros">
-      <button class="port__filtro is-active" data-filter="todos">Todos</button>
-      <button class="port__filtro" data-filter="RESIDENCIAL">Residencial</button>
-      <button class="port__filtro" data-filter="COMERCIAL">Comercial</button>
-    </div>
+<section class="prt" id="portafolio">
+  <div class="prt__header-container">
+    <header class="prt__header">
+      <div class="prt__mask">
+        <h2 class="prt__heading">PROYECTOS</h2>
+      </div>
+      
+      <nav class="prt__nav">
+        <button class="prt__cat-btn is-active" data-filter="all">TODOS</button>
+        <button class="prt__cat-btn" data-filter="ninos">NIÑOS</button>
+        <button class="prt__cat-btn" data-filter="residencial">RESIDENCIAL</button>
+        <button class="prt__cat-btn" data-filter="comercial">COMERCIAL</button>
+      </nav>
+    </header>
   </div>
 
-  <!-- Grilla de proyectos -->
-  <div class="port__grid" id="portGrid">
-    {categorias.map((cat) => (
-      <article
-        class="port__item"
-        data-tipo={cat.tipo}
-        data-label={cat.label}
-        data-imagenes={JSON.stringify(cat.imagenes)}
-        tabindex="0"
-        role="button"
-        aria-label={"Ver proyecto: " + cat.label}
-      >
-        <div class="port__img-wrap">
-          <img
-            class="port__img"
-            src={cat.cover}
-            alt={cat.label}
-            loading="lazy"
-          />
-          <!-- Hover overlay sutil -->
-          <div class="port__overlay">
-            <span class="port__overlay-cta">
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M3 9h12M9 3l6 6-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Ver proyecto
-            </span>
+  <div class="prt__grid">
+    {categorias.map(cat => (
+      <div class="prt__item" data-filtro={cat.filtro} data-imagenes={JSON.stringify(cat.imagenes)} data-label={cat.label}>
+        <div class="prt__card">
+          <div class="prt__img-wrapper">
+            <img src={cat.cover} alt={cat.label} class="prt__img" loading="lazy" />
+            <div class="prt__overlay">
+              <span class="prt__view-btn">EXPLORAR CATÁLOGO</span>
+            </div>
+          </div>
+          <div class="prt__info">
+            <span class="prt__project-type">{cat.tipo}</span>
+            <h3 class="prt__project-label">{cat.label}</h3>
           </div>
         </div>
-        <!-- Caption debajo de la imagen, igual que referencia -->
-        <div class="port__caption">
-          <span class="port__caption-label">{cat.label}</span>
-          <span class="port__caption-count">{cat.imagenes.length} {cat.imagenes.length === 1 ? "foto" : "fotos"}</span>
-        </div>
-      </article>
+      </div>
     ))}
   </div>
 
-</section>
-
-<!-- ══════════════════════════════════════
-     LIGHTBOX
-══════════════════════════════════════ -->
-<div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
-
-  <!-- Botón cerrar -->
-  <button class="lb__close" id="lbClose" aria-label="Cerrar galería">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-  </button>
-
-  <!-- Sidebar: título + navegación entre proyectos del mismo tipo -->
-  <aside class="lb__sidebar">
-    <div class="lb__sidebar-top">
-      <span class="lb__sidebar-tipo" id="lbTipo"></span>
-      <h3 class="lb__sidebar-title" id="lbTitle"></h3>
-    </div>
-
-    <div class="lb__sidebar-nav">
-      <span class="lb__sidebar-idx" id="lbIdx"></span>
-      <div class="lb__nav-btns">
-        <button class="lb__nav-btn" id="lbPrev" aria-label="Proyecto anterior">
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-            <path d="M13 5H1M5 1L1 5l4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <div class="prt__lb" id="prtLightbox">
+    <div class="prt__lb-controls">
+        <button class="prt__lb-close" aria-label="Cerrar">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 6L6 18M6 6l12 12"></path>
           </svg>
         </button>
-        <button class="lb__nav-btn" id="lbNext" aria-label="Proyecto siguiente">
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
-            <path d="M1 5h12M9 1l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Zona de fotos con scroll vertical -->
-  <div class="lb__stage">
-    <div class="lb__scroll" id="lbScroll"></div>
-
-    <!-- Contador de foto -->
-    <div class="lb__photo-num" id="lbPhotoNum">
-      <span id="lbPhotoA">1</span>
-      <span class="lb__photo-slash">/</span>
-      <span id="lbPhotoB">1</span>
+        <div class="prt__lb-title-box">
+            <h4 id="lbProjectTitle">PROYECTO</h4>
+            <span>Desliza para ver más</span>
+        </div>
     </div>
 
-    <!-- Pista de scroll -->
-    <div class="lb__scroll-hint" id="lbScrollHint">
-      <span>Desliza para ver más</span>
-      <svg width="16" height="8" viewBox="0 0 16 8" fill="none">
-        <path d="M1 1l7 6 7-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <div class="prt__lb-content" id="lbScrollArea" data-lenis-prevent>
     </div>
   </div>
-
-</div>
+</section>
 
 <style>
-/* ═══════════════════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════════════════ */
-:root {
-  --cream:      #F5F0E8;
-  --cream-dark: #EDE6D8;
-  --brown:      #2C2117;
-  --brown-mid:  #5C4A38;
-  --gold:       #A48C6E;
-  --gold-light: #C8AA88;
-  --white:      #FDFCFA;
-  --ink:        #1A1410;
+  .prt { background: #f5f2ee; padding: 6rem 0 0; color: #0a0a08; overflow: hidden; }
+  
+  .prt__header-container { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
 
-  --font-serif: 'Cormorant Garamond', 'Garamond', Georgia, serif;
-  --font-sans:  'Jost', 'Helvetica Neue', sans-serif;
-}
-
-/* ═══════════════════════════════════════════════════
-   SECCIÓN
-═══════════════════════════════════════════════════ */
-.port {
-  background: var(--cream);
-  padding: 6rem 0 7rem;
-}
-
-/* Encabezado */
-.port__head {
-  max-width: 100%;
-  margin: 0 0 3rem;
-  padding: 0 1rem;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.port__head-left {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.port__eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.68rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin: 0;
-}
-
-.port__title {
-  font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 4vw, 3.4rem);
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  color: var(--brown);
-  margin: 0;
-}
-
-/* Filtros */
-.port__filtros {
-  display: flex;
-  gap: 0.4rem;
-  flex-shrink: 0;
-  align-items: center;
-}
-
-.port__filtro {
-  font-family: var(--font-sans);
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  background: transparent;
-  border: 1px solid rgba(44,33,23,0.18);
-  color: rgba(44,33,23,0.38);
-  padding: 0.45rem 1.1rem;
-  cursor: pointer;
-  transition: all 0.28s ease;
-  line-height: 1;
-}
-
-.port__filtro:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-}
-
-.port__filtro.is-active {
-  background: var(--brown);
-  border-color: var(--brown);
-  color: var(--cream);
-}
-
-/* ═══════════════════════════════════════════════════
-   GRILLA — 3 columnas, imagen grande + caption debajo
-═══════════════════════════════════════════════════ */
-.port__grid {
-  max-width: 100%;
-  margin: 0;
-  padding: 0 1rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
-
-.port__item {
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-/* Contenedor de imagen — ratio fijo 4:3 */
-.port__img-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--cream-dark);
-}
-
-.port__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.port__item:hover .port__img,
-.port__item:focus-visible .port__img {
-  transform: scale(1.04);
-}
-
-/* Overlay hover */
-.port__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(26, 20, 16, 0.28);
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 1.4rem 1.6rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.port__item:hover .port__overlay,
-.port__item:focus-visible .port__overlay {
-  opacity: 1;
-}
-
-.port__overlay-cta {
-  font-family: var(--font-sans);
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-bottom: 1px solid rgba(253,252,250,0.5);
-  padding-bottom: 0.2rem;
-}
-
-/* Caption debajo de la imagen */
-.port__caption {
-  padding: 0.9rem 0 0;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.8rem;
-  border-bottom: 1px solid rgba(44,33,23,0.1);
-  padding-bottom: 0.9rem;
-}
-
-.port__caption-label {
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  color: var(--brown);
-  line-height: 1.2;
-}
-
-.port__caption-count {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-
-.port__item.is-hidden {
-  display: none;
-}
-
-/* ═══════════════════════════════════════════════════
-   LIGHTBOX
-═══════════════════════════════════════════════════ */
-.lb {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: var(--ink);
-  display: flex;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.lb.is-open {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* Cerrar */
-.lb__close {
-  position: fixed;
-  top: 1.4rem;
-  right: 1.4rem;
-  z-index: 20;
-  width: 44px;
-  height: 44px;
-  background: rgba(253,252,250,0.06);
-  border: 1px solid rgba(253,252,250,0.12);
-  color: rgba(253,252,250,0.7);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.22s, color 0.22s;
-}
-
-.lb__close:hover {
-  background: rgba(253,252,250,0.12);
-  color: var(--white);
-}
-
-/* Sidebar izquierdo */
-.lb__sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 3.5rem 2rem 2rem;
-  border-right: 1px solid rgba(253,252,250,0.07);
-  background: rgba(253,252,250,0.015);
-}
-
-.lb__sidebar-top {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.lb__sidebar-tipo {
-  font-family: var(--font-sans);
-  font-size: 0.58rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.lb__sidebar-title {
-  font-family: var(--font-serif);
-  font-size: 1.7rem;
-  font-weight: 300;
-  line-height: 1.15;
-  color: rgba(253,252,250,0.88);
-  margin: 0;
-}
-
-.lb__sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.lb__sidebar-idx {
-  font-family: var(--font-sans);
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
-  color: rgba(253,252,250,0.22);
-}
-
-.lb__nav-btns {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.lb__nav-btn {
-  width: 38px;
-  height: 38px;
-  background: rgba(253,252,250,0.05);
-  border: 1px solid rgba(253,252,250,0.1);
-  color: rgba(253,252,250,0.4);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.22s;
-}
-
-.lb__nav-btn:hover:not(:disabled) {
-  background: rgba(253,252,250,0.1);
-  border-color: rgba(253,252,250,0.25);
-  color: var(--white);
-}
-
-.lb__nav-btn:disabled {
-  opacity: 0.15;
-  cursor: default;
-}
-
-/* Zona de fotos */
-.lb__stage {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Scroll vertical de fotos — único elemento con overflow */
-.lb__scroll {
-  position: absolute;
-  inset: 0;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.lb__scroll::-webkit-scrollbar { display: none; }
-
-/* Cada slide = 100% del viewport height */
-.lb__slide {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 3rem;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-/* Imagen: se contiene en el slide, nunca se desborda */
-.lb__slide img {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.lb__slide img.is-loaded {
-  opacity: 1;
-}
-
-/* Contador de foto */
-.lb__photo-num {
-  position: absolute;
-  bottom: 1.6rem;
-  right: 2rem;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-family: var(--font-sans);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: rgba(253,252,250,0.25);
-  pointer-events: none;
-}
-
-.lb__photo-slash {
-  opacity: 0.4;
-  margin: 0 0.1rem;
-}
-
-/* Pista de scroll */
-.lb__scroll-hint {
-  position: absolute;
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: var(--font-sans);
-  font-size: 0.56rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(253,252,250,0.18);
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  white-space: nowrap;
-}
-
-.lb__scroll-hint.is-hidden {
-  opacity: 0;
-}
-
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════ */
-@media (max-width: 1100px) {
-  .port__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .port { padding: 4rem 0 5rem; }
-
-  .port__head {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0 1.4rem;
-    margin-bottom: 2rem;
-    gap: 1.2rem;
+  .prt__header { margin-bottom: 4rem; text-align: center; }
+  .prt__heading { 
+    font-family: 'Inter', sans-serif; 
+    font-size: clamp(3.5rem, 10vw, 8rem); 
+    font-weight: 800; 
+    color: #0a0a08;
+    letter-spacing: -0.04em;
+    margin-bottom: 2.5rem;
+    line-height: 1;
   }
 
-  .port__title { font-size: 2.4rem; }
-
-  .port__grid {
-    grid-template-columns: 1fr 1fr;
-    padding: 0 1.4rem;
-    gap: 1.2rem 0.9rem;
+  .prt__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; }
+  .prt__cat-btn {
+    background: transparent; border: 1px solid rgba(0,0,0,0.15);
+    color: #0a0a08; padding: 0.8rem 1.8rem; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; transition: all 0.3s ease; border-radius: 50px;
+    letter-spacing: 0.05em;
   }
+  .prt__cat-btn:hover, .prt__cat-btn.is-active { background: #0a0a08; color: #fff; border-color: #0a0a08; }
 
-  /* Lightbox: sidebar se convierte en barra inferior */
-  .lb__sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: auto;
+  .prt__grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
     width: 100%;
-    height: auto;
-    flex-direction: row;
-    align-items: center;
-    border-right: none;
-    border-top: 1px solid rgba(253,252,250,0.08);
-    padding: 0.85rem 1.4rem;
-    background: rgba(10,9,8,0.96);
-    gap: 1rem;
-    z-index: 15;
+    gap: 2px; 
+    background: #f5f2ee;
   }
 
-  .lb__sidebar-top {
-    flex: 1;
-    gap: 0.2rem;
+  @media (max-width: 1024px) { .prt__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .prt__grid { grid-template-columns: 1fr; } }
+
+  .prt__item { cursor: pointer; position: relative; }
+  .prt__img-wrapper { position: relative; aspect-ratio: 1/1; overflow: hidden; }
+  .prt__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+  
+  .prt__item:hover .prt__img { transform: scale(1.05); }
+
+  .prt__overlay { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .prt__item:hover .prt__overlay { opacity: 1; }
+  .prt__view-btn { 
+    background: #fff; color: #000; padding: 14px 28px; font-size: 0.75rem; 
+    font-weight: 700; letter-spacing: 0.15em; border-radius: 2px;
+  }
+
+  .prt__info { 
+    position: absolute; bottom: 30px; left: 30px; z-index: 2; 
+    pointer-events: none; transition: transform 0.4s ease;
+  }
+  .prt__item:hover .prt__info { transform: translateY(-10px); }
+  
+  .prt__project-type { 
+    font-size: 0.7rem; color: #fff; font-weight: 600; letter-spacing: 0.15em; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3); display: block; 
+  }
+  .prt__project-label { 
+    font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; 
+    font-weight: 600; color: #fff; line-height: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  /* =============================================
+     LIGHTBOX — FIX DEFINITIVO
+     ============================================= */
+
+  .prt__lb {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #0a0a08;
+    z-index: 9999;
+    display: none;
     overflow: hidden;
   }
+  .prt__lb.is-open { display: block; }
 
-  .lb__sidebar-title {
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .prt__lb-controls {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4vw;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.9), transparent);
+    pointer-events: none;
+    box-sizing: border-box;
   }
-
-  .lb__sidebar-nav {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.6rem;
+  .prt__lb-close {
+    background: transparent; color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    width: 50px; height: 50px; border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: auto;
+    transition: all 0.3s;
     flex-shrink: 0;
   }
+  .prt__lb-close:hover { background: #fff; color: #000; }
 
-  .lb__sidebar-idx { font-size: 0.55rem; }
+  .prt__lb-title-box { text-align: right; color: #fff; }
+  .prt__lb-title-box h4 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin: 0; font-weight: 600; }
+  .prt__lb-title-box span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; font-weight: 600; }
 
-  .lb__slide {
-    height: calc(100vh - 68px);
-    padding: 1rem;
+  /*
+    ZONA DE SCROLL:
+    overflow-x: hidden  → elimina el scroll horizontal que se veía en tu screenshot
+    overflow-y: auto    → permite deslizar entre imágenes
+  */
+  .prt__lb-content {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
   }
 
-  .lb__photo-num { bottom: 5rem; }
-  .lb__scroll-hint { display: none; }
-}
-
-@media (max-width: 480px) {
-  .port__grid {
-    grid-template-columns: 1fr;
-    gap: 1.6rem;
+  /*
+    CADA SLIDE:
+    - Usa el viewport completo como caja
+    - overflow: hidden → la imagen nunca rompe los bordes
+  */
+  .prt__lb-img-wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 110px 6vw 40px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
-}
+
+  /*
+    LA IMAGEN:
+    - max-width: 100% → no desborda el ancho del wrapper (que ya tiene padding)
+    - max-height: 85vh → no supera el alto visible
+    - width/height: auto → respeta la proporción real (vertical, horizontal, cuadrada)
+    No se necesita object-fit porque la imagen no está forzada a ningún tamaño fijo.
+  */
+  .prt__lb-img {
+    display: block;
+    max-width: 100%;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .prt__lb-img-wrapper { padding: 100px 4vw 30px; }
+    .prt__lb-img { max-height: 82vh; }
+  }
+
+  @media (max-width: 480px) {
+    .prt__lb-img-wrapper { padding: 90px 3vw 20px; }
+    .prt__lb-img { max-height: 80vh; }
+  }
 </style>
 
 <script>
-// ═══════════════════════════════════════════════════
-// FILTROS
-// ═══════════════════════════════════════════════════
-var filtros = document.querySelectorAll('.port__filtro')
-var items   = document.querySelectorAll('.port__item')
+  const items = document.querySelectorAll('.prt__item');
+  const btns = document.querySelectorAll('.prt__cat-btn');
+  const lb = document.getElementById('prtLightbox')!;
+  const lbScrollArea = document.getElementById('lbScrollArea')!;
+  const lbTitle = document.getElementById('lbProjectTitle')!;
+  const lbClose = document.querySelector('.prt__lb-close')!;
 
-filtros.forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    filtros.forEach(function(b) { b.classList.remove('is-active') })
-    btn.classList.add('is-active')
-    var filter = btn.getAttribute('data-filter')
-    items.forEach(function(item) {
-      var tipo = item.getAttribute('data-tipo')
-      item.classList.toggle('is-hidden', filter !== 'todos' && tipo !== filter)
-    })
-  })
-})
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const filter = btn.getAttribute('data-filter');
+      items.forEach(item => {
+        if (filter === 'all' || item.getAttribute('data-filtro') === filter) {
+          (item as HTMLElement).style.display = 'block';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
 
-// ═══════════════════════════════════════════════════
-// LIGHTBOX
-// ═══════════════════════════════════════════════════
-var lb         = document.getElementById('lightbox')
-var lbClose    = document.getElementById('lbClose')
-var lbScroll   = document.getElementById('lbScroll')
-var lbPrev     = document.getElementById('lbPrev')
-var lbNext     = document.getElementById('lbNext')
-var lbTipo     = document.getElementById('lbTipo')
-var lbTitle    = document.getElementById('lbTitle')
-var lbIdx      = document.getElementById('lbIdx')
-var lbPhotoA   = document.getElementById('lbPhotoA')
-var lbPhotoB   = document.getElementById('lbPhotoB')
-var lbScrollHint = document.getElementById('lbScrollHint')
+  function openCatalog(item: Element) {
+    const imagenes = JSON.parse(item.getAttribute('data-imagenes') || '[]');
+    const label = item.getAttribute('data-label') || '';
 
-var siblings = []   // proyectos del mismo tipo actualmente visibles
-var projIdx  = 0    // índice del proyecto actual dentro de siblings
-var ioSlides = null // IntersectionObserver para el contador de foto
+    (lbTitle as HTMLElement).innerText = label.toUpperCase();
+    lbScrollArea.innerHTML = '';
 
-// ── Ancho del scrollbar para evitar layout shift ──
-function sbw() {
-  return window.innerWidth - document.documentElement.clientWidth
-}
+    imagenes.forEach((src: string) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'prt__lb-img-wrapper';
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'prt__lb-img';
+      img.alt = 'Proyecto Studio2810';
+      img.loading = 'lazy';
+      wrapper.appendChild(img);
+      lbScrollArea.appendChild(wrapper);
+    });
 
-// ── Construir los slides en el scroll ──
-function buildSlides(imagenes) {
-  if (!lbScroll) return
-  if (ioSlides) { ioSlides.disconnect(); ioSlides = null }
-
-  lbScroll.innerHTML = ''
-
-  imagenes.forEach(function(src) {
-    var slide = document.createElement('div')
-    slide.className = 'lb__slide'
-
-    var img = document.createElement('img')
-    img.alt = ''
-    img.decoding = 'async'
-
-    function onLoad() { img.classList.add('is-loaded') }
-    img.addEventListener('load',  onLoad)
-    img.addEventListener('error', onLoad)
-    if (img.complete) onLoad()
-    img.src = src
-
-    slide.appendChild(img)
-    lbScroll.appendChild(slide)
-  })
-
-  lbScroll.scrollTop = 0
-  if (lbPhotoA) lbPhotoA.textContent = '1'
-  if (lbPhotoB) lbPhotoB.textContent = imagenes.length
-
-  // Hint: solo si hay más de 1 foto
-  if (lbScrollHint) {
-    lbScrollHint.classList.toggle('is-hidden', imagenes.length <= 1)
+    lb.classList.add('is-open');
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    lbScrollArea.scrollTop = 0;
   }
 
-  // Observer para el contador
-  setTimeout(function() {
-    var slides = lbScroll.querySelectorAll('.lb__slide')
-    ioSlides = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return
-        var i = Array.prototype.indexOf.call(slides, entry.target)
-        if (lbPhotoA) lbPhotoA.textContent = i + 1
-        if (i > 0 && lbScrollHint) lbScrollHint.classList.add('is-hidden')
-      })
-    }, { root: lbScroll, threshold: 0.5 })
-    slides.forEach(function(s) { ioSlides.observe(s) })
-  }, 40)
-}
-
-// ── Actualizar sidebar y slides al cambiar de proyecto ──
-function loadProject() {
-  var proj = siblings[projIdx]
-  if (!proj) return
-
-  if (lbTipo)  lbTipo.textContent  = proj.tipo
-  if (lbTitle) lbTitle.textContent = proj.label
-  if (lbIdx)   lbIdx.textContent   = (projIdx + 1) + ' de ' + siblings.length
-
-  if (lbPrev) lbPrev.disabled = (projIdx === 0)
-  if (lbNext) lbNext.disabled = (projIdx === siblings.length - 1)
-
-  buildSlides(proj.imagenes)
-}
-
-// ── Abrir ──
-function openLb(clickedItem) {
-  var clickedTipo  = clickedItem.getAttribute('data-tipo')
-  var clickedLabel = clickedItem.getAttribute('data-label')
-
-  // Solo proyectos visibles del mismo tipo
-  siblings = []
-  items.forEach(function(item) {
-    if (item.classList.contains('is-hidden')) return
-    if (item.getAttribute('data-tipo') !== clickedTipo) return
-    siblings.push({
-      label:    item.getAttribute('data-label')    || '',
-      tipo:     item.getAttribute('data-tipo')     || '',
-      imagenes: JSON.parse(item.getAttribute('data-imagenes') || '[]')
-    })
-  })
-
-  projIdx = siblings.findIndex(function(p) { return p.label === clickedLabel })
-  if (projIdx < 0) projIdx = 0
-
-  loadProject()
-
-  lb.classList.add('is-open')
-  lb.setAttribute('aria-hidden', 'false')
-  document.body.style.overflow     = 'hidden'
-  document.body.style.paddingRight = sbw() + 'px'
-}
-
-// ── Cerrar ──
-function closeLb() {
-  lb.classList.remove('is-open')
-  lb.setAttribute('aria-hidden', 'true')
-  document.body.style.overflow     = ''
-  document.body.style.paddingRight = ''
-  setTimeout(function() {
-    if (ioSlides) { ioSlides.disconnect(); ioSlides = null }
-    if (lbScroll) lbScroll.innerHTML = ''
-  }, 420)
-}
-
-// ── Navegación entre proyectos ──
-function goPrev() { if (projIdx > 0) { projIdx--; loadProject() } }
-function goNext() { if (projIdx < siblings.length - 1) { projIdx++; loadProject() } }
-
-// ── Eventos ──
-items.forEach(function(item) {
-  item.addEventListener('click', function() { openLb(item) })
-  item.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(item) }
-  })
-})
-
-lbClose.addEventListener('click', closeLb)
-lbPrev.addEventListener('click', goPrev)
-lbNext.addEventListener('click', goNext)
-
-lb.addEventListener('click', function(e) { if (e.target === lb) closeLb() })
-
-document.addEventListener('keydown', function(e) {
-  if (!lb.classList.contains('is-open')) return
-  if (e.key === 'Escape')     closeLb()
-  if (e.key === 'ArrowLeft')  goPrev()
-  if (e.key === 'ArrowRight') goNext()
-})
-
-// Swipe horizontal → cambiar proyecto / vertical → scroll nativo
-var tx0 = 0, ty0 = 0
-lb.addEventListener('touchstart', function(e) {
-  tx0 = e.touches[0].clientX
-  ty0 = e.touches[0].clientY
-}, { passive: true })
-
-lb.addEventListener('touchend', function(e) {
-  var dx = tx0 - e.changedTouches[0].clientX
-  var dy = ty0 - e.changedTouches[0].clientY
-  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 55) {
-    if (dx > 0) goNext(); else goPrev()
+  function closeLb() {
+    lb.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
   }
-}, { passive: true })
+
+  items.forEach(item => {
+    item.addEventListener('click', () => openCatalog(item));
+  });
+
+  lbClose.addEventListener('click', closeLb);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
 </script>
