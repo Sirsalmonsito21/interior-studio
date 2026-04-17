@@ -1,14 +1,15 @@
 ---
 const categorias = [
+  // ================= RESIDENCIAL =================
   {
     id: "sala",
     label: "Sala de Estar",
     tipo: "RESIDENCIAL",
     filtro: "residencial",
-    cover: "/images/sala1.jpeg",
+    cover: "/images/sala1.webp",
     imagenes: [
-      "/images/sala1.jpeg", "/images/sala2.jpeg", "/images/sala3.jpeg", "/images/sala4.jpeg",
-      "/images/sala5.jpeg", "/images/sala6.jpeg", "/images/sala7.jpeg", "/images/sala8.png",
+      "/images/sala1.webp", "/images/sala2.webp", "/images/sala3.webp", "/images/sala4.webp",
+      "/images/sala5.webp", "/images/sala6.webp", "/images/sala7.webp", 
     ]
   },
   {
@@ -16,9 +17,9 @@ const categorias = [
     label: "Comedor",
     tipo: "RESIDENCIAL",
     filtro: "residencial",
-    cover: "/images/comedor1.jpeg",
+    cover: "/images/comedor1.webp",
     imagenes: [
-      "/images/comedor1.jpeg", "/images/comedor2.jpeg", "/images/comedor3.jpeg",
+      "/images/comedor1.webp", "/images/comedor2.webp", "/images/comedor3.webp",
     ]
   },
   {
@@ -26,19 +27,9 @@ const categorias = [
     label: "Cocina",
     tipo: "RESIDENCIAL",
     filtro: "residencial",
-    cover: "/images/cocina1-1.png",
+    cover: "/images/cocina1-1.webp",
     imagenes: [
-      "/images/cocina1-1.png", "/images/cocina2.jpeg", "/images/cocina3.png", "/images/cocina4.jpeg", "/images/cocina5.jpeg",
-    ]
-  },
-  {
-    id: "dormitorio",
-    label: "Dormitorio",
-    tipo: "RESIDENCIAL",
-    filtro: "residencial",
-    cover: "/images/dormitorio1.jpeg",
-    imagenes: [
-      "/images/dormitorio1.jpeg", "/images/dormitorio2.jpeg", "/images/dormitorio3.jpeg", "/images/dormitorio4.jpeg",
+      "/images/cocina1-1.webp", "/images/cocina2.webp", "/images/cocina3.webp", "/images/cocina4.webp", "/images/cocina5.webp",
     ]
   },
   {
@@ -46,19 +37,41 @@ const categorias = [
     label: "Baño",
     tipo: "RESIDENCIAL",
     filtro: "residencial",
-    cover: "/images/baño1.jpeg",
+    cover: "/images/baño1.webp",
     imagenes: [
-      "/images/baño1.jpeg", "/images/baño2.jpeg", "/images/baño3.jpeg",
+      "/images/baño1.webp", "/images/baño2.webp",
     ]
   },
   {
-    id: "comercial",
-    label: "Comercial",
-    tipo: "COMERCIAL",
-    filtro: "comercial",
-    cover: "/images/oficina2.png",
+    id: "entrada",
+    label: "Entrada",
+    tipo: "RESIDENCIAL",
+    filtro: "residencial",
+    cover: "/images/entrada2.webp",
     imagenes: [
-      "/images/oficina1.png", "/images/oficina2.png"
+      "/images/entrada2.webp","/images/entrada1.webp"
+    ]
+  },
+
+  // ================= INFANTIL / KIDS =================
+  {
+    id: "bebes",
+    label: "Bebés",
+    tipo: "INFANTIL",
+    filtro: "ninos",
+    cover: "/images/bebe1.webp", 
+    imagenes: [
+      "/images/bebe1.webp", "/images/bebe2.webp", "/images/bebe3.webp", 
+    ]
+  },
+  {
+    id: "ninas",
+    label: "Niñas",
+    tipo: "INFANTIL",
+    filtro: "ninos",
+    cover: "/images/niñaa1.webp",
+    imagenes: [
+      "/images/niñaa1.webp", "/images/niñaa2.webp", "/images/niñaa3.webp",
     ]
   },
   {
@@ -66,9 +79,31 @@ const categorias = [
     label: "Niños",
     tipo: "INFANTIL",
     filtro: "ninos",
-    cover: "/images/niña4.jpeg",
+    cover: "/images/niño1.webp", 
     imagenes: [
-      "/images/niña1.jpeg", "/images/niña2.jpeg", "/images/niña3.jpeg", "/images/niña4.jpeg",
+      "/images/niño1.webp","/images/niño2.webp","/images/niño3.webp",
+    ]
+  },
+
+  // ================= COMERCIAL =================
+  {
+    id: "oficina",
+    label: "Oficina Ejecutiva",
+    tipo: "COMERCIAL",
+    filtro: "comercial",
+    cover: "/images/OFi_2.webp",
+    imagenes: [
+      "/images/OFi_2.webp", "/images/OFi_1.webp"
+    ]
+  },
+  {
+    id: "puesto",
+    label: "Puesto Comercial",
+    tipo: "COMERCIAL",
+    filtro: "comercial",
+    cover: "/images/CC11.webp", 
+    imagenes: [
+      "/images/CC11.webp" 
     ]
   }
 ]
@@ -90,7 +125,7 @@ const categorias = [
     </header>
   </div>
 
-  <div class="prt__grid">
+  <div class="prt__grid" id="prtGrid">
     {categorias.map(cat => (
       <div class="prt__item" data-filtro={cat.filtro} data-imagenes={JSON.stringify(cat.imagenes)} data-label={cat.label}>
         <div class="prt__card">
@@ -135,6 +170,8 @@ const categorias = [
   .prt__header-container { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
 
   .prt__header { margin-bottom: 4rem; text-align: center; }
+  .prt__mask { overflow: hidden; } 
+  
   .prt__heading { 
     font-family: 'Playfair Display', serif; 
     font-size: clamp(3.5rem, 10vw, 8rem); 
@@ -202,7 +239,7 @@ const categorias = [
   }
 
   /* =============================================
-     LIGHTBOX — FIX DEFINITIVO
+     LIGHTBOX
      ============================================= */
 
   .prt__lb {
@@ -242,11 +279,6 @@ const categorias = [
   .prt__lb-title-box h4 { font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0; font-weight: 400; }
   .prt__lb-title-box span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; font-weight: 600; }
 
-  /*
-    ZONA DE SCROLL:
-    overflow-x: hidden  → elimina el scroll horizontal que se veía en tu screenshot
-    overflow-y: auto    → permite deslizar entre imágenes
-  */
   .prt__lb-content {
     position: absolute;
     top: 0; left: 0;
@@ -258,11 +290,6 @@ const categorias = [
     box-sizing: border-box;
   }
 
-  /*
-    CADA SLIDE:
-    - Usa el viewport completo como caja
-    - overflow: hidden → la imagen nunca rompe los bordes
-  */
   .prt__lb-img-wrapper {
     width: 100%;
     height: 100vh;
@@ -274,13 +301,6 @@ const categorias = [
     overflow: hidden;
   }
 
-  /*
-    LA IMAGEN:
-    - max-width: 100% → no desborda el ancho del wrapper (que ya tiene padding)
-    - max-height: 85vh → no supera el alto visible
-    - width/height: auto → respeta la proporción real (vertical, horizontal, cuadrada)
-    No se necesita object-fit porque la imagen no está forzada a ningún tamaño fijo.
-  */
   .prt__lb-img {
     display: block;
     max-width: 100%;
@@ -302,63 +322,100 @@ const categorias = [
 </style>
 
 <script>
-  const items = document.querySelectorAll('.prt__item');
-  const btns = document.querySelectorAll('.prt__cat-btn');
-  const lb = document.getElementById('prtLightbox')!;
-  const lbScrollArea = document.getElementById('lbScrollArea')!;
-  const lbTitle = document.getElementById('lbProjectTitle')!;
-  const lbClose = document.querySelector('.prt__lb-close')!;
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btns.forEach(b => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const filter = btn.getAttribute('data-filter');
-      items.forEach(item => {
-        if (filter === 'all' || item.getAttribute('data-filtro') === filter) {
-          (item as HTMLElement).style.display = 'block';
-        } else {
-          (item as HTMLElement).style.display = 'none';
-        }
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initPortafolio() {
+    // 1. Animación del Título Principal
+    gsap.fromTo('.prt__heading', 
+      { y: 80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.prt__header-container', start: 'top 85%' } }
+    );
+
+    // 2. Animación de los Botones de Filtro (Segura)
+    gsap.fromTo('.prt__cat-btn', 
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: '.prt__header-container', start: 'top 85%' } }
+    );
+
+    // 3. Animación de las Imágenes (Grid Segura)
+    gsap.fromTo('.prt__item', 
+      { y: 60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: '#prtGrid', start: 'top 80%' } }
+    );
+
+    // Lógica de Filtros y Lightbox
+    const items = document.querySelectorAll('.prt__item');
+    const btns = document.querySelectorAll('.prt__cat-btn');
+    const lb = document.getElementById('prtLightbox');
+    const lbScrollArea = document.getElementById('lbScrollArea');
+    const lbTitle = document.getElementById('lbProjectTitle');
+    const lbClose = document.querySelector('.prt__lb-close');
+
+    // Funcionalidad de filtrado
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        
+        const filter = btn.getAttribute('data-filter');
+        
+        items.forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-filtro') === filter) {
+            (item as HTMLElement).style.display = 'block';
+            gsap.fromTo(item, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
+          } else {
+            (item as HTMLElement).style.display = 'none';
+          }
+        });
+        ScrollTrigger.refresh(); // Refrescar animaciones tras cambiar tamaños
       });
     });
-  });
 
-  function openCatalog(item: Element) {
-    const imagenes = JSON.parse(item.getAttribute('data-imagenes') || '[]');
-    const label = item.getAttribute('data-label') || '';
+    if (!lb || !lbScrollArea || !lbTitle || !lbClose) return;
 
-    (lbTitle as HTMLElement).innerText = label.toUpperCase();
-    lbScrollArea.innerHTML = '';
+    function openCatalog(item) {
+      const imagenes = JSON.parse(item.getAttribute('data-imagenes') || '[]');
+      const label = item.getAttribute('data-label') || '';
 
-    imagenes.forEach((src: string) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'prt__lb-img-wrapper';
-      const img = document.createElement('img');
-      img.src = src;
-      img.className = 'prt__lb-img';
-      img.alt = 'Proyecto Studio2810';
-      img.loading = 'lazy';
-      wrapper.appendChild(img);
-      lbScrollArea.appendChild(wrapper);
+      (lbTitle as HTMLElement).innerText = label.toUpperCase();
+      lbScrollArea!.innerHTML = '';
+
+      imagenes.forEach((src) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'prt__lb-img-wrapper';
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'prt__lb-img';
+        img.alt = 'Proyecto Studio2810';
+        img.loading = 'lazy';
+        wrapper.appendChild(img);
+        lbScrollArea!.appendChild(wrapper);
+      });
+
+      lb!.classList.add('is-open');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      lbScrollArea!.scrollTop = 0;
+    }
+
+    function closeLb() {
+      lb!.classList.remove('is-open');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+
+    items.forEach(item => {
+      item.addEventListener('click', () => openCatalog(item));
     });
 
-    lb.classList.add('is-open');
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    lbScrollArea.scrollTop = 0;
+    lbClose.addEventListener('click', closeLb);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
   }
 
-  function closeLb() {
-    lb.classList.remove('is-open');
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-  }
-
-  items.forEach(item => {
-    item.addEventListener('click', () => openCatalog(item));
-  });
-
-  lbClose.addEventListener('click', closeLb);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+  // Inicializar en carga y tras navegación
+  initPortafolio();
+  document.addEventListener('astro:after-swap', initPortafolio);
 </script>
