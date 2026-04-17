@@ -26,7 +26,8 @@ const servicios = [
   },
 ]
 
-const lineaColores = ["#548235", "#FAC606", "#C55A11"]
+// Colores del "caminito" — uno por conector
+const lineaColores = ["#a07846", "#C55A11", "#548235"]
 ---
 
 <section class="srv" id="servicios">
@@ -46,13 +47,11 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
             <div class="srv__parallax-inner">
               <img class="srv__image" src={s.imagen} alt={s.titulo} loading="eager" />
             </div>
+            {/* Número flotante sobre la imagen — solo desktop */}
+            <div class="srv__num-overlay">{s.numero}</div>
           </div>
 
           <div class="srv__text-col">
-            <div class="srv__mask srv__mask-num">
-              <div class="srv__num">{s.numero}</div>
-            </div>
-            
             <div class="srv__mask srv__mask-title">
               <h3 class="srv__title">
                 {s.titulo.split('\n').map((line, j) => (
@@ -60,23 +59,50 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
                 ))}
               </h3>
             </div>
+
+            {/* Acento decorativo bajo el título */}
+            <div class="srv__accent-line"></div>
             
             <div class="srv__mask srv__mask-desc">
               <p class="srv__desc">{s.descripcion}</p>
             </div>
+
+            {/* Tag de número en mobile */}
+            <div class="srv__num-mobile">{s.numero}</div>
           </div>
 
         </div>
 
-        {/* LÍNEA VERTICAL CONECTORA ENTRE IMÁGENES */}
+        {/* CAMINITO entre servicios — solo desktop via CSS */}
         {i < servicios.length - 1 && (
-          <div class="srv__wave-wrap" data-index={i}>
-            <svg class="srv__wave" viewBox="0 0 1000 150" preserveAspectRatio="none">
-              <path class="srv__wave-path" 
-                d={i % 2 === 0 
-                  ? "M 250,0 C 250,80 750,70 750,150" 
-                  : "M 750,0 C 750,80 250,70 250,150"} 
-                fill="none" stroke={lineaColores[i]} stroke-width="3" stroke-linecap="round" />
+          <div class="srv__connector" data-index={i}>
+            <svg class="srv__wave" viewBox="0 0 1000 160" preserveAspectRatio="none">
+              <path
+                class="srv__wave-path"
+                d={i % 2 === 0
+                  ? "M 275,0 C 275,90 725,70 725,160"
+                  : "M 725,0 C 725,90 275,70 275,160"}
+                fill="none"
+                stroke={lineaColores[i]}
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              {/* Punto de inicio */}
+              <circle
+                class="srv__wave-dot srv__wave-dot--start"
+                cx={i % 2 === 0 ? "275" : "725"}
+                cy="0"
+                r="5"
+                fill={lineaColores[i]}
+              />
+              {/* Punto de llegada */}
+              <circle
+                class="srv__wave-dot srv__wave-dot--end"
+                cx={i % 2 === 0 ? "725" : "275"}
+                cy="160"
+                r="5"
+                fill={lineaColores[i]}
+              />
             </svg>
           </div>
         )}
@@ -115,25 +141,54 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
   .srv__mask { overflow: hidden; padding-bottom: 5px; }
   .srv__items { display: flex; flex-direction: column; gap: 0; }
   
-  .srv__item { display: grid; grid-template-columns: 55fr 45fr; align-items: center; min-height: 560px; position: relative; z-index: 5; }
+  .srv__item {
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    align-items: center;
+    min-height: 560px;
+    position: relative;
+    z-index: 5;
+  }
   
   .srv__item--reverse { grid-template-columns: 45fr 55fr; }
   .srv__item--reverse .srv__image-col { order: 2; }
   .srv__item--reverse .srv__text-col  { order: 1; }
 
-  .srv__image-col { position: relative; align-self: stretch; overflow: hidden; min-height: 560px; }
+  /* ── Imagen ── */
+  .srv__image-col {
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+    min-height: 560px;
+  }
   .srv__parallax-inner { position: absolute; top: -15%; left: 0; width: 100%; height: 130%; }
   .srv__image { width: 100%; height: 100%; object-fit: cover; }
 
-  .srv__text-col { display: flex; flex-direction: column; gap: 1.6rem; padding: 4rem 5vw; }
-
-  .srv__num { 
-    font-family: 'Cormorant Garamond', serif; 
-    font-size: clamp(4.5rem, 9vw, 8rem);
+  /* Número flotante sobre imagen — desktop */
+  .srv__num-overlay {
+    position: absolute;
+    bottom: 1.8rem;
+    right: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 10vw, 9rem);
     line-height: 1;
-    color: rgba(160, 120, 70, 0.28); 
-    margin-bottom: 0.5rem; 
+    color: rgba(255,255,255,0.18);
+    pointer-events: none;
+    z-index: 2;
+    letter-spacing: -0.04em;
+    /* Sombra para que se lea sobre cualquier imagen */
+    text-shadow: 0 2px 24px rgba(0,0,0,0.18);
+    transition: color 0.4s ease;
   }
+  .srv__item:hover .srv__num-overlay {
+    color: rgba(160, 120, 70, 0.35);
+  }
+
+  /* Número mobile — oculto en desktop */
+  .srv__num-mobile { display: none; }
+
+  /* ── Texto ── */
+  .srv__text-col { display: flex; flex-direction: column; gap: 1.4rem; padding: 4rem 5vw; }
 
   .srv__title { 
     font-family: 'Playfair Display', serif;
@@ -143,54 +198,85 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
     color: #0a0a08;
     letter-spacing: -0.02em;
   }
+
+  /* Línea acento bajo el título */
+  .srv__accent-line {
+    width: 40px;
+    height: 2px;
+    background: #a07846;
+    border-radius: 2px;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease;
+  }
+  /* Se activa con la clase que agrega el JS */
+  .srv__item-wrap.is-visible .srv__accent-line {
+    opacity: 1;
+    transform: scaleX(1);
+  }
   
   .srv__desc { 
     font-family: 'Inter', sans-serif; 
-    font-size: 1.15rem; 
+    font-size: 1.05rem; 
     font-weight: 300; 
-    line-height: 1.6;
-    color: rgba(20, 18, 14, 0.82); 
+    line-height: 1.75;
+    color: rgba(20, 18, 14, 0.75); 
     max-width: 420px; 
     text-align: justify; 
   }
 
-  .srv__wave-wrap { 
+  /* ── Conector / caminito ── */
+  .srv__connector { 
     width: 100%;
-    height: 120px; 
+    height: 140px;
     display: flex; 
     justify-content: center;
-    margin: 2rem 0; 
+    margin: 1rem 0;
     position: relative; 
-    z-index: 1; 
+    z-index: 1;
+    /* Oculto en móvil y tablet por defecto */
+    display: none;
   }
   .srv__wave { width: 100%; max-width: 1000px; height: 100%; overflow: visible; }
   .srv__wave-path { stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+  .srv__wave-dot { opacity: 0; }
 
+  /* Solo se muestra en desktop */
+  @media (min-width: 1025px) {
+    .srv__connector { display: flex; }
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 1024px) {
-    .srv__wave-wrap { display: none; }
-    .srv__item, .srv__item--reverse { display: flex; flex-direction: column; min-height: unset; gap: 0; margin-bottom: 5rem; }
+    .srv__item, .srv__item--reverse {
+      display: flex;
+      flex-direction: column;
+      min-height: unset;
+      gap: 0;
+      margin-bottom: 5rem;
+    }
     .srv__text-col { display: contents; }
-    .srv__item .srv__mask-num { order: 1; text-align: center; margin-top: 1rem; }
-    .srv__item .srv__mask-title { order: 2; text-align: center; padding: 0 5vw; margin-bottom: 2.5rem; }
-    
-    /* SOLUCIÓN DEFINITIVA: El contenedor se vuelve automático */
-    .srv__item .srv__image-col, .srv__item--reverse .srv__image-col { 
-      order: 3; 
+
+    .srv__item .srv__mask-title { order: 2; text-align: center; padding: 0 5vw; margin-bottom: 0.5rem; }
+    .srv__item .srv__accent-line { order: 3; margin: 0 auto 1rem; }
+    .srv__item .srv__mask-desc  { order: 4; text-align: center; padding: 0 5vw; }
+    .srv__desc { margin-left: auto; margin-right: auto; text-align: center; }
+
+    .srv__item .srv__image-col,
+    .srv__item--reverse .srv__image-col { 
+      order: 5;
       width: 100%; 
       height: auto;
       min-height: auto;
-      margin-bottom: 2.5rem; 
+      margin-bottom: 0;
     }
-    
-    /* Quitamos el position absolute y alturas forzadas del parallax */
     .srv__parallax-inner {
       position: relative;
       top: 0;
       height: auto;
       width: 100%;
     }
-
-    /* La imagen toma el 100% del ancho del celular y muestra el 100% de su propia altura sin recortar nada */
     .srv__image {
       width: 100%;
       height: auto;
@@ -198,8 +284,18 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
       display: block;
     }
 
-    .srv__item .srv__mask-desc { order: 4; text-align: center; padding: 0 5vw; }
-    .srv__desc { margin-left: auto; margin-right: auto; text-align: center; }
+    /* Número desktop oculto, mobile visible */
+    .srv__num-overlay { display: none; }
+    .srv__num-mobile {
+      display: block;
+      order: 1;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 10vw, 5rem);
+      line-height: 1;
+      color: rgba(160, 120, 70, 0.3);
+      margin-bottom: 0.2rem;
+    }
   }
 </style>
 
@@ -210,52 +306,71 @@ const lineaColores = ["#548235", "#FAC606", "#C55A11"]
 
   function initServicios() {
     gsap.from('.srv__heading', {
-      y: 50, opacity: 0, duration: 1, scrollTrigger: { trigger: ".srv__intro", start: "top 90%" }
+      y: 50, opacity: 0, duration: 1,
+      scrollTrigger: { trigger: ".srv__intro", start: "top 90%" }
     })
 
     document.querySelectorAll('.srv__item-wrap').forEach((wrap) => {
-      const item = wrap.querySelector('.srv__item');
-      if (!item) return;
+      const item = wrap.querySelector('.srv__item')
+      if (!item) return
 
-      // 1. Textos: Entrada más fluida
+      // Textos
       gsap.from(item.querySelectorAll('.srv__mask > *'), {
-        y: 80, opacity: 0, duration: 1.2, ease: "power3.out", stagger: 0.2, 
+        y: 80, opacity: 0, duration: 1.2, ease: "power3.out", stagger: 0.2,
         scrollTrigger: { trigger: item, start: "top 80%" }
       })
 
-      // 2. Imágenes: Efecto Revelado "Cortina" + Parallax
-      const imgCol = item.querySelector('.srv__image-col');
-      const img = item.querySelector('.srv__image');
+      // Activar la línea acento (CSS transition)
+      ScrollTrigger.create({
+        trigger: item,
+        start: "top 78%",
+        onEnter: () => wrap.classList.add('is-visible'),
+      })
+
+      // Imagen: revelado cortina
+      const imgCol = item.querySelector('.srv__image-col')
+      const img    = item.querySelector('.srv__image')
 
       if (imgCol && img) {
-        // Revelado de la caja
-        gsap.fromTo(imgCol, 
+        gsap.fromTo(imgCol,
           { clipPath: "inset(100% 0 0 0)" },
-          { clipPath: "inset(0% 0 0 0)", duration: 1.5, ease: "power3.inOut", scrollTrigger: { trigger: item, start: "top 75%" } }
+          { clipPath: "inset(0% 0 0 0)", duration: 1.5, ease: "power3.inOut",
+            scrollTrigger: { trigger: item, start: "top 75%" } }
         )
-        
-        // Parallax de la foto: SOLO EN COMPUTADORAS
         if (window.innerWidth > 1024) {
           gsap.to(img, {
-            yPercent: 25, ease: "none", scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
+            yPercent: 25, ease: "none",
+            scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
           })
         }
       }
     })
 
-    // 3. Líneas verticales bajando
-    if(window.innerWidth > 1024) {
-      document.querySelectorAll('.srv__wave-path').forEach((path: any) => {
+    // Caminito animado — solo desktop
+    if (window.innerWidth > 1024) {
+      document.querySelectorAll('.srv__connector').forEach((connector) => {
+        const path = connector.querySelector('.srv__wave-path') as SVGPathElement | null
+        const dots = connector.querySelectorAll('.srv__wave-dot')
+
+        if (!path) return
         const length = path.getTotalLength()
         gsap.set(path, { strokeDasharray: length, strokeDashoffset: length })
-        gsap.to(path, {
-          strokeDashoffset: 0, 
-          scrollTrigger: { trigger: path, start: "top 65%", end: "bottom 35%", scrub: 1 }
+        gsap.set(dots, { opacity: 0 })
+
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: connector, start: "top 70%", end: "bottom 30%", scrub: 1 }
         })
+
+        // Punto de inicio aparece primero
+        tl.to(dots[0], { opacity: 1, duration: 0.1 })
+        // Línea se dibuja
+        tl.to(path, { strokeDashoffset: 0, duration: 1, ease: "none" }, 0.05)
+        // Punto de llegada aparece al final
+        tl.to(dots[1], { opacity: 1, duration: 0.1 }, 0.9)
       })
     }
   }
   
   initServicios()
-  document.addEventListener('astro:after-swap', initServicios);
+  document.addEventListener('astro:after-swap', initServicios)
 </script>

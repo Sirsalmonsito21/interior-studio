@@ -80,9 +80,10 @@
 
 <style>
   .contact {
-    background: #0a0a08; /* FONDO OSCURO */
-    padding: 10rem 5vw;
-    color: #fff; /* TEXTO BLANCO */
+    background: #0a0a08;
+    padding: 8rem 5vw; /* Reducido un poco para tablets */
+    color: #fff;
+    overflow: hidden; /* Evita cualquier desborde lateral */
   }
 
   .contact__inner {
@@ -90,7 +91,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    gap: 8rem;
+    gap: 4rem; /* Reducido de 8rem para que quepa mejor en laptops */
     align-items: center;
   }
 
@@ -107,11 +108,11 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin-bottom: 2rem;
-    color: rgba(255, 255, 255, 0.6); /* Label suavizado */
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .contact__title {
-    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-size: clamp(2.2rem, 5vw, 3.8rem); /* Ajustado el mínimo */
     font-weight: 400;
     line-height: 1.1;
     margin-bottom: 2rem;
@@ -120,16 +121,17 @@
   .contact__desc {
     font-size: 1.05rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7); /* Texto descriptivo suavizado */
+    color: rgba(255, 255, 255, 0.7);
     max-width: 400px;
     margin: 0 auto;
   }
 
-  /* --- AJUSTES DEL FORMULARIO PARA FONDO OSCURO --- */
   .contact__form-wrap {
-    background: #111; /* Un gris casi negro para que resalte del fondo */
-    padding: 4rem;
-    border: 1px solid rgba(255, 255, 255, 0.05); /* Borde muy sutil */
+    background: #111;
+    padding: 3.5rem; /* Ajustado */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    width: 100%; /* Asegura que no crezca más que su contenedor */
+    box-sizing: border-box; /* Crucial para que el padding no sume al ancho */
   }
 
   .contact__row {
@@ -154,21 +156,22 @@
   .contact__input, .contact__select, .contact__textarea {
     padding: 1rem 0;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Línea blanca sutil */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     background: transparent;
     color: #fff;
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  /* Cambiar color del placeholder */
   .contact__input::placeholder, .contact__textarea::placeholder {
     color: rgba(255, 255, 255, 0.3);
   }
 
   .contact__submit {
     width: 100%;
-    background: #fff; /* Botón blanco */
-    color: #000; /* Texto negro */
+    background: #fff;
+    color: #000;
     border: none;
     padding: 1.2rem;
     text-transform: uppercase;
@@ -177,11 +180,43 @@
     transition: background 0.3s ease;
   }
 
-  .contact__submit:hover {
-    background: #e0e0e0;
+  /* --- MEDIA QUERIES --- */
+
+  /* Para Laptops pequeñas / Tablets grandes */
+  @media (max-width: 1100px) {
+    .contact__inner {
+      gap: 3rem;
+    }
+    .contact__form-wrap {
+      padding: 2.5rem;
+    }
   }
 
-  @media (max-width: 1024px) {
-    .contact__inner { grid-template-columns: 1fr; gap: 4rem; }
+  /* Para Tablets y Móviles */
+  @media (max-width: 900px) {
+    .contact {
+      padding: 6rem 5vw;
+    }
+    .contact__inner {
+      grid-template-columns: 1fr; /* Una sola columna */
+      gap: 4rem;
+    }
+    .contact__info {
+      text-align: center;
+    }
+  }
+
+  /* Específico para Teléfonos */
+  @media (max-width: 600px) {
+    .contact__row {
+      grid-template-columns: 1fr; /* Nombre y Email uno debajo del otro */
+      gap: 0;
+    }
+    .contact__form-wrap {
+      padding: 2rem 1.5rem; /* Padding más pequeño para que respire en el cel */
+    }
+    .contact__title {
+      font-size: 2.5rem; /* Tamaño fijo cómodo para móvil */
+    }
   }
 </style>
