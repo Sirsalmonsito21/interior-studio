@@ -45,14 +45,13 @@
         </div>
 
         <div class="contact__field">
-          <label class="contact__field-label" for="servicio">Servicio de interés</label>
-          <select class="contact__input" id="servicio" name="servicio" required>
-            <option value="" disabled selected>Selecciona un servicio...</option>
-            <option value="Diseño de Interiores">Diseño de Interiores</option>
-            <option value="Remodelación">Remodelación</option>
-            <option value="Mobiliario a Medida">Mobiliario a Medida</option>
-            <option value="Consultoría">Consultoría</option>
-            <option value="Otro">Otro</option>
+          <label class="contact__field-label" for="servicio">¿En qué podemos ayudarte?</label>
+          <select class="contact__select" id="servicio" name="servicio" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="residencial">Diseño Residencial</option>
+            <option value="comercial">Diseño Comercial</option>
+            <option value="infantil">Diseño Infantil / Kids</option>
+            <option value="otro">Otro</option>
           </select>
         </div>
 
@@ -63,20 +62,16 @@
             id="mensaje"
             name="mensaje"
             rows="4"
-            placeholder="Detalles sobre tu espacio, ideas o presupuesto..."
+            placeholder="Cuéntanos un poco más..."
             required
           ></textarea>
         </div>
 
-        <button class="contact__submit" type="submit" id="submitBtn">
+        <button class="contact__submit" type="submit">
           <span class="contact__submit-text">Enviar mensaje</span>
-          <svg class="contact__submit-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
         </button>
 
-        <div class="contact__msg" id="formMsg"></div>
+        <div class="contact__feedback" id="formFeedback"></div>
       </form>
     </div>
 
@@ -84,70 +79,57 @@
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
-
   .contact {
-    background-color: #111614;
-    color: #F0EDE8;
-    padding: 120px 0;
-    overflow: hidden;
+    background: #0a0a08; /* FONDO OSCURO */
+    padding: 10rem 5vw;
+    color: #fff; /* TEXTO BLANCO */
   }
 
   .contact__inner {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 5vw;
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    gap: 8vw;
-    align-items: start;
+    gap: 8rem;
+    align-items: center;
   }
 
-  /* --- INFO COL --- */
+  .contact__info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .contact__label {
-    font-family: 'Inter', sans-serif;
-    display: inline-block;
-    font-size: 0.75rem;
+    display: block;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
     margin-bottom: 2rem;
-    color: rgba(240, 237, 232, 0.6);
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6); /* Label suavizado */
   }
 
   .contact__title {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(3rem, 5vw, 5rem);
-    font-weight: 300;
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-weight: 400;
     line-height: 1.1;
     margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-  }
-
-  .contact__title em {
-    font-style: italic;
-    color: #a07846;
   }
 
   .contact__desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
-    color: rgba(240, 237, 232, 0.7);
+    color: rgba(255, 255, 255, 0.7); /* Texto descriptivo suavizado */
     max-width: 400px;
-    font-weight: 300;
+    margin: 0 auto;
   }
 
-  /* --- FORM COL --- */
+  /* --- AJUSTES DEL FORMULARIO PARA FONDO OSCURO --- */
   .contact__form-wrap {
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  .contact__form {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+    background: #111; /* Un gris casi negro para que resalte del fondo */
+    padding: 4rem;
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Borde muy sutil */
   }
 
   .contact__row {
@@ -157,244 +139,49 @@
   }
 
   .contact__field {
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    position: relative;
   }
 
   .contact__field-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.05em;
-    color: rgba(240, 237, 232, 0.9);
-    font-weight: 500;
-  }
-
-  .contact__input,
-  .contact__textarea {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(240, 237, 232, 0.2);
-    color: #F0EDE8;
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-    transition: border-color 0.4s ease;
-    border-radius: 0;
-  }
-
-  /* Estilos específicos para el selector desplegable (options) */
-  select.contact__input {
-    cursor: pointer;
-    appearance: none; /* Oculta la flecha por defecto en algunos navegadores */
-  }
-  
-  select.contact__input option {
-    background-color: #111614; /* Fondo oscuro para que se vea bien al abrir */
-    color: #F0EDE8;
-    padding: 10px;
-  }
-
-  .contact__input::placeholder,
-  .contact__textarea::placeholder {
-    color: rgba(240, 237, 232, 0.3);
-  }
-
-  .contact__input:focus,
-  .contact__textarea:focus {
-    outline: none;
-    border-color: #F0EDE8;
-  }
-
-  .contact__textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-
-  /* SUBMIT BUTTON */
-  .contact__submit {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: transparent;
-    border: 1px solid rgba(240, 237, 232, 0.2);
-    color: #F0EDE8;
-    padding: 1.2rem 2.5rem;
-    border-radius: 50px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    margin-bottom: 0.8rem;
+    color: #fff;
+  }
+
+  .contact__input, .contact__select, .contact__textarea {
+    padding: 1rem 0;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Línea blanca sutil */
+    background: transparent;
+    color: #fff;
+    outline: none;
+  }
+
+  /* Cambiar color del placeholder */
+  .contact__input::placeholder, .contact__textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .contact__submit {
+    width: 100%;
+    background: #fff; /* Botón blanco */
+    color: #000; /* Texto negro */
+    border: none;
+    padding: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.4s ease;
-    margin-top: 1rem;
-    font-weight: 500;
+    transition: background 0.3s ease;
   }
 
-  .contact__submit:hover:not(:disabled) {
-    background: #F0EDE8;
-    color: #111614;
+  .contact__submit:hover {
+    background: #e0e0e0;
   }
 
-  .contact__submit-icon {
-    transition: transform 0.4s ease;
-  }
-
-  .contact__submit:hover:not(:disabled) .contact__submit-icon {
-    transform: translateX(4px);
-  }
-
-  .contact__submit:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .contact__msg {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    min-height: 1.5em;
-    font-weight: 400;
-  }
-  .contact__msg.error { color: #ff6b6b; }
-  .contact__msg.success { color: #51cf66; }
-
-  /* --- RESPONSIVE --- */
-  @media (max-width: 900px) {
-    .contact {
-      padding: 80px 0;
-    }
-    .contact__inner {
-      grid-template-columns: 1fr;
-      gap: 4rem;
-    }
-    .contact__desc {
-      max-width: 100%;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .contact__row {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-    .contact__submit {
-      width: 100%;
-      justify-content: center;
-    }
+  @media (max-width: 1024px) {
+    .contact__inner { grid-template-columns: 1fr; gap: 4rem; }
   }
 </style>
-
-<script>
-  // IMPORTACIONES SIEMPRE ARRIBA
-  import gsap from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  // IMPORTANTE: Reemplaza con tus IDs reales de EmailJS
-  const EMAILJS_SERVICE_ID = 'service_XXXXXXXX';
-  const EMAILJS_TEMPLATE_ID = 'template_XXXXXXXX';
-  const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY_XXXXX';
-
-  function initContact() {
-    // Inicializar EmailJS (asegúrate de que window.emailjs exista)
-    if (typeof window !== 'undefined' && window.emailjs) {
-      window.emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
-
-    // Animaciones de entrada
-    gsap.from('.contact__info > *', {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.contact',
-        start: 'top 80%'
-      }
-    });
-
-    gsap.from('.contact__field, .contact__submit', {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.contact__form',
-        start: 'top 85%'
-      }
-    });
-  }
-
-  // Ejecutar animación inicial
-  initContact();
-  document.addEventListener('astro:after-swap', initContact);
-
-  // Lógica del formulario
-  const form = document.getElementById('contactForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const msgEl = document.getElementById('formMsg');
-
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!submitBtn || !msgEl) return;
-
-      // Prevenir spam (limite de 1 envio por minuto)
-      const lastSend = sessionStorage.getItem('last_contact_send');
-      if (lastSend && Date.now() - parseInt(lastSend) < 60000) {
-        setFeedback('Por favor espera un momento antes de enviar otro mensaje.', 'error');
-        return;
-      }
-
-      const nombre = form.elements['nombre'].value.trim();
-      const email = form.elements['email'].value.trim();
-      const servicio = form.elements['servicio'].value;
-      const mensaje = form.elements['mensaje'].value.trim();
-
-      if (!nombre || !email || !servicio || !mensaje) {
-        setFeedback('Por favor completa todos los campos requeridos.', 'error');
-        return;
-      }
-
-      // Validación de email con regex simple
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setFeedback('El email no parece válido.', 'error');
-        return;
-      }
-
-      submitBtn.disabled = true;
-      const btnText = submitBtn.querySelector('.contact__submit-text');
-      if (btnText) btnText.textContent = 'Enviando...';
-
-      try {
-        await window.emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form);
-        sessionStorage.setItem('last_contact_send', String(Date.now()));
-        setFeedback('Mensaje enviado. Te contactaremos pronto.', 'success');
-        form.reset();
-      } catch (err) {
-        setFeedback('Hubo un error al enviar. Intenta de nuevo.', 'error');
-        console.error(err);
-      } finally {
-        submitBtn.disabled = false;
-        if (btnText) btnText.textContent = 'Enviar mensaje';
-      }
-    });
-  }
-
-  function setFeedback(msg, type) {
-    if (!msgEl) return;
-    msgEl.textContent = msg;
-    msgEl.className = `contact__msg ${type}`;
-    setTimeout(() => {
-      msgEl.textContent = '';
-      msgEl.className = 'contact__msg';
-    }, 5000);
-  }
-</script>
