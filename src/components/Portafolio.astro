@@ -98,7 +98,7 @@ const categorias = [
   },
   {
     id: "puesto",
-    label: "Puesto Comercial",
+    label: "Area Comun C.C.",
     tipo: "COMERCIAL",
     filtro: "comercial",
     cover: "/images/CC11.webp", 
@@ -113,12 +113,15 @@ const categorias = [
   <div class="prt__header-container">
     <header class="prt__header">
       <div class="prt__mask">
-        <h2 class="prt__heading">NUESTROS <em>PROYECTOS</em></h2>
-      </div>
+  <h2 class="prt__heading">
+    <span class="prt__heading-normal">Nuestros</span>
+    <span class="prt__heading-italic">proyectos</span>
+  </h2>
+</div>
       
       <nav class="prt__nav">
         <button class="prt__cat-btn is-active" data-filter="all">TODOS</button>
-        <button class="prt__cat-btn" data-filter="ninos">INFANTIL / KIDS</button>
+        <button class="prt__cat-btn" data-filter="ninos">INFANTIL</button>
         <button class="prt__cat-btn" data-filter="residencial">RESIDENCIAL</button>
         <button class="prt__cat-btn" data-filter="comercial">COMERCIAL</button>
       </nav>
@@ -172,15 +175,46 @@ const categorias = [
   .prt__header { margin-bottom: 4rem; text-align: center; }
   .prt__mask { overflow: hidden; } 
   
-  .prt__heading { 
-    font-family: 'Playfair Display', serif; 
-    font-size: clamp(3.5rem, 10vw, 8rem); 
-    font-weight: 500; 
-    color: #0a0a08;
-    letter-spacing: -0.02em;
-    margin-bottom: 2.5rem;
-    line-height: 1;
+  .prt__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alineación a la izquierda para el escalón */
+  margin: 0 auto 2.5rem;
+  width: fit-content;      /* Centra el bloque entero en la pantalla */
+  text-align: left;
+  line-height: 1;
+}
+
+.prt__heading-normal {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem); /* Igual a Esencia */
+  font-weight: 300;
+  color: #0a0a08;
+  text-transform: none;    /* Quitamos las mayúsculas para que sea igual */
+  letter-spacing: -0.02em; /* Letras juntas como pediste */
+  display: block;
+  align-self: flex-start;
+}
+
+.prt__heading-italic {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 5.5vw, 5.5rem); /* Un poco más grande */
+  font-weight: 300;
+  font-style: italic;
+  color: #a07846;
+  display: block;
+  letter-spacing: -0.02em;
+  
+  /* EL ESCALÓN (Igual que en Esencia y Servicios) */
+  padding-left: 4rem;      
+  margin-top: -0.5rem;     /* Se entrelaza un poco con la de arriba */
+}
+
+@media (max-width: 768px) {
+  .prt__heading-italic {
+    padding-left: 2rem;
   }
+}
 
   /* La palabra en cursiva toma el color acento */
   .prt__heading em {

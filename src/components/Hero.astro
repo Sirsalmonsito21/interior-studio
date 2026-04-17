@@ -5,16 +5,16 @@
 const slides = [
   {
     img: "/images/heroimagen.webp",
-    typed: "tienen estilo.",
+    typed: "tienen estilo",
   },
   {
     img: "/images/cocina1-1.webp", 
-    typed: "crean armonía.",
+    typed: "crean armonía",
   },
   {
     img: "/images/niño1.webp",
     // FRASE MÁS CORTA PARA QUE NO ROMPA LA LÍNEA
-    typed: "perduran.",
+    typed: "perduran",
   },
 ]
 ---
@@ -47,9 +47,7 @@ const slides = [
     </div>
   </div>
 
-  <div class="hero__progress-container">
-    <div class="hero__progress-bar" id="heroProgress"></div>
-  </div>
+  
 </section>
 
 <script is:inline define:vars={{ slidesData: slides }}>
@@ -154,7 +152,6 @@ const slides = [
     const slidesEls = document.querySelectorAll('.hero__slide');
     const images = document.querySelectorAll('.hero__slide-img');
     const wrapper = document.getElementById('heroTextWrapper');
-    const progressBar = document.getElementById('heroProgress');
     const elTyped = document.getElementById('heroTyped');
     
     let current = 0;
@@ -170,16 +167,13 @@ const slides = [
     gsap.to(elTyped, { opacity: 1, duration: 1.2, ease: "power2.out", onComplete: startWait });
 
     function startWait() {
-      gsap.fromTo(progressBar, 
-        { width: '0%' }, 
-        { width: '100%', duration: 5, ease: "none", onComplete: fadeOutAndTransition }
-      );
+      setTimeout(fadeOutAndTransition, 5000);
     }
 
     function fadeOutAndTransition() {
       // 1. Desvanecemos el texto actual (Fade Out) y reiniciamos la barra
       gsap.to(elTyped, { opacity: 0, duration: 0.8, ease: "power2.inOut" });
-      gsap.set(progressBar, { width: '0%' });
+      
 
       const next = (current + 1) % slidesEls.length;
       const prevSlide = slidesEls[current];

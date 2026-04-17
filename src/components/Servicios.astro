@@ -26,15 +26,23 @@ const servicios = [
   },
 ]
 
-// Colores del "caminito" — uno por conector
 const lineaColores = ["#a07846", "#C55A11", "#548235"]
+
+const conectores = [
+  "M 275,0 C 240,50 190,85 330,112 C 460,138 600,98 725,160",
+  "M 725,0 C 762,42 808,92 655,118 C 510,142 375,102 275,160",
+  "M 275,0 C 228,58 175,98 345,120 C 490,140 615,92 725,160",
+]
 ---
 
 <section class="srv" id="servicios">
 
   <div class="srv__intro">
-    <div class="srv__mask" style="text-align: center;">
-      <h2 class="srv__heading">Nuestros <em>servicios</em></h2>
+    <div class="srv__mask">
+      <h2 class="srv__heading">
+        <span class="srv__heading-normal">Nuestros</span>
+        <span class="srv__heading-italic">servicios</span>
+      </h2>
     </div>
   </div>
 
@@ -42,12 +50,11 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
     {servicios.map((s, i) => (
       <div class="srv__item-wrap">
         <div class={`srv__item ${i % 2 === 0 ? 'srv__item--normal' : 'srv__item--reverse'}`}>
-          
+
           <div class="srv__image-col">
             <div class="srv__parallax-inner">
               <img class="srv__image" src={s.imagen} alt={s.titulo} loading="eager" />
             </div>
-            {/* Número flotante sobre la imagen — solo desktop */}
             <div class="srv__num-overlay">{s.numero}</div>
           </div>
 
@@ -59,48 +66,39 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
                 ))}
               </h3>
             </div>
-
-            {/* Acento decorativo bajo el título */}
             <div class="srv__accent-line"></div>
-            
             <div class="srv__mask srv__mask-desc">
               <p class="srv__desc">{s.descripcion}</p>
             </div>
-
-            {/* Tag de número en mobile */}
             <div class="srv__num-mobile">{s.numero}</div>
           </div>
 
         </div>
 
-        {/* CAMINITO entre servicios — solo desktop via CSS */}
         {i < servicios.length - 1 && (
           <div class="srv__connector" data-index={i}>
             <svg class="srv__wave" viewBox="0 0 1000 160" preserveAspectRatio="none">
               <path
                 class="srv__wave-path"
-                d={i % 2 === 0
-                  ? "M 275,0 C 275,90 725,70 725,160"
-                  : "M 725,0 C 725,90 275,70 275,160"}
+                d={conectores[i]}
                 fill="none"
                 stroke={lineaColores[i]}
-                stroke-width="2"
+                stroke-width="10"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               />
-              {/* Punto de inicio */}
               <circle
                 class="srv__wave-dot srv__wave-dot--start"
                 cx={i % 2 === 0 ? "275" : "725"}
                 cy="0"
-                r="5"
+                r="9"
                 fill={lineaColores[i]}
               />
-              {/* Punto de llegada */}
               <circle
                 class="srv__wave-dot srv__wave-dot--end"
                 cx={i % 2 === 0 ? "725" : "275"}
                 cy="160"
-                r="5"
+                r="9"
                 fill={lineaColores[i]}
               />
             </svg>
@@ -112,35 +110,64 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
 </section>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:wght@500&display=swap');
-  
-  .srv { background: #f5f2ee; padding: 4rem 0 10rem; overflow: hidden; }
-  
-  .srv__intro { max-width: 1300px; margin: 0 auto 5rem; padding: 0 5vw; }
-  
-  .srv__heading { 
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 3.8vw, 3.6rem); 
-    font-weight: 300; 
-    color: #0a0a08; 
-    text-transform: uppercase; 
-    letter-spacing: 0.1em;
-    margin: 0;
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant+Garamond:wght@300;400;500&display=swap');
+
+  .srv {
+    background: #f5f2ee;
+    padding: 4rem 0 2rem;
+    overflow: hidden;
   }
-  
-  .srv__heading em { 
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 4.5vw, 4.5rem); 
-    font-weight: 300; 
-    color: #a07846; 
-    font-style: italic;
-    text-transform: none;
-    letter-spacing: normal;
+
+  .srv__intro {
+    max-width: 1300px;
+    margin: 0 auto 5rem;
+    padding: 0 5vw;
+    text-align: center;
   }
+
+ .srv__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+  width: fit-content;
+  text-align: left;
+}
+
+.srv__heading-normal {
+  /* Usamos Playfair para que sea igual a Esencia */
+  font-family: 'Playfair Display', serif;
+  /* Aumentamos el tamaño y quitamos el estilo de todo mayúsculas */
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem); 
+  /* Grosor 300 para que sea elegante pero no tan fino */
+  font-weight: 300;
+  color: #1a1a1a;
+  text-transform: none; 
+  /* REDUCIMOS EL ESPACIADO: Aquí es donde se veía muy separado */
+  letter-spacing: -0.02em; 
+  line-height: 1.1;
+  display: block;
+  align-self: flex-start;
+}
+
+.srv__heading-italic {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 5.5vw, 5.5rem); /* Un poco más grande como en Esencia */
+  font-weight: 300;
+  font-style: italic;
+  color: #a07846;
+  line-height: 1.05;
+  display: block;
+  letter-spacing: -0.02em; /* También más juntas las letras aquí */
+
+  /* El escalón lateral de 4rem igual que en Esencia */
+  padding-left: 4rem; 
+  margin-top: -0.5rem;
+}
 
   .srv__mask { overflow: hidden; padding-bottom: 5px; }
   .srv__items { display: flex; flex-direction: column; gap: 0; }
-  
+
   .srv__item {
     display: grid;
     grid-template-columns: 55fr 45fr;
@@ -149,22 +176,32 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
     position: relative;
     z-index: 5;
   }
-  
+
   .srv__item--reverse { grid-template-columns: 45fr 55fr; }
   .srv__item--reverse .srv__image-col { order: 2; }
   .srv__item--reverse .srv__text-col  { order: 1; }
 
-  /* ── Imagen ── */
   .srv__image-col {
     position: relative;
     align-self: stretch;
     overflow: hidden;
     min-height: 560px;
   }
-  .srv__parallax-inner { position: absolute; top: -15%; left: 0; width: 100%; height: 130%; }
-  .srv__image { width: 100%; height: 100%; object-fit: cover; }
 
-  /* Número flotante sobre imagen — desktop */
+  .srv__parallax-inner {
+    position: absolute;
+    top: -15%;
+    left: 0;
+    width: 100%;
+    height: 130%;
+  }
+
+  .srv__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .srv__num-overlay {
     position: absolute;
     bottom: 1.8rem;
@@ -176,78 +213,89 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
     pointer-events: none;
     z-index: 2;
     letter-spacing: -0.04em;
-    /* Sombra para que se lea sobre cualquier imagen */
     text-shadow: 0 2px 24px rgba(0,0,0,0.18);
     transition: color 0.4s ease;
   }
+
   .srv__item:hover .srv__num-overlay {
-    color: rgba(160, 120, 70, 0.35);
+    color: rgba(160,120,70,0.35);
   }
 
-  /* Número mobile — oculto en desktop */
   .srv__num-mobile { display: none; }
 
-  /* ── Texto ── */
-  .srv__text-col { display: flex; flex-direction: column; gap: 1.4rem; padding: 4rem 5vw; }
+  .srv__text-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    padding: 4rem 5vw;
+  }
 
-  .srv__title { 
+  .srv__title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 3.4vw, 3.2rem); 
-    font-weight: 400; 
-    line-height: 1.15; 
+    font-size: clamp(2.2rem, 3.4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.15;
     color: #0a0a08;
     letter-spacing: -0.02em;
   }
 
-  /* Línea acento bajo el título */
   .srv__accent-line {
     width: 40px;
     height: 2px;
     background: #a07846;
-    border-radius: 2px;
+    border-radius: 0;
     opacity: 0;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.4s ease;
   }
-  /* Se activa con la clase que agrega el JS */
+
   .srv__item-wrap.is-visible .srv__accent-line {
     opacity: 1;
     transform: scaleX(1);
   }
-  
-  .srv__desc { 
-    font-family: 'Inter', sans-serif; 
-    font-size: 1.05rem; 
-    font-weight: 300; 
+
+  .srv__desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 300;
     line-height: 1.75;
-    color: rgba(20, 18, 14, 0.75); 
-    max-width: 420px; 
-    text-align: justify; 
+    color: rgba(20,18,14,0.75);
+    max-width: 420px;
+    text-align: justify;
   }
 
-  /* ── Conector / caminito ── */
-  .srv__connector { 
+  /* ── CONECTOR ── */
+  .srv__connector {
     width: 100%;
-    height: 140px;
-    display: flex; 
+    height: 160px;
     justify-content: center;
-    margin: 1rem 0;
-    position: relative; 
-    z-index: 1;
-    /* Oculto en móvil y tablet por defecto */
+    margin: -45px 0;
+    position: relative;
+    z-index: 10;
     display: none;
+    pointer-events: none;
   }
-  .srv__wave { width: 100%; max-width: 1000px; height: 100%; overflow: visible; }
-  .srv__wave-path { stroke-dasharray: 2000; stroke-dashoffset: 2000; }
+
+  .srv__wave {
+    width: 100%;
+    max-width: 1000px;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .srv__wave-path {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+  }
+
   .srv__wave-dot { opacity: 0; }
 
-  /* Solo se muestra en desktop */
   @media (min-width: 1025px) {
     .srv__connector { display: flex; }
   }
 
-  /* ── Responsive ── */
+  /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     .srv__item, .srv__item--reverse {
       display: flex;
@@ -256,6 +304,7 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
       gap: 0;
       margin-bottom: 5rem;
     }
+
     .srv__text-col { display: contents; }
 
     .srv__item .srv__mask-title { order: 2; text-align: center; padding: 0 5vw; margin-bottom: 0.5rem; }
@@ -264,19 +313,20 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
     .srv__desc { margin-left: auto; margin-right: auto; text-align: center; }
 
     .srv__item .srv__image-col,
-    .srv__item--reverse .srv__image-col { 
+    .srv__item--reverse .srv__image-col {
       order: 5;
-      width: 100%; 
+      width: 100%;
       height: auto;
       min-height: auto;
-      margin-bottom: 0;
     }
+
     .srv__parallax-inner {
       position: relative;
       top: 0;
       height: auto;
       width: 100%;
     }
+
     .srv__image {
       width: 100%;
       height: auto;
@@ -284,8 +334,8 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
       display: block;
     }
 
-    /* Número desktop oculto, mobile visible */
     .srv__num-overlay { display: none; }
+
     .srv__num-mobile {
       display: block;
       order: 1;
@@ -293,7 +343,7 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(3rem, 10vw, 5rem);
       line-height: 1;
-      color: rgba(160, 120, 70, 0.3);
+      color: rgba(160,120,70,0.3);
       margin-bottom: 0.2rem;
     }
   }
@@ -314,20 +364,17 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
       const item = wrap.querySelector('.srv__item')
       if (!item) return
 
-      // Textos
       gsap.from(item.querySelectorAll('.srv__mask > *'), {
         y: 80, opacity: 0, duration: 1.2, ease: "power3.out", stagger: 0.2,
         scrollTrigger: { trigger: item, start: "top 80%" }
       })
 
-      // Activar la línea acento (CSS transition)
       ScrollTrigger.create({
         trigger: item,
         start: "top 78%",
         onEnter: () => wrap.classList.add('is-visible'),
       })
 
-      // Imagen: revelado cortina
       const imgCol = item.querySelector('.srv__image-col')
       const img    = item.querySelector('.srv__image')
 
@@ -346,7 +393,6 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
       }
     })
 
-    // Caminito animado — solo desktop
     if (window.innerWidth > 1024) {
       document.querySelectorAll('.srv__connector').forEach((connector) => {
         const path = connector.querySelector('.srv__wave-path') as SVGPathElement | null
@@ -361,16 +407,13 @@ const lineaColores = ["#a07846", "#C55A11", "#548235"]
           scrollTrigger: { trigger: connector, start: "top 70%", end: "bottom 30%", scrub: 1 }
         })
 
-        // Punto de inicio aparece primero
         tl.to(dots[0], { opacity: 1, duration: 0.1 })
-        // Línea se dibuja
         tl.to(path, { strokeDashoffset: 0, duration: 1, ease: "none" }, 0.05)
-        // Punto de llegada aparece al final
         tl.to(dots[1], { opacity: 1, duration: 0.1 }, 0.9)
       })
     }
   }
-  
+
   initServicios()
   document.addEventListener('astro:after-swap', initServicios)
 </script>
