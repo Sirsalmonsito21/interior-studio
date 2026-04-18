@@ -1,55 +1,54 @@
 ---
 const navLinks = [
-  { label: "Nosotros",   href: "#esencia"   },
-  { label: "Servicios",  href: "#servicios"  },
-  { label: "Portafolio", href: "#portafolio" },
-  { label: "Contacto",   href: "#contacto"   },
+  { label: "Nosotros",   href: "#esencia",    key: "nav.nosotros"   },
+  { label: "Servicios",  href: "#servicios",  key: "nav.servicios"  },
+  { label: "Portafolio", href: "#portafolio", key: "nav.portafolio" },
+  { label: "Contacto",   href: "#contacto",   key: "nav.contacto"   },
 ]
 ---
 
 <footer class="footer">
-
   <div class="footer__body">
     <div class="footer__body-inner">
-      
+
       <div class="footer__brand">
         <a href="/" class="footer__logo">
-  <img src="/images/studioLOGO.jpeg" alt="Studio 2810 Logo" class="footer__logo-img" />
-</a>
-        <p class="footer__tagline">
+          <img src="/images/studioLOGO.jpeg" alt="Studio 2810 Logo" class="footer__logo-img" />
+        </a>
+        <p class="footer__tagline" data-i18n="footer.tagline">
           Espacios que cuentan<br />tu historia.
         </p>
       </div>
 
       <nav class="footer__nav">
-        <span class="footer__label">Navegación</span>
+        <span class="footer__label" data-i18n="footer.nav.label">Navegación</span>
         <ul class="footer__nav-list">
           {navLinks.map(link => (
             <li>
-              <a href={link.href} class="footer__nav-link">{link.label}</a>
+              <a href={link.href} class="footer__nav-link" data-i18n={link.key}>{link.label}</a>
             </li>
           ))}
         </ul>
       </nav>
 
       <div class="footer__contact">
-        <span class="footer__label">Contacto</span>
+        <span class="footer__label" data-i18n="footer.cont.label">Contacto</span>
         <div class="footer__contact-list">
           <a href="mailto:hola@studio2810.com" class="footer__contact-item">hola@studio2810.com</a>
           <a href="https://wa.me/51999999999" target="_blank" class="footer__contact-item">+51 999 999 999</a>
           <span class="footer__contact-item">Lima, Perú</span>
         </div>
       </div>
+
     </div>
   </div>
 
   <div class="footer__bar">
     <div class="footer__bar-inner">
-      <span class="footer__copy">© 2025 Studio2810. Todos los derechos reservados.</span>
-      <a href="#hero" class="footer__top">Volver arriba <span>↑</span></a>
+      <span class="footer__copy" data-i18n="footer.copy">© 2025 Studio2810. Todos los derechos reservados.</span>
+      <a href="#hero" class="footer__top" data-i18n="footer.top">Volver arriba <span>↑</span></a>
     </div>
   </div>
-
 </footer>
 
 <style>

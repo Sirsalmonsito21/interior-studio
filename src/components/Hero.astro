@@ -1,30 +1,17 @@
 ---
-// AQUÍ ELIGES LAS IMÁGENES Y EL ORDEN
-// El primer bloque que pongas aquí será el primero en cargar en el video.
-// Puedes cambiar el orden copiando y pegando los bloques { ... }
 const slides = [
-  {
-    img: "/images/heroimagen.webp",
-    typed: "tienen estilo",
-  },
-  {
-    img: "/images/cocina1-1.webp", 
-    typed: "crean armonía",
-  },
-  {
-    img: "/images/niño1.webp",
-    // FRASE MÁS CORTA PARA QUE NO ROMPA LA LÍNEA
-    typed: "perduran",
-  },
+  { img: "/images/heroimagen.webp",  typed: "tienen estilo", typedKey: "hero.typed.0" },
+  { img: "/images/cocina1-1.webp",   typed: "crean armonía", typedKey: "hero.typed.1" },
+  { img: "/images/niño1.webp",       typed: "perduran",      typedKey: "hero.typed.2" },
 ]
 ---
 
 <section class="hero" id="hero">
   <div class="hero__slides">
     {slides.map((s, i) => (
-      <div 
-        class="hero__slide" 
-        data-index={i} 
+      <div
+        class="hero__slide"
+        data-index={i}
         style={i === 0 ? "opacity: 1; z-index: 1;" : "opacity: 0; z-index: 0;"}
       >
         <img class="hero__slide-img" src={s.img} alt="Fondo Studio2810" />
@@ -35,19 +22,15 @@ const slides = [
 
   <div class="hero__content">
     <div class="hero__content-wrapper" id="heroTextWrapper">
-      
       <h1 class="hero__title">
-        <span>Espacios que </span><br>
+        <span data-i18n="hero.espacios">Espacios que </span><br>
         <span id="heroTyped" class="hero__typed" style="opacity: 0;"></span>
       </h1>
-      
       <div class="hero__action">
-        <a href="#portafolio" class="hero__btn">VER PORTAFOLIO</a>
+        <a href="#portafolio" class="hero__btn" data-i18n="hero.btn">VER PORTAFOLIO</a>
       </div>
     </div>
   </div>
-
-  
 </section>
 
 <script is:inline define:vars={{ slidesData: slides }}>
@@ -55,12 +38,9 @@ const slides = [
 </script>
 
 <style>
-  /* Importamos Playfair Display y Jost */
   @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Playfair+Display:wght@400;500;600&display=swap');
 
   .hero { position: relative; height: 100vh; width: 100%; overflow: hidden; background-color: #111; }
-
-  /* IMÁGENES Y CAPAS */
   .hero__slides { position: absolute; inset: 0; }
   .hero__slide { position: absolute; inset: 0; }
   .hero__slide-img { width: 100%; height: 100%; object-fit: cover; transform-origin: center; will-change: transform; }
@@ -68,24 +48,18 @@ const slides = [
     position: absolute; inset: 0;
     background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
   }
-
-  /* TEXTOS FIJOS */
   .hero__content { position: absolute; top: 50%; left: 8vw; transform: translateY(-50%); z-index: 10; width: 90%; max-width: 750px; }
-  .hero__content-wrapper { opacity: 0; /* Inicia oculto solo al recargar la web */ }
-  
+  .hero__content-wrapper { opacity: 0; }
   .hero__eyebrow { font-family: 'Jost', sans-serif; font-size: 0.8rem; color: white; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; opacity: 0.85; }
-  
-  /* NUEVA TIPOGRAFÍA Y TAMAÑO REDUCIDO PARA EL TÍTULO */
   .hero__title { 
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem); /* Textos más pequeños y elegantes */
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
     color: white; 
     font-weight: 350; 
     line-height: 1.15; 
     letter-spacing: -0.01em;
     margin: 0;
   }
-  
   .hero__typed {
     background: linear-gradient(120deg, #ceab7f 0%, #bda677 50%, #ecb785 100%);
     -webkit-background-clip: text;
@@ -93,54 +67,21 @@ const slides = [
     display: inline-block;
     font-weight: 450;
   }
-
-  .hero__desc { font-family: 'Jost', sans-serif; font-size: 1rem; color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-top: 1.5rem; max-width: 550px; }
-
-  /* BOTÓN MÁS ABAJO */
-  .hero__action { 
-    margin-top: 6rem; /* Aumentado para bajar el botón */
-  } 
-  
-  .hero__btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(255, 255, 255, 0.6); background: transparent; color: white; font-family: 'Jost', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s ease; }
+  .hero__desc { font-family: 'Jost', sans-serif; font-size: 1rem; color: rgba(255,255,255,0.9); line-height: 1.6; margin-top: 1.5rem; max-width: 550px; }
+  .hero__action { margin-top: 6rem; }
+  .hero__btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(255,255,255,0.6); background: transparent; color: white; font-family: 'Jost', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s ease; }
   .hero__btn:hover { background: white; color: black; border-color: white; }
-
-  /* PROGRESO */
   .hero__progress-container { position: absolute; bottom: 2.5rem; left: 8vw; right: 8vw; height: 2px; background: rgba(255,255,255,0.2); z-index: 10; }
   .hero__progress-bar { height: 100%; width: 0%; background: white; }
-  
-  /* ========================================================
-     REDISEÑO REACTIVE (iPads y Tablets max 1024px)
-     ======================================================== */
+
   @media (max-width: 1024px) {
-    .hero__eyebrow,
-    .hero__desc {
-      display: none;
-    }
+    .hero__eyebrow, .hero__desc { display: none; }
   }
-
-  /* ========================================================
-     REDISEÑO REACTIVE (Celulares max 768px)
-     ======================================================== */
   @media (max-width: 768px) {
-    .hero__content { 
-      left: 50%;
-      transform: translate(-50%, -50%); 
-      width: 100%;
-      padding: 0 5vw;
-      text-align: center;
-    }
-    
-    .hero__action {
-      display: flex;
-      justify-content: center;
-      margin-top: 4rem; /* Un poco más abajo en móvil también */
-    }
-
+    .hero__content { left: 50%; transform: translate(-50%, -50%); width: 100%; padding: 0 5vw; text-align: center; }
+    .hero__action { display: flex; justify-content: center; margin-top: 4rem; }
     .hero__progress-container { left: 5vw; right: 5vw; }
-    
-    .hero__title { 
-      font-size: clamp(2.2rem, 7vw, 3.2rem); /* Más proporcionado y pequeño en móvil */
-    }
+    .hero__title { font-size: clamp(2.2rem, 7vw, 3.2rem); }
   }
 </style>
 
@@ -156,14 +97,21 @@ const slides = [
     
     let current = 0;
 
-    // APARECEN TODOS LOS TEXTOS JUNTOS AL ENTRAR A LA WEB
     gsap.fromTo(wrapper, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
- 
-    // Zoom inicial de la primera imagen
     gsap.fromTo(images[0], { scale: 1 }, { scale: 1.1, duration: 15, ease: "none" });
     
-    // Inicia el primer texto con una transición suave (Fade In)
-    elTyped.textContent = slideData[0].typed;
+    // Usa la clave traducida si está disponible
+    function getTyped(index) {
+      const key = slideData[index].typedKey
+      return window.__translations?.[window.__lang]?.[key] || slideData[index].typed
+    }
+window.addEventListener('langChange', () => {
+  // Si el typed está visible, actualiza el texto inmediatamente
+  if (parseFloat(elTyped.style.opacity) > 0) {
+    elTyped.textContent = getTyped(current)
+  }
+})
+    elTyped.textContent = getTyped(0);
     gsap.to(elTyped, { opacity: 1, duration: 1.2, ease: "power2.out", onComplete: startWait });
 
     function startWait() {
@@ -171,9 +119,7 @@ const slides = [
     }
 
     function fadeOutAndTransition() {
-      // 1. Desvanecemos el texto actual (Fade Out) y reiniciamos la barra
       gsap.to(elTyped, { opacity: 0, duration: 0.8, ease: "power2.inOut" });
-      
 
       const next = (current + 1) % slidesEls.length;
       const prevSlide = slidesEls[current];
@@ -185,42 +131,29 @@ const slides = [
       gsap.set(nextImg, { scale: 1 });
       gsap.to(nextImg, { scale: 1.1, duration: 15, ease: "none" });
       
-      // 2. Transición suave de la imagen de fondo
       gsap.to(nextSlide, {
         opacity: 1,
-        duration: 1.5, 
+        duration: 1.5,
         ease: "power2.inOut",
         onComplete: () => {
           gsap.set(prevSlide, { opacity: 0, zIndex: 0 });
           gsap.set(nextSlide, { zIndex: 1 });
-          
           current = next;
-          
-          // 3. Cambiamos el texto dinámico y lo hacemos aparecer (Fade In)
-          elTyped.textContent = slideData[current].typed; 
+          elTyped.textContent = getTyped(current);
           gsap.to(elTyped, { opacity: 1, duration: 1.2, ease: "power2.out", onComplete: startWait });
         }
       });
     }
 
-    // ==========================================
-    // SCROLL ULTRA SUAVE PARA EL BOTÓN
-    // ==========================================
     const heroBtn = document.querySelector('.hero__btn');
     if (heroBtn) {
       heroBtn.addEventListener('click', function(e) {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetSection = document.querySelector(targetId);
-        
         if (targetSection) {
-          // El -65 es para descontar el tamaño de tu header pegajoso
           const targetPos = targetSection.getBoundingClientRect().top + window.scrollY - 65;
-    
-          window.scrollTo({
-            top: targetPos,
-            behavior: 'smooth'
-          });
+          window.scrollTo({ top: targetPos, behavior: 'smooth' });
         }
       });
     }

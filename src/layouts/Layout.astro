@@ -14,12 +14,174 @@ const { title } = Astro.props
   </head>
   <body>
     <slot />
-    
+
     <script is:inline>
       if (history.scrollRestoration) {
         history.scrollRestoration = 'manual'
       }
       window.scrollTo(0, 0)
+
+      // ── MOTOR DE TRADUCCIONES ──
+      window.__translations = {
+        ES: {
+          "nav.nosotros":    "Nosotros",
+          "nav.servicios":   "Servicios",
+          "nav.portafolio":  "Portafolio",
+          "nav.contacto":    "Contacto",
+          "nav.shop":        "Shop Studio2810",
+          "nav.conversemos": "Conversemos",
+// HERO
+  "hero.espacios":   "Espacios que",
+  "hero.typed.0":    "tienen estilo",
+  "hero.typed.1":    "crean armonía",
+  "hero.typed.2":    "perduran",
+  "hero.btn":        "VER PORTAFOLIO",
+
+  // ESENCIA
+  "esencia.titulo.1":  "Diseños que",
+  "esencia.titulo.2":  "transforma espacios",
+  "esencia.body.1":    "En Studio2810 diseñamos espacios con intención, sensibilidad y claridad. Entendemos el diseño como una experiencia cercana, donde escuchar y comprender al cliente es tan importante como proponer.",
+  "esencia.body.2":    "Nuestro enfoque combina la funcionalidad arquitectónica con una curaduría meticulosa de materiales, logrando ambientes que no solo se ven bien, sino que se sienten propios.",
+  "esencia.stat.0":    "Proyectos",
+  "esencia.stat.1":    "Años de experiencia",
+  "esencia.stat.2":    "Acompañamiento",
+
+  // SERVICIOS
+  "srv.heading.1":     "Nuestros",
+  "srv.heading.2":     "servicios",
+  "srv.titulo.0":      "Diseño de\nInteriores",
+  "srv.titulo.1":      "Remodelación",
+  "srv.titulo.2":      "Mobiliario\na Medida",
+  "srv.titulo.3":      "Consultoría",
+  "srv.desc.0":        "Desde la concepción hasta el detalle final. Creamos espacios que equilibran estética y funcionalidad con intención en cada decisión.",
+  "srv.desc.1":        "Transformamos ambientes existentes respetando su esencia y elevando su potencial al máximo.",
+  "srv.desc.2":        "Piezas únicas que se integran perfectamente al espacio. Cada mueble es una extensión del ambiente.",
+  "srv.desc.3":        "Una mirada experta para decisiones clave: paletas, materiales, distribución y estilo.",
+
+    "wa.texto": "Conversemos",
+  "wa.mensaje": "Hola Studio2810, me gustaría obtener información sobre sus servicios.",
+
+  // CONTACTO
+  "contact.label":        "Contacto",
+  "contact.titulo.1":     "Hablemos de",
+  "contact.titulo.2":     "tu proyecto",
+  "contact.desc":         "Cuéntanos tu visión. Nos pondremos en contacto lo antes posible.",
+  "contact.nombre.label": "Nombre",
+  "contact.nombre.ph":    "Tu nombre completo",
+  "contact.email.label":  "Email",
+  "contact.servicio.label": "¿En qué podemos ayudarte?",
+  "contact.servicio.ph":  "Selecciona una opción",
+  "contact.op.residencial": "Diseño Residencial",
+  "contact.op.comercial":   "Diseño Comercial",
+  "contact.op.infantil":    "Diseño Infantil / Kids",
+  "contact.op.otro":        "Otro",
+  "contact.mensaje.label":  "Mensaje",
+  "contact.mensaje.ph":     "Cuéntanos un poco más...",
+  "contact.btn":            "Enviar mensaje",
+
+  // FOOTER
+  "footer.tagline":    "Espacios que cuentan\ntu historia.",
+  "footer.nav.label":  "Navegación",
+  "footer.cont.label": "Contacto",
+  "footer.copy":       "© 2025 Studio2810. Todos los derechos reservados.",
+  "footer.top":        "Volver arriba",
+},
+        EN: {
+          "nav.nosotros":    "About",
+          "nav.servicios":   "Services",
+          "nav.portafolio":  "Portfolio",
+          "nav.contacto":    "Contact",
+          "nav.shop":        "Shop Studio2810",
+          "nav.conversemos": "Let's Talk",
+// HERO
+  "hero.espacios":   "Spaces that",
+  "hero.typed.0":    "have style",
+  "hero.typed.1":    "create harmony",
+  "hero.typed.2":    "endure",
+  "hero.btn":        "VIEW PORTFOLIO",
+
+  // ESENCIA
+  "esencia.titulo.1":  "Designs that",
+  "esencia.titulo.2":  "transform spaces",
+  "esencia.body.1":    "At Studio2810 we design spaces with intention, sensitivity and clarity. We understand design as a close experience, where listening and understanding the client is just as important as proposing.",
+  "esencia.body.2":    "Our approach combines architectural functionality with a meticulous curation of materials, achieving environments that not only look good, but feel like your own.",
+  "esencia.stat.0":    "Projects",
+  "esencia.stat.1":    "Years of experience",
+  "esencia.stat.2":    "Accompaniment",
+
+  // SERVICIOS
+  "srv.heading.1":     "Our",
+  "srv.heading.2":     "services",
+  "srv.titulo.0":      "Interior\nDesign",
+  "srv.titulo.1":      "Remodeling",
+  "srv.titulo.2":      "Custom\nFurniture",
+  "srv.titulo.3":      "Consulting",
+  "srv.desc.0":        "From conception to final detail. We create spaces that balance aesthetics and functionality with intention in every decision.",
+  "srv.desc.1":        "We transform existing environments respecting their essence and elevating their potential to the fullest.",
+  "srv.desc.2":        "Unique pieces that integrate perfectly into the space. Each piece of furniture is an extension of the environment.",
+  "srv.desc.3":        "An expert eye for key decisions: palettes, materials, layout and style.",
+
+   // WHATSAPP
+  "wa.texto": "Let's Talk",
+  "wa.mensaje": "Hello Studio2810, I would like to get information about your services.",
+
+  // CONTACTO
+  "contact.label":        "Contact",
+  "contact.titulo.1":     "Let's talk about",
+  "contact.titulo.2":     "your project",
+  "contact.desc":         "Tell us your vision. We will get in touch as soon as possible.",
+  "contact.nombre.label": "Name",
+  "contact.nombre.ph":    "Your full name",
+  "contact.email.label":  "Email",
+  "contact.servicio.label": "How can we help you?",
+  "contact.servicio.ph":  "Select an option",
+  "contact.op.residencial": "Residential Design",
+  "contact.op.comercial":   "Commercial Design",
+  "contact.op.infantil":    "Children's Design / Kids",
+  "contact.op.otro":        "Other",
+  "contact.mensaje.label":  "Message",
+  "contact.mensaje.ph":     "Tell us a little more...",
+  "contact.btn":            "Send message",
+
+  // FOOTER
+  "footer.tagline":    "Spaces that tell\nyour story.",
+  "footer.nav.label":  "Navigation",
+  "footer.cont.label": "Contact",
+  "footer.copy":       "© 2025 Studio2810. All rights reserved.",
+  "footer.top":        "Back to top",
+},
+      }
+
+      window.__lang = localStorage.getItem('lang') || 'ES'
+
+      window.applyTranslations = function(lang) {
+        window.__lang = lang
+        localStorage.setItem('lang', lang)
+        document.querySelectorAll('[data-i18n]').forEach(function(el) {
+          var key = el.getAttribute('data-i18n')
+          if (window.__translations[lang] && window.__translations[lang][key]) {
+            el.textContent = window.__translations[lang][key]
+          }
+        })
+        var label = document.getElementById('langLabel')
+        var other = document.getElementById('langOther')
+        if (label) label.textContent = lang
+        if (other) other.textContent = lang === 'ES' ? 'EN' : 'ES'
+
+        window.dispatchEvent(new CustomEvent('langChange'))
+// Agrega esto dentro de applyTranslations, después del forEach existente
+document.querySelectorAll('[data-i18n-ph]').forEach(function(el) {
+  var key = el.getAttribute('data-i18n-ph')
+  if (window.__translations[lang] && window.__translations[lang][key]) {
+    el.placeholder = window.__translations[lang][key]
+  }
+})
+
+      }
+
+      window.addEventListener('load', function() {
+        window.applyTranslations(window.__lang)
+      })
     </script>
 
     <script>
@@ -27,12 +189,10 @@ const { title } = Astro.props
       import gsap from 'gsap'
       import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-      // Registramos ScrollTrigger
       gsap.registerPlugin(ScrollTrigger)
 
-      // Inicializamos Lenis
       const lenis = new Lenis({
-        duration: 1.2, // El tiempo que tarda en frenar (fluidez premium)
+        duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
         orientation: 'vertical',
         gestureOrientation: 'vertical',
@@ -41,10 +201,8 @@ const { title } = Astro.props
         touchMultiplier: 2,
       })
 
-      // Sincronizamos Lenis con GSAP ScrollTrigger (vital para tus líneas SVG)
       lenis.on('scroll', ScrollTrigger.update)
 
-      // Conectamos Lenis al ticker interno de GSAP
       gsap.ticker.add((time) => {
         lenis.raf(time * 1000)
       })
@@ -56,7 +214,6 @@ const { title } = Astro.props
 
 <style is:global>
   html {
-    /* Desactiva el scroll nativo a tirones del navegador */
     scroll-behavior: auto !important; 
   }
   html, body {

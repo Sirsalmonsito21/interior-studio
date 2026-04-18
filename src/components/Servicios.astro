@@ -3,35 +3,65 @@ const servicios = [
   {
     numero: "01",
     titulo: "Diseño de\nInteriores",
+    tituloKey: "srv.titulo.0",
     descripcion: "Desde la concepción hasta el detalle final. Creamos espacios que equilibran estética y funcionalidad con intención en cada decisión.",
+    descKey: "srv.desc.0",
     imagen: "/images/cocina3.webp",
   },
   {
     numero: "02",
     titulo: "Remodelación",
+    tituloKey: "srv.titulo.1",
     descripcion: "Transformamos ambientes existentes respetando su esencia y elevando su potencial al máximo.",
+    descKey: "srv.desc.1",
     imagen: "/images/entrada2.webp",
   },
   {
     numero: "03",
     titulo: "Mobiliario\na Medida",
+    tituloKey: "srv.titulo.2",
     descripcion: "Piezas únicas que se integran perfectamente al espacio. Cada mueble es una extensión del ambiente.",
+    descKey: "srv.desc.2",
     imagen: "/images/bebe1.webp",
   },
   {
     numero: "04",
     titulo: "Consultoría",
+    tituloKey: "srv.titulo.3",
     descripcion: "Una mirada experta para decisiones clave: paletas, materiales, distribución y estilo.",
+    descKey: "srv.desc.3",
     imagen: "/images/oficina2.webp",
   },
 ]
 
+
 const lineaColores = ["#a07846", "#C55A11", "#548235"]
 
+// ── LÍNEA 1 (conector 0): imagen1 → imagen2 ──
+const l1_startX = 275
+const l1_startY = 0
+const l1_endX   = 480
+const l1_endY   = 300
+
+// ── LÍNEA 2 (conector 1): imagen2 → imagen3 ──
+const l2_startX = 920
+const l2_startY = 0
+const l2_endX = 480
+const l2_endY = 170
+
+// ── LÍNEA 3 (conector 2): imagen3 → imagen4 ── LISTA PARA PERSONALIZAR
+const l3_startX = 560
+const l3_startY = 0
+const l3_endX   = 470
+const l3_endY   = 300
+
 const conectores = [
-  "M 275,0 C 240,50 190,85 330,112 C 460,138 600,98 725,160",
-  "M 725,0 C 762,42 808,92 655,118 C 510,142 375,102 275,160",
-  "M 275,0 C 228,58 175,98 345,120 C 490,140 615,92 725,160",
+  // Línea 1 — no tocar
+  `M ${l1_startX},${l1_startY} C 310,25 360,45 330,75 C 300,105 160,110 180,155 C 195,195 350,210 ${l1_endX},${l1_endY}`,
+  // Línea 2 — inicio más a la derecha, fin más abajo y a la derecha
+  `M ${l2_startX},${l2_startY} C 1050,30 1080,110 950,125 C 820,140 650,145 580,120 C 520,98 510,88 ${l2_endX},${l2_endY}`,
+  // Línea 3 — LISTA PARA PERSONALIZAR
+  `M ${l3_startX},${l3_startY} C 750,25 780,60 680,85 C 580,108 350,110 280,135 C 240,158 320,200 ${l3_endX},${l3_endY}`,
 ]
 ---
 
@@ -40,8 +70,8 @@ const conectores = [
   <div class="srv__intro">
     <div class="srv__mask">
       <h2 class="srv__heading">
-        <span class="srv__heading-normal">Nuestros</span>
-        <span class="srv__heading-italic">servicios</span>
+        <span class="srv__heading-normal" data-i18n="srv.heading.1">Nuestros</span>
+<span class="srv__heading-italic" data-i18n="srv.heading.2">servicios</span>
       </h2>
     </div>
   </div>
@@ -60,15 +90,15 @@ const conectores = [
 
           <div class="srv__text-col">
             <div class="srv__mask srv__mask-title">
-              <h3 class="srv__title">
-                {s.titulo.split('\n').map((line, j) => (
-                  <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
-                ))}
-              </h3>
+              <h3 class="srv__title" data-i18n={s.tituloKey}>
+  {s.titulo.split('\n').map((line, j) => (
+    <>{line}{j < s.titulo.split('\n').length - 1 && <br />}</>
+  ))}
+</h3>
             </div>
             <div class="srv__accent-line"></div>
             <div class="srv__mask srv__mask-desc">
-              <p class="srv__desc">{s.descripcion}</p>
+              <p class="srv__desc" data-i18n={s.descKey}>{s.descripcion}</p>
             </div>
             <div class="srv__num-mobile">{s.numero}</div>
           </div>
@@ -89,15 +119,27 @@ const conectores = [
               />
               <circle
                 class="srv__wave-dot srv__wave-dot--start"
-                cx={i % 2 === 0 ? "275" : "725"}
+                cx={
+                  i === 0 ? String(l1_startX) :
+                  i === 1 ? String(l2_startX) :
+                            String(l3_startX)
+                }
                 cy="0"
                 r="9"
                 fill={lineaColores[i]}
               />
               <circle
                 class="srv__wave-dot srv__wave-dot--end"
-                cx={i % 2 === 0 ? "725" : "275"}
-                cy="160"
+                cx={
+                  i === 0 ? String(l1_endX) :
+                  i === 1 ? String(l2_endX) :
+                            String(l3_endX)
+                }
+                cy={
+                  i === 0 ? String(l1_endY) :
+                  i === 1 ? String(l2_endY) :
+                            String(l3_endY)
+                }
                 r="9"
                 fill={lineaColores[i]}
               />
@@ -125,45 +167,39 @@ const conectores = [
     text-align: center;
   }
 
- .srv__heading {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 0 auto;
-  width: fit-content;
-  text-align: left;
-}
+  .srv__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 auto;
+    width: fit-content;
+    text-align: left;
+  }
 
-.srv__heading-normal {
-  /* Usamos Playfair para que sea igual a Esencia */
-  font-family: 'Playfair Display', serif;
-  /* Aumentamos el tamaño y quitamos el estilo de todo mayúsculas */
-  font-size: clamp(2.5rem, 4.5vw, 4.5rem); 
-  /* Grosor 300 para que sea elegante pero no tan fino */
-  font-weight: 300;
-  color: #1a1a1a;
-  text-transform: none; 
-  /* REDUCIMOS EL ESPACIADO: Aquí es donde se veía muy separado */
-  letter-spacing: -0.02em; 
-  line-height: 1.1;
-  display: block;
-  align-self: flex-start;
-}
+  .srv__heading-normal {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+    font-weight: 300;
+    color: #1a1a1a;
+    text-transform: none;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    display: block;
+    align-self: flex-start;
+  }
 
-.srv__heading-italic {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 5.5vw, 5.5rem); /* Un poco más grande como en Esencia */
-  font-weight: 300;
-  font-style: italic;
-  color: #a07846;
-  line-height: 1.05;
-  display: block;
-  letter-spacing: -0.02em; /* También más juntas las letras aquí */
-
-  /* El escalón lateral de 4rem igual que en Esencia */
-  padding-left: 4rem; 
-  margin-top: -0.5rem;
-}
+  .srv__heading-italic {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5.5vw, 5.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: #a07846;
+    line-height: 1.05;
+    display: block;
+    letter-spacing: -0.02em;
+    padding-left: 4rem;
+    margin-top: -0.5rem;
+  }
 
   .srv__mask { overflow: hidden; padding-bottom: 5px; }
   .srv__items { display: flex; flex-direction: column; gap: 0; }
@@ -265,7 +301,6 @@ const conectores = [
     text-align: justify;
   }
 
-  /* ── CONECTOR ── */
   .srv__connector {
     width: 100%;
     height: 160px;
@@ -295,7 +330,6 @@ const conectores = [
     .srv__connector { display: flex; }
   }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     .srv__item, .srv__item--reverse {
       display: flex;

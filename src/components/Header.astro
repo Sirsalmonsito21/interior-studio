@@ -1,10 +1,10 @@
 ---
 const navLinks = [
-  { label: "Nosotros",   href: "#esencia"   },
-  { label: "Servicios",  href: "#servicios"  },
-  { label: "Portafolio", href: "#portafolio" },
-  { label: "Contacto",   href: "#contacto"   },
-  { label: "Shop Studio2810", href: "#shop", isShop: true }
+  { label: "Nosotros",        href: "#esencia",    key: "nav.nosotros"   },
+  { label: "Servicios",       href: "#servicios",  key: "nav.servicios"  },
+  { label: "Portafolio",      href: "#portafolio", key: "nav.portafolio" },
+  { label: "Contacto",        href: "#contacto",   key: "nav.contacto"   },
+  { label: "Shop Studio2810", href: "#shop",       key: "nav.shop", isShop: true }
 ]
 ---
 
@@ -26,7 +26,7 @@ const navLinks = [
       <ul class="header__nav-list">
         {navLinks.map((link) => (
           <li>
-            <a href={link.href} class={`header__nav-link ${link.isShop ? 'is-shop' : ''}`}>
+            <a href={link.href} class={`header__nav-link ${link.isShop ? 'is-shop' : ''}`} data-i18n={link.key}>
               {link.label}
             </a>
           </li>
@@ -40,8 +40,6 @@ const navLinks = [
           <span id="langLabel">ES</span> / <span id="langOther">EN</span>
         </button>
       </div>
-      
-      
 
       <button class="header__burger" id="menuToggle" aria-label="Menu">
         <svg id="iconOpen" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -49,7 +47,6 @@ const navLinks = [
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
-       
         <svg id="iconClose" style="display: none;" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -62,9 +59,9 @@ const navLinks = [
   <div class="header__mobile-menu" id="mobileMenu">
     <nav class="header__mobile-nav">
       {navLinks.map((link) => (
-        <a href={link.href} class="header__mobile-link">{link.label}</a>
+        <a href={link.href} class="header__mobile-link" data-i18n={link.key}>{link.label}</a>
       ))}
-      <a href="#contacto" class="header__mobile-link">Conversemos</a>
+      <a href="#contacto" class="header__mobile-link" data-i18n="nav.conversemos">Conversemos</a>
     </nav>
   </div>
 </header>
@@ -93,21 +90,20 @@ const navLinks = [
   }
 
   .header__container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px; /* Cámbialo de 85px a 60px (o el valor que prefieras) */
-  padding: 0 2vw;
-  max-width: 98%;
-  margin: 0 auto;
-  transition: height 0.4s ease;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 2vw;
+    max-width: 98%;
+    margin: 0 auto;
+    transition: height 0.4s ease;
+  }
 
   .header.is-scrolled .header__container {
-  height: 50px; /* Cámbialo de 60px a 50px */
-}
+    height: 50px;
+  }
 
-  /* LOGO */
   .header__left { flex: 1; display: flex; align-items: center; justify-content: flex-start; }
   .header__logo { 
     text-decoration: none !important; 
@@ -117,7 +113,7 @@ const navLinks = [
     display: inline-block;
   }
   .header__logo-img {
-    height: 38px; /* Logo más pequeño y delicado */
+    height: 38px;
     width: auto;
     display: block;
     mix-blend-mode: screen;
@@ -128,10 +124,9 @@ const navLinks = [
   .header.is-scrolled .header__logo-img {
     filter: none;
     mix-blend-mode: multiply;
-    height: 30px; /* Aún más sutil al bajar */
+    height: 30px;
   }
 
-  /* NAV LINKS */
   .header__nav-desktop { flex: 2; }
   .header__nav-list {
     display: flex;
@@ -140,9 +135,9 @@ const navLinks = [
   }
   .header__nav-link {
     font-family: 'Jost', sans-serif;
-    font-size: 0.8rem; /* Un poco más pequeño */
+    font-size: 0.8rem;
     text-transform: uppercase; 
-    letter-spacing: 0.2em; /* Más espaciado editorial */
+    letter-spacing: 0.2em;
     color: inherit; 
     text-decoration: none; 
     position: relative;
@@ -150,7 +145,6 @@ const navLinks = [
     transition: opacity 0.3s;
   }
   
-  /* Efecto Hover Subrayado Elegante */
   .header__nav-link:not(.is-shop)::after {
     content: '';
     position: absolute;
@@ -174,61 +168,44 @@ const navLinks = [
     opacity: 0.6;
   }
 
-  /* DERECHA */
   .header__right {
     flex: 1; display: flex;
     justify-content: flex-end; align-items: center; gap: 2.5rem;
   }
 
-  /* SELECTOR DE IDIOMA CON HOVER */
- .header__lang {
-  background: none; 
-  border: none; 
-  cursor: pointer;
-  font-family: 'Jost', sans-serif; 
-  font-size: 0.8rem; 
-  font-weight: 500;
-  color: inherit;
-  display: flex;
-  gap: 0.3rem;
-  align-items: center;
-  padding: 5px;
-}
+  .header__lang {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-family: 'Jost', sans-serif; 
+    font-size: 0.8rem; 
+    font-weight: 500;
+    color: inherit;
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    padding: 5px;
+  }
   .header__lang:hover {
     opacity: 0.7;
-    transform: scale(1.05); /* Ligero efecto de crecimiento */
+    transform: scale(1.05);
   }
   #langOther {
-  opacity: 0.5;
-}
-.header__lang span {
-  display: inline-block;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-.header__lang:hover #langLabel {
-  transform: scale(1.1);
-  opacity: 1;
-}
-  .header__lang:hover #langOther {
-  transform: scale(1.1);
-  opacity: 0.8;
-}
-
-  /* BOTÓN CONVERSEMOS */
-  .header__cta {
-    background: white; color: black; padding: 10px 22px;
-    font-family: 'Jost', sans-serif; font-size: 0.7rem; /* Reducido sutilmente */
-    text-transform: uppercase; letter-spacing: 0.15em;
-    text-decoration: none; border-radius: 2px;
-    transition: all 0.4s ease;
-    border: 1px solid white;
+    opacity: 0.5;
   }
-  .header__cta:hover { background: transparent; color: white; border-color: white; }
+  .header__lang span {
+    display: inline-block;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .header__lang:hover #langLabel {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  .header__lang:hover #langOther {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 
-  .header.is-scrolled .header__cta { background: #111; color: white; border-color: #111; }
-  .header.is-scrolled .header__cta:hover { background: transparent; color: #111; }
-
-  /* BURGER ICON */
   .header__burger {
     display: none; 
     background: none;
@@ -238,7 +215,6 @@ const navLinks = [
     z-index: 1001;
   }
 
-  /* MENÚ MÓVIL */
   .header__mobile-menu {
     position: fixed;
     top: 0; right: 0; width: 100%; height: 100vh;
@@ -252,21 +228,28 @@ const navLinks = [
   .header__mobile-menu.is-open { opacity: 1; pointer-events: auto; }
   
   .header__mobile-nav { display: flex; flex-direction: column; gap: 2.5rem; align-items: center; }
-  .header__mobile-link { font-family: 'Jost', sans-serif; font-size: 1.4rem; font-weight: 400; text-decoration: none; color: #111; text-transform: uppercase; letter-spacing: 0.1em; transition: opacity 0.3s; }
+  .header__mobile-link { 
+    font-family: 'Jost', sans-serif; 
+    font-size: 1.4rem; 
+    font-weight: 400; 
+    text-decoration: none; 
+    color: #111; 
+    text-transform: uppercase; 
+    letter-spacing: 0.1em; 
+    transition: opacity 0.3s; 
+  }
   .header__mobile-link:hover { opacity: 0.5; }
 
-  /* =========================================
-     RESPONSIVE
-     ========================================= */
   @media (max-width: 1024px) {
-    .header__nav-desktop, .header__cta, .header__lang-wrapper { display: none; }
+    .header__nav-desktop, .header__cta { display: none; }
+    .header__lang-wrapper { display: flex; }
     .header__burger { display: flex; align-items: center; justify-content: center; }
+    .header__right { gap: 1rem; }
   }
 
   @media (max-width: 768px) {
     .header__container { height: 70px; }
     .header.is-scrolled .header__container { height: 55px; }
-    
     .header__logo-img { height: 32px; }
     .header.is-scrolled .header__logo-img { height: 26px; }
   }
@@ -291,28 +274,22 @@ const navLinks = [
       if (window.gsap && window.innerWidth > 1024 && logoLink && nav && actions) {
         const logoRect = logoLink.getBoundingClientRect();
         const xOffset = (window.innerWidth / 2) - (logoRect.left + logoRect.width / 2);
-
         gsap.set(logoLink, { x: xOffset });
         gsap.set([nav, actions], { opacity: 0, y: 10 });
-
         const tl = gsap.timeline({ delay: 1.5 });
         tl.to(logoLink, { x: 0, duration: 1.6, ease: "power3.inOut" })
           .to([nav, actions], { opacity: 1, y: 0, duration: 0.8, stagger: 0.15 }, "-=0.6");
       }
 
-      // =========================================
-      // SMART SCROLL (Ocultar al bajar, mostrar al subir)
-      // =========================================
+      // SMART SCROLL
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const currentScroll = window.scrollY;
-        
         if (currentScroll > 60) {
           header?.classList.add('is-scrolled');
         } else {
           header?.classList.remove('is-scrolled');
         }
-
         const isMenuOpen = document.getElementById('mobileMenu')?.classList.contains('is-open');
         if (!isMenuOpen) {
           if (currentScroll > lastScroll && currentScroll > 150) {
@@ -321,23 +298,18 @@ const navLinks = [
             header?.classList.remove('is-hidden'); 
           }
         }
-        
         lastScroll = currentScroll;
       });
 
-      // Cambio de idioma
+      // CAMBIO DE IDIOMA
       const langBtn = document.getElementById('langToggle');
-      let currentLang = 'ES';
       langBtn?.addEventListener('click', () => {
-        currentLang = currentLang === 'ES' ? 'EN' : 'ES';
-        document.getElementById('langLabel').textContent = currentLang;
-        document.getElementById('langOther').textContent = currentLang === 'ES' ? 'EN' : 'ES';
-        if (window.gsap) gsap.fromTo(langContainer, { scale: 1 }, { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1 });
+        const newLang = window.__lang === 'ES' ? 'EN' : 'ES'
+        window.applyTranslations(newLang)
+        if (window.gsap) gsap.fromTo(langContainer, { scale: 1 }, { scale: 1.1, duration: 0.1, yoyo: true, repeat: 1 })
       });
 
-      // =========================================
-      // LÓGICA DE MENÚ MÓVIL (Abrir, Cerrar y Enlaces)
-      // =========================================
+      // MENÚ MÓVIL
       const burger = document.getElementById('menuToggle');
       const mobileMenu = document.getElementById('mobileMenu');
       const iconOpen = document.getElementById('iconOpen');
@@ -346,16 +318,13 @@ const navLinks = [
       function toggleMobileMenu() {
         if(!mobileMenu) return;
         const isOpen = mobileMenu.classList.contains('is-open');
-        
         if (isOpen) {
-          // CERRAR
           mobileMenu.classList.remove('is-open');
           iconOpen.style.display = 'block';
           iconClose.style.display = 'none';
           document.body.style.overflow = '';
           if (window.scrollY <= 60) header.style.color = 'white';
         } else {
-          // ABRIR
           mobileMenu.classList.add('is-open');
           iconOpen.style.display = 'none';
           iconClose.style.display = 'block';
@@ -366,30 +335,23 @@ const navLinks = [
 
       burger?.addEventListener('click', toggleMobileMenu);
 
-      // Scroll suave y CERRAR MENÚ AL TOCAR ENLACES
       document.querySelectorAll('.header__nav-link, .header__mobile-link, .header__cta').forEach(link => {
         link.addEventListener('click', function(e) {
           const href = this.getAttribute('href');
-          
           if (href && href.startsWith('#')) {
             e.preventDefault();
-            
             if (mobileMenu?.classList.contains('is-open')) {
               toggleMobileMenu();
             }
-
             const targetSection = document.querySelector(href);
             if (targetSection) {
               const offsetPosition = targetSection.getBoundingClientRect().top + window.scrollY - 65;
- 
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-              });
+              window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             }
           }
         });
       });
+
     } catch (e) { console.error("Error en Header:", e); }
   }
 

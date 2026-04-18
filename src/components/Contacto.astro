@@ -5,14 +5,13 @@
   <div class="contact__inner">
 
     <div class="contact__info">
-      <span class="label contact__label">Contacto</span>
+      <span class="label contact__label" data-i18n="contact.label">Contacto</span>
       <h2 class="contact__title">
-        Hablemos de<br />
-        <em>tu proyecto</em>
+        <span data-i18n="contact.titulo.1">Hablemos de</span><br />
+        <em data-i18n="contact.titulo.2">tu proyecto</em>
       </h2>
-      <p class="contact__desc">
-        Cuéntanos tu visión. Nos pondremos en contacto
-        en menos de 24 horas para agendar una primera conversación.
+      <p class="contact__desc" data-i18n="contact.desc">
+        Cuéntanos tu visión. Nos pondremos en contacto lo antes posible.
       </p>
     </div>
 
@@ -21,54 +20,33 @@
 
         <div class="contact__row">
           <div class="contact__field">
-            <label class="contact__field-label" for="nombre">Nombre</label>
-            <input
-              class="contact__input"
-              type="text"
-              id="nombre"
-              name="nombre"
-              placeholder="Tu nombre completo"
-              required
-            />
+            <label class="contact__field-label" for="nombre" data-i18n="contact.nombre.label">Nombre</label>
+            <input class="contact__input" type="text" id="nombre" name="nombre" data-i18n-ph="contact.nombre.ph" placeholder="Tu nombre completo" required />
           </div>
           <div class="contact__field">
-            <label class="contact__field-label" for="email">Email</label>
-            <input
-              class="contact__input"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="tu@email.com"
-              required
-            />
+            <label class="contact__field-label" for="email" data-i18n="contact.email.label">Email</label>
+            <input class="contact__input" type="email" id="email" name="email" placeholder="tu@email.com" required />
           </div>
         </div>
 
         <div class="contact__field">
-          <label class="contact__field-label" for="servicio">¿En qué podemos ayudarte?</label>
+          <label class="contact__field-label" for="servicio" data-i18n="contact.servicio.label">¿En qué podemos ayudarte?</label>
           <select class="contact__select" id="servicio" name="servicio" required>
-            <option value="" disabled selected>Selecciona una opción</option>
-            <option value="residencial">Diseño Residencial</option>
-            <option value="comercial">Diseño Comercial</option>
-            <option value="infantil">Diseño Infantil / Kids</option>
-            <option value="otro">Otro</option>
+            <option value="" disabled selected data-i18n="contact.servicio.ph">Selecciona una opción</option>
+            <option value="residencial" data-i18n="contact.op.residencial">Diseño Residencial</option>
+            <option value="comercial"   data-i18n="contact.op.comercial">Diseño Comercial</option>
+            <option value="infantil"    data-i18n="contact.op.infantil">Diseño Infantil / Kids</option>
+            <option value="otro"        data-i18n="contact.op.otro">Otro</option>
           </select>
         </div>
 
         <div class="contact__field">
-          <label class="contact__field-label" for="mensaje">Mensaje</label>
-          <textarea
-            class="contact__textarea"
-            id="mensaje"
-            name="mensaje"
-            rows="4"
-            placeholder="Cuéntanos un poco más..."
-            required
-          ></textarea>
+          <label class="contact__field-label" for="mensaje" data-i18n="contact.mensaje.label">Mensaje</label>
+          <textarea class="contact__textarea" id="mensaje" name="mensaje" rows="4" data-i18n-ph="contact.mensaje.ph" placeholder="Cuéntanos un poco más..." required></textarea>
         </div>
 
         <button class="contact__submit" type="submit">
-          <span class="contact__submit-text">Enviar mensaje</span>
+          <span class="contact__submit-text" data-i18n="contact.btn">Enviar mensaje</span>
         </button>
 
         <div class="contact__feedback" id="formFeedback"></div>

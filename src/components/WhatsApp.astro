@@ -1,21 +1,38 @@
 ---
 const NUMERO = "51999999999"
-const MENSAJE = encodeURIComponent("Hola Studio2810, me gustaría obtener información sobre sus servicios.")
-const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
+const MENSAJE_ES = "Hola Studio2810, me gustaría obtener información sobre sus servicios."
 ---
 
-<a class="wa-btn" href={href} target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
+<a class="wa-btn" id="waBtn" href={`https://wa.me/${NUMERO}?text=${encodeURIComponent(MENSAJE_ES)}`} target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
   <span class="wa-btn__inner">
     <svg class="wa-btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="22" height="22">
       <path d="M12.001 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5.003L2.01 22l5.12-1.31A9.959 9.959 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 0 1-4.03-1.09l-.29-.17-2.99.77.8-2.91-.19-.3A7.944 7.944 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8zm4.406-5.884c-.241-.12-1.427-.703-1.648-.784-.221-.08-.382-.12-.543.12-.16.241-.622.784-.763.945-.14.16-.281.18-.522.06-.241-.12-1.018-.375-1.939-1.196-.717-.64-1.201-1.43-1.342-1.671-.14-.241-.015-.371.106-.491.109-.108.241-.281.362-.422.12-.14.16-.241.241-.401.08-.16.04-.301-.02-.422-.06-.12-.543-1.307-.743-1.789-.196-.47-.395-.406-.543-.414l-.462-.008c-.16 0-.422.06-.643.301-.221.241-.843.824-.843 2.01 0 1.186.863 2.332.983 2.493.12.16 1.699 2.595 4.118 3.639.576.248 1.025.396 1.374.507.577.184 1.103.158 1.518.096.463-.069 1.427-.583 1.628-1.146.2-.562.2-1.044.14-1.145-.06-.1-.221-.16-.462-.281z"/>
     </svg>
-    <span class="wa-btn__text">Conversemos</span>
+    <span class="wa-btn__text" data-i18n="wa.texto">Conversemos</span>
   </span>
   <span class="wa-dot"></span>
 </a>
 
-<style is:global>
+<script is:inline>
+  (function() {
+    var NUMERO = "51999999999"
+    var mensajes = {
+      ES: "Hola Studio2810, me gustaría obtener información sobre sus servicios.",
+      EN: "Hello Studio2810, I would like to get information about your services."
+    }
+    function updateWaLink() {
+      var lang = window.__lang || 'ES'
+      var btn = document.getElementById('waBtn')
+      if (btn) {
+        btn.href = 'https://wa.me/' + NUMERO + '?text=' + encodeURIComponent(mensajes[lang])
+      }
+    }
+    window.addEventListener('load', updateWaLink)
+    window.addEventListener('langChange', updateWaLink)
+  })()
+</script>
 
+<style is:global>
   .wa-btn {
     position: fixed;
     z-index: 9998;
@@ -45,15 +62,11 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
     100% { transform: scale(2.8); opacity: 0; }
   }
 
-  /* ═══════════════════════════════════════════
-     MÓVIL — círculo negro, ícono blanco
-  ═══════════════════════════════════════════ */
   @media (max-width: 767px) {
     .wa-btn {
       bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px));
       right: 1rem;
     }
-
     .wa-btn__inner {
       display: flex;
       align-items: center;
@@ -66,33 +79,16 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
       border-radius: 50%;
       transition: border-color 0.3s ease, background 0.3s ease;
     }
-
     .wa-btn:active .wa-btn__inner {
       background: #1a1a1a;
       border-color: rgba(255, 255, 255, 0.35);
     }
-
-    .wa-btn__text {
-      display: none;
-    }
-
-    .wa-dot {
-      width: 10px;
-      height: 10px;
-      top: 1px;
-      right: 1px;
-    }
+    .wa-btn__text { display: none; }
+    .wa-dot { width: 10px; height: 10px; top: 1px; right: 1px; }
   }
 
-  /* ═══════════════════════════════════════════
-     TABLET — cuadrado negro, ícono blanco
-  ═══════════════════════════════════════════ */
   @media (min-width: 768px) and (max-width: 1023px) {
-    .wa-btn {
-      bottom: 2rem;
-      right: 1.5rem;
-    }
-
+    .wa-btn { bottom: 2rem; right: 1.5rem; }
     .wa-btn__inner {
       display: flex;
       align-items: center;
@@ -105,33 +101,16 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
       border-radius: 4px;
       transition: border-color 0.3s ease, background 0.3s ease;
     }
-
     .wa-btn:hover .wa-btn__inner {
       border-color: rgba(255, 255, 255, 0.35);
       background: #1a1a1a;
     }
-
-    .wa-btn__text {
-      display: none;
-    }
-
-    .wa-dot {
-      width: 9px;
-      height: 9px;
-      top: -3px;
-      right: -3px;
-    }
+    .wa-btn__text { display: none; }
+    .wa-dot { width: 9px; height: 9px; top: -3px; right: -3px; }
   }
 
-  /* ═══════════════════════════════════════════
-     DESKTOP — ícono + "Conversemos"
-  ═══════════════════════════════════════════ */
   @media (min-width: 1024px) {
-    .wa-btn {
-      bottom: 2rem;
-      right: 2rem;
-    }
-
+    .wa-btn { bottom: 2rem; right: 2rem; }
     .wa-btn__inner {
       display: flex;
       align-items: center;
@@ -146,26 +125,17 @@ const href = `https://wa.me/${NUMERO}?text=${MENSAJE}`
       text-transform: uppercase;
       transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
     }
-
     .wa-btn:hover .wa-btn__inner {
       border-color: rgba(255, 255, 255, 0.35);
       color: #ffffff;
       background: #1a1a1a;
     }
-
     .wa-btn__text {
       font-family: 'Manrope', system-ui, sans-serif;
       font-size: 0.7rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-
-    .wa-dot {
-      width: 9px;
-      height: 9px;
-      top: -4px;
-      right: -4px;
-    }
+    .wa-dot { width: 9px; height: 9px; top: -4px; right: -4px; }
   }
-
 </style>

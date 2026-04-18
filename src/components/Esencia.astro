@@ -1,20 +1,19 @@
 ---
 const indicadores = [
-  { numero: "50", label: "Proyectos", plus: true },
-  { numero: "9",  label: "Años de experiencia", plus: true },
-  { numero: "100", label: "Acompañamiento", plus: false, suffix: "%" },
+  { numero: "50",  label: "Proyectos",          labelKey: "esencia.stat.0", plus: true },
+  { numero: "9",   label: "Años de experiencia", labelKey: "esencia.stat.1", plus: true },
+  { numero: "100", label: "Acompañamiento",      labelKey: "esencia.stat.2", plus: false, suffix: "%" },
 ]
 ---
 
 <section class="esencia" id="esencia">
   <div class="esencia__container">
-    
     <div class="esencia__content">
       <div class="esencia__title-col">
         <div class="esencia__mask">
           <h2 class="esencia__title">
-            Diseños que<br />
-            <em class="esencia__italic">transforma espacios</em>
+            <span data-i18n="esencia.titulo.1">Diseños que</span><br />
+            <em class="esencia__italic" data-i18n="esencia.titulo.2">transforma espacios</em>
           </h2>
         </div>
       </div>
@@ -22,14 +21,14 @@ const indicadores = [
       <div class="esencia__text-col">
         <div class="esencia__text-blocks">
           <div class="esencia__mask">
-            <p class="esencia__body">
+            <p class="esencia__body" data-i18n="esencia.body.1">
               En Studio2810 diseñamos espacios con intención, sensibilidad y claridad.
               Entendemos el diseño como una experiencia cercana, donde escuchar y comprender
               al cliente es tan importante como proponer.
             </p>
           </div>
           <div class="esencia__mask">
-            <p class="esencia__body">
+            <p class="esencia__body" data-i18n="esencia.body.2">
               Nuestro enfoque combina la funcionalidad arquitectónica con una curaduría 
               meticulosa de materiales, logrando ambientes que no solo se ven bien, 
               sino que se sienten propios.
@@ -43,7 +42,7 @@ const indicadores = [
               <div class="esencia__stat-inner">
                 <span class="esencia__number" data-target={ind.numero}>0</span>
                 <span class="esencia__suffix">{ind.plus ? '+' : ''}{ind.suffix || ''}</span>
-                <p class="esencia__stat-label">{ind.label}</p>
+                <p class="esencia__stat-label" data-i18n={ind.labelKey}>{ind.label}</p>
               </div>
             </div>
           ))}
@@ -61,7 +60,6 @@ const indicadores = [
         />
       </div>
     </div>
-
   </div>
 </section>
 
