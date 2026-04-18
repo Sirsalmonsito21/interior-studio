@@ -1,0 +1,375 @@
+---
+---
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Studio2810 — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="cs" id="cs">
+
+    <!-- Canvas para líneas animadas -->
+    <canvas class="cs__canvas" id="csCanvas"></canvas>
+
+    <!-- Luz ambiental que pulsa -->
+    <div class="cs__ambient" id="csAmbient"></div>
+
+    <!-- Líneas decorativas de marco -->
+    <div class="cs__frame" aria-hidden="true">
+      <div class="cs__frame-h cs__frame-h--top"></div>
+      <div class="cs__frame-h cs__frame-h--bottom"></div>
+      <div class="cs__frame-v cs__frame-v--left"></div>
+      <div class="cs__frame-v cs__frame-v--right"></div>
+      <div class="cs__corner cs__corner--tl"></div>
+      <div class="cs__corner cs__corner--tr"></div>
+      <div class="cs__corner cs__corner--bl"></div>
+      <div class="cs__corner cs__corner--br"></div>
+    </div>
+
+    <!-- Botón volver -->
+    <button class="cs__back" id="csBack">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      <span id="csBackLabel">Volver</span>
+    </button>
+
+    <!-- Contenido -->
+    <div class="cs__content">
+      <div class="cs__logo-wrap">
+        <img src="/images/studioLOGO.jpeg" alt="Studio2810" class="cs__logo" />
+      </div>
+      <div class="cs__divider"></div>
+      <p class="cs__eyebrow">Shop Studio2810</p>
+      <h1 class="cs__heading">
+        <em id="csHeadingItalic">Próximamente</em>
+        <span id="csHeadingNormal">algo especial</span>
+      </h1>
+      <p class="cs__coming" id="csComingSoon">— Coming Soon —</p>
+      <p class="cs__desc" id="csDesc">
+        Planos, recursos y piezas cuidadosamente seleccionadas.<br/>
+        Pronto disponibles para ti.
+      </p>
+      <div class="cs__badge">
+        <span class="cs__badge-dot"></span>
+        <span id="csBadgeText">Acceso exclusivo próximamente</span>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0a08; }
+
+    .cs {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #0a0a08;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .cs.is-leaving {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+
+    /* ── CANVAS líneas ── */
+    .cs__canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ── LUZ AMBIENTAL ── */
+    .cs__ambient {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(160,120,70,0.07) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      animation: ambientPulse 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* ── MARCO ── */
+    .cs__frame { position: absolute; inset: 2rem; z-index: 3; pointer-events: none; }
+
+    .cs__frame-h {
+      position: absolute; left: 0; right: 0; height: 1px;
+      background: rgba(255,255,255,0.07);
+      transform: scaleX(0);
+      animation: expandX 1.4s cubic-bezier(0.77,0,0.175,1) 0.5s forwards;
+    }
+    .cs__frame-h--top { top: 0; transform-origin: left; }
+    .cs__frame-h--bottom { bottom: 0; transform-origin: right; animation-delay: 0.7s; }
+
+    .cs__frame-v {
+      position: absolute; top: 0; bottom: 0; width: 1px;
+      background: rgba(255,255,255,0.07);
+      transform: scaleY(0);
+      animation: expandY 1.4s cubic-bezier(0.77,0,0.175,1) 0.6s forwards;
+    }
+    .cs__frame-v--left { left: 0; transform-origin: top; }
+    .cs__frame-v--right { right: 0; transform-origin: bottom; animation-delay: 0.8s; }
+
+    .cs__corner {
+      position: absolute; width: 14px; height: 14px;
+      opacity: 0;
+      animation: fadeIn 0.4s ease 1.8s forwards;
+    }
+    .cs__corner--tl { top: -1px; left: -1px; border-top: 1px solid rgba(210,175,120,0.5); border-left: 1px solid rgba(210,175,120,0.5); }
+    .cs__corner--tr { top: -1px; right: -1px; border-top: 1px solid rgba(210,175,120,0.5); border-right: 1px solid rgba(210,175,120,0.5); }
+    .cs__corner--bl { bottom: -1px; left: -1px; border-bottom: 1px solid rgba(210,175,120,0.5); border-left: 1px solid rgba(210,175,120,0.5); }
+    .cs__corner--br { bottom: -1px; right: -1px; border-bottom: 1px solid rgba(210,175,120,0.5); border-right: 1px solid rgba(210,175,120,0.5); }
+
+    /* ── VOLVER ── */
+    .cs__back {
+      position: absolute; top: 2rem; left: 2.5rem; z-index: 10;
+      display: flex; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.45);
+      background: none; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.78rem;
+      font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase;
+      transition: color 0.3s ease;
+      opacity: 0; animation: fadeIn 1s ease 2.2s forwards;
+    }
+    .cs__back:hover { color: #fff; }
+
+    /* ── CONTENIDO ── */
+    .cs__content {
+      position: relative; z-index: 5;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      gap: 1.6rem; padding: 2rem;
+      max-width: 680px; width: 100%;
+    }
+
+    .cs__logo-wrap {
+      opacity: 0;
+      animation: slideDown 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s forwards;
+    }
+    .cs__logo { height: 65px; width: auto; filter: brightness(0) invert(1); }
+
+    .cs__divider {
+      width: 0; height: 1px;
+      background: rgba(255,255,255,0.15);
+      animation: expandLine 1s ease 0.9s forwards;
+    }
+
+    .cs__eyebrow {
+      font-family: 'Jost', sans-serif; font-size: 0.7rem;
+      font-weight: 300; letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      opacity: 0; animation: fadeIn 1s ease 1.1s forwards;
+    }
+
+    .cs__heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7.5vw, 7rem);
+      font-weight: 300; line-height: 1;
+      color: #fff; letter-spacing: -0.02em;
+      display: flex; flex-direction: column; gap: 0.1em;
+      opacity: 0; animation: slideUp 1.2s cubic-bezier(0.25,0.46,0.45,0.94) 1.2s forwards;
+    }
+    .cs__heading em { font-style: italic; color: rgba(210,175,120,0.95); }
+
+    .cs__coming {
+      font-family: 'Jost', sans-serif; font-size: 0.7rem;
+      font-weight: 200; letter-spacing: 0.5em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      opacity: 0; animation: fadeIn 1s ease 1.5s forwards;
+    }
+
+    .cs__desc {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+      font-weight: 200; line-height: 1.9;
+      color: rgba(255,255,255,0.4);
+      opacity: 0; animation: fadeIn 1s ease 1.7s forwards;
+    }
+
+    .cs__badge {
+      display: flex; align-items: center; gap: 0.6rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 0.55rem 1.4rem;
+      font-family: 'Jost', sans-serif; font-size: 0.68rem;
+      font-weight: 300; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      opacity: 0; animation: fadeIn 1s ease 2s forwards;
+    }
+    .cs__badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(210,175,120,0.9);
+      animation: pulse 2.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeIn    { from{opacity:0} to{opacity:1} }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes slideUp   { from{opacity:0;transform:translateY(24px)}  to{opacity:1;transform:translateY(0)} }
+    @keyframes expandLine{ from{width:0} to{width:100px} }
+    @keyframes expandX   { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+    @keyframes expandY   { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+    @keyframes pulse     { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+    @keyframes ambientPulse {
+      0%,100% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+      50%     { opacity:0.4; transform:translate(-50%,-50%) scale(1.3); }
+    }
+
+    @media (max-width: 600px) {
+      .cs__logo { height: 48px; }
+      .cs__back { top: 1.4rem; left: 1.4rem; }
+      .cs__frame { inset: 1rem; }
+    }
+  </style>
+
+  <script is:inline>
+    // ── IDIOMA ──
+    const lang = localStorage.getItem('lang') || 'ES'
+    const translations = {
+      ES: {
+        back:   'Volver',
+        italic: 'Próximamente',
+        normal: 'algo especial',
+        coming: '— Coming Soon —',
+        desc:   'Planos, recursos y piezas cuidadosamente seleccionadas.\nPronto disponibles para ti.',
+        badge:  'Acceso exclusivo próximamente',
+      },
+      EN: {
+        back:   'Go back',
+        italic: 'Coming Soon',
+        normal: 'something special',
+        coming: '— Stay Tuned —',
+        desc:   'Plans, resources and carefully curated pieces.\nAvailable for you soon.',
+        badge:  'Exclusive access coming soon',
+      }
+    }
+    const t = translations[lang] || translations.ES
+    document.getElementById('csBackLabel').textContent     = t.back
+    document.getElementById('csHeadingItalic').textContent = t.italic
+    document.getElementById('csHeadingNormal').textContent = t.normal
+    document.getElementById('csComingSoon').textContent    = t.coming
+    document.getElementById('csDesc').innerHTML            = t.desc.replace('\n', '<br/>')
+    document.getElementById('csBadgeText').textContent     = t.badge
+
+    // ── LÍNEAS ANIMADAS EN CANVAS ──
+    const canvas = document.getElementById('csCanvas')
+    const ctx    = canvas.getContext('2d')
+
+    function resize() {
+      canvas.width  = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    // Cada línea: origen, destino, progreso, velocidad, opacidad, color
+    const lines = []
+    const GOLD  = 'rgba(210,175,120,'
+    const WHITE = 'rgba(255,255,255,'
+
+    function randomLine() {
+      const w = canvas.width
+      const h = canvas.height
+      // Puntos de inicio en los bordes
+      const side = Math.floor(Math.random() * 4)
+      let x1, y1
+      if (side === 0) { x1 = Math.random() * w; y1 = 0 }
+      else if (side === 1) { x1 = w; y1 = Math.random() * h }
+      else if (side === 2) { x1 = Math.random() * w; y1 = h }
+      else { x1 = 0; y1 = Math.random() * h }
+
+      // Destino: otro punto semi-aleatorio por la pantalla
+      const angle  = Math.random() * Math.PI * 2
+      const length = 80 + Math.random() * 300
+      const x2     = x1 + Math.cos(angle) * length
+      const y2     = y1 + Math.sin(angle) * length
+      const isGold = Math.random() < 0.25
+      const alpha  = 0.04 + Math.random() * 0.08
+
+      return {
+        x1, y1, x2, y2,
+        progress: 0,
+        speed: 0.003 + Math.random() * 0.004,
+        alpha,
+        color: isGold ? GOLD : WHITE,
+        width: isGold ? 0.8 : 0.5,
+        fade: false,
+      }
+    }
+
+    // Inicializar con varias líneas
+    for (let i = 0; i < 18; i++) {
+      const l = randomLine()
+      l.progress = Math.random() // algunas ya avanzadas
+      lines.push(l)
+    }
+
+    let rafId
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      lines.forEach((l, i) => {
+        l.progress += l.speed
+        if (l.progress >= 1) {
+          // Cuando llega al final, empieza a desaparecer
+          l.fade = true
+        }
+        if (l.fade) {
+          l.alpha -= 0.004
+          if (l.alpha <= 0) {
+            lines[i] = randomLine() // reemplazar con una nueva
+            return
+          }
+        }
+
+        const prog = Math.min(l.progress, 1)
+        const cx   = l.x1 + (l.x2 - l.x1) * prog
+        const cy   = l.y1 + (l.y2 - l.y1) * prog
+
+        ctx.beginPath()
+        ctx.moveTo(l.x1, l.y1)
+        ctx.lineTo(cx, cy)
+        ctx.strokeStyle = l.color + l.alpha + ')'
+        ctx.lineWidth   = l.width
+        ctx.stroke()
+      })
+
+      rafId = requestAnimationFrame(draw)
+    }
+    draw()
+
+    // ── VOLVER CON ANIMACIÓN ──
+    document.getElementById('csBack').addEventListener('click', () => {
+      cancelAnimationFrame(rafId)
+      document.getElementById('cs').classList.add('is-leaving')
+      setTimeout(() => {
+        if (window.history.length > 1) {
+          window.history.back()
+        } else {
+          window.location.href = '/'
+        }
+      }, 600)
+    })
+  </script>
+
+</body>
+</html>

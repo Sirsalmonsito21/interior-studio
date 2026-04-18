@@ -35,9 +35,7 @@
     display: block;
   }
 
-  .splash__logo.is-visible {
-    opacity: 1;
-  }
+  .splash__logo.is-visible { opacity: 1; }
 
   .splash.is-done {
     opacity: 0;
@@ -45,32 +43,34 @@
     pointer-events: none;
   }
 
-  .splash.is-gone {
-    display: none;
-  }
+  .splash.is-gone { display: none; }
 </style>
 
 <script>
-  // Esperar a que todo esté listo
   window.addEventListener('load', () => {
-    const splash       = document.getElementById('splash')
-    const splashLogo   = document.getElementById('splashLogo') as HTMLImageElement
-    const splashWrap   = document.getElementById('splashLogoWrap')
-    const headerLogo   = document.getElementById('headerLogoImg') as HTMLImageElement
+    const splash     = document.getElementById('splash')
+    const splashLogo = document.getElementById('splashLogo') as HTMLImageElement
+    const splashWrap = document.getElementById('splashLogoWrap')
+    const headerLogo = document.getElementById('headerLogoImg') as HTMLImageElement
 
     if (!splash || !splashLogo || !splashWrap || !headerLogo) return
 
-    // 1. Fade in del logo en el splash
+    // ── CLAVE: si venimos de /shop con history.back(), saltamos el preloader ──
+    const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming
+    if (navEntry && navEntry.type === 'back_forward') {
+      splash.classList.add('is-gone')
+      document.body.style.overflow = ''
+      return
+    }
+
     requestAnimationFrame(() => {
       splashLogo.classList.add('is-visible')
     })
 
-    // 2. Después de 1.8s → animar hacia el header
     setTimeout(() => {
-      const srcRect  = splashWrap.getBoundingClientRect()
-      const dstRect  = headerLogo.getBoundingClientRect()
+      const srcRect = splashWrap.getBoundingClientRect()
+      const dstRect = headerLogo.getBoundingClientRect()
 
-      // Centro de origen y destino
       const srcCX = srcRect.left + srcRect.width  / 2
       const srcCY = srcRect.top  + srcRect.height / 2
       const dstCX = dstRect.left + dstRect.width  / 2
@@ -80,12 +80,10 @@
       const dy    = dstCY - srcCY
       const scale = dstRect.width / srcRect.width
 
-      // Aplicar la transformación FLIP
       splashLogo.style.transition = 'transform 0.85s cubic-bezier(0.77,0,0.175,1), opacity 0.6s ease 0.35s'
       splashLogo.style.transform  = `translate(${dx}px, ${dy}px) scale(${scale})`
       splashLogo.style.opacity    = '0'
 
-      // Revelar el logo del header justo cuando termina
       setTimeout(() => {
         headerLogo.style.opacity    = '1'
         headerLogo.style.transition = 'opacity 0.4s ease'
@@ -99,7 +97,6 @@
 
     }, 1900)
 
-    // Bloquear scroll durante el splash
     document.body.style.overflow = 'hidden'
   })
 </script>

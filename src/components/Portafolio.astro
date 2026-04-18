@@ -199,17 +199,12 @@ const categorias = [
   ════════════════════════════════════════ */
 
   .prt__lb {
-    /* Cubre todo el viewport real en iOS */
     position: fixed;
     top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    /* Fallback para iOS Safari que no cuenta bien 100vh */
-    height: -webkit-fill-available;
+    right: 0; bottom: 0; /* La clave absoluta: anclar a los 4 bordes */
     background: #0a0a08;
     z-index: 9999;
     display: none;
-    /* Sin overflow aquí — lo maneja el scroll interno */
     overflow: hidden;
   }
   .prt__lb.is-open { display: block; }
@@ -244,30 +239,28 @@ const categorias = [
   .prt__lb-title-box h4 { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 4vw, 2rem); margin: 0; font-weight: 400; color: #a07846; }
   .prt__lb-title-box span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; font-weight: 600; }
 
+
   /* ── ÁREA DE SCROLL ── */
   .prt__lb-content {
     position: absolute;
-    top: 0;
-    left: 0;
-    /* Ancho exacto del viewport, sin posibilidad de overflow horizontal */
-    width: 100vw;
-    max-width: 100vw;
+    top: 0; left: 0;
+    right: 0; bottom: 0; /* Anclamos el contenido interno también */
+    width: 100%;
     height: 100%;
-    overflow-x: hidden;   /* nunca scroll horizontal */
+    overflow-x: hidden;   
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
-    overscroll-behavior: none; /* <-- ESTA ES LA LÍNEA NUEVA PARA EL SCROLL */
+    overscroll-behavior: none; 
   }
 
   /* ── CADA IMAGEN ── */
+  /* ── CADA IMAGEN ── */
   .prt__lb-img-wrapper {
-    /* Fuerza ancho exacto del viewport */
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%; /* Cambiamos 100vw por 100% para evitar desbordes */
+    max-width: 100%;
     box-sizing: border-box;
-    overflow: hidden;     /* corta cualquier desborde */
-    /* Espacio arriba solo en la primera para no tapar con los controles */
+    overflow: hidden;     
     background: #0a0a08;
   }
   .prt__lb-img-wrapper:first-child {
