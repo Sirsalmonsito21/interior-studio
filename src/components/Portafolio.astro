@@ -1,110 +1,64 @@
 ---
 const categorias = [
-  // ================= RESIDENCIAL =================
   {
-    id: "sala",
-    label: "Sala de Estar",
-    tipo: "RESIDENCIAL",
-    filtro: "residencial",
+    id: "sala", label: "Sala de Estar", labelKey: "cat.sala",
+    tipo: "RESIDENCIAL", tipoKey: "tipo.residencial", filtro: "residencial",
     cover: "/images/sala1.webp",
-    imagenes: [
-      "/images/sala1.webp", "/images/sala2.webp", "/images/sala3.webp", "/images/sala4.webp",
-      "/images/sala5.webp", "/images/sala6.webp", "/images/sala7.webp", 
-    ]
+    imagenes: ["/images/sala1.webp","/images/sala2.webp","/images/sala3.webp","/images/sala4.webp","/images/sala5.webp","/images/sala6.webp","/images/sala7.webp"]
   },
   {
-    id: "comedor",
-    label: "Comedor",
-    tipo: "RESIDENCIAL",
-    filtro: "residencial",
+    id: "comedor", label: "Comedor", labelKey: "cat.comedor",
+    tipo: "RESIDENCIAL", tipoKey: "tipo.residencial", filtro: "residencial",
     cover: "/images/comedor1.webp",
-    imagenes: [
-      "/images/comedor1.webp", "/images/comedor2.webp", "/images/comedor3.webp",
-    ]
+    imagenes: ["/images/comedor1.webp","/images/comedor2.webp","/images/comedor3.webp"]
   },
   {
-    id: "cocina",
-    label: "Cocina",
-    tipo: "RESIDENCIAL",
-    filtro: "residencial",
+    id: "cocina", label: "Cocina", labelKey: "cat.cocina",
+    tipo: "RESIDENCIAL", tipoKey: "tipo.residencial", filtro: "residencial",
     cover: "/images/cocina1-1.webp",
-    imagenes: [
-      "/images/cocina1-1.webp", "/images/cocina2.webp", "/images/cocina3.webp", "/images/cocina4.webp", "/images/cocina5.webp",
-    ]
+    imagenes: ["/images/cocina1-1.webp","/images/cocina2.webp","/images/cocina3.webp","/images/cocina4.webp","/images/cocina5.webp"]
   },
   {
-    id: "banio",
-    label: "Baño",
-    tipo: "RESIDENCIAL",
-    filtro: "residencial",
+    id: "banio", label: "Baño", labelKey: "cat.banio",
+    tipo: "RESIDENCIAL", tipoKey: "tipo.residencial", filtro: "residencial",
     cover: "/images/baño1.webp",
-    imagenes: [
-      "/images/baño1.webp", "/images/baño2.webp",
-    ]
+    imagenes: ["/images/baño1.webp","/images/baño2.webp"]
   },
   {
-    id: "entrada",
-    label: "Entrada",
-    tipo: "RESIDENCIAL",
-    filtro: "residencial",
+    id: "entrada", label: "Entrada", labelKey: "cat.entrada",
+    tipo: "RESIDENCIAL", tipoKey: "tipo.residencial", filtro: "residencial",
     cover: "/images/entrada2.webp",
-    imagenes: [
-      "/images/entrada2.webp","/images/entrada1.webp"
-    ]
-  },
-
-  // ================= INFANTIL / KIDS =================
-  {
-    id: "bebes",
-    label: "Bebés",
-    tipo: "INFANTIL",
-    filtro: "ninos",
-    cover: "/images/bebe1.webp", 
-    imagenes: [
-      "/images/bebe1.webp", "/images/bebe2.webp", "/images/bebe3.webp", 
-    ]
+    imagenes: ["/images/entrada2.webp","/images/entrada1.webp"]
   },
   {
-    id: "ninas",
-    label: "Niñas",
-    tipo: "INFANTIL",
-    filtro: "ninos",
+    id: "bebes", label: "Bebés", labelKey: "cat.bebes",
+    tipo: "INFANTIL", tipoKey: "tipo.infantil", filtro: "ninos",
+    cover: "/images/bebe1.webp",
+    imagenes: ["/images/bebe1.webp","/images/bebe2.webp","/images/bebe3.webp"]
+  },
+  {
+    id: "ninas", label: "Niñas", labelKey: "cat.ninas",
+    tipo: "INFANTIL", tipoKey: "tipo.infantil", filtro: "ninos",
     cover: "/images/niñaa1.webp",
-    imagenes: [
-      "/images/niñaa1.webp", "/images/niñaa2.webp", "/images/niñaa3.webp",
-    ]
+    imagenes: ["/images/niñaa1.webp","/images/niñaa2.webp","/images/niñaa3.webp"]
   },
   {
-    id: "ninos",
-    label: "Niños",
-    tipo: "INFANTIL",
-    filtro: "ninos",
-    cover: "/images/niño1.webp", 
-    imagenes: [
-      "/images/niño1.webp","/images/niño2.webp","/images/niño3.webp",
-    ]
+    id: "ninos", label: "Niños", labelKey: "cat.ninos",
+    tipo: "INFANTIL", tipoKey: "tipo.infantil", filtro: "ninos",
+    cover: "/images/niño1.webp",
+    imagenes: ["/images/niño1.webp","/images/niño2.webp","/images/niño3.webp"]
   },
-
-  // ================= COMERCIAL =================
   {
-    id: "oficina",
-    label: "Oficina Ejecutiva",
-    tipo: "COMERCIAL",
-    filtro: "comercial",
+    id: "oficina", label: "Oficina Ejecutiva", labelKey: "cat.oficina",
+    tipo: "COMERCIAL", tipoKey: "tipo.comercial", filtro: "comercial",
     cover: "/images/OFi_2.webp",
-    imagenes: [
-      "/images/OFi_2.webp", "/images/OFi_1.webp"
-    ]
+    imagenes: ["/images/OFi_2.webp","/images/OFi_1.webp"]
   },
   {
-    id: "puesto",
-    label: "Area Comun C.C.",
-    tipo: "COMERCIAL",
-    filtro: "comercial",
-    cover: "/images/CC11.webp", 
-    imagenes: [
-      "/images/CC11.webp" 
-    ]
+    id: "puesto", label: "Area Comun C.C.", labelKey: "cat.puesto",
+    tipo: "COMERCIAL", tipoKey: "tipo.comercial", filtro: "comercial",
+    cover: "/images/CC11.webp",
+    imagenes: ["/images/CC11.webp"]
   }
 ]
 ---
@@ -113,17 +67,17 @@ const categorias = [
   <div class="prt__header-container">
     <header class="prt__header">
       <div class="prt__mask">
-  <h2 class="prt__heading">
-    <span class="prt__heading-normal">Nuestros</span>
-    <span class="prt__heading-italic">proyectos</span>
-  </h2>
-</div>
-      
+        <h2 class="prt__heading">
+          <span class="prt__heading-normal" data-i18n="prt.heading.1">Nuestros</span>
+          <span class="prt__heading-italic" data-i18n="prt.heading.2">proyectos</span>
+        </h2>
+      </div>
+
       <nav class="prt__nav">
-        <button class="prt__cat-btn is-active" data-filter="all">TODOS</button>
-        <button class="prt__cat-btn" data-filter="ninos">INFANTIL</button>
-        <button class="prt__cat-btn" data-filter="residencial">RESIDENCIAL</button>
-        <button class="prt__cat-btn" data-filter="comercial">COMERCIAL</button>
+        <button class="prt__cat-btn is-active" data-filter="all"     data-i18n="prt.filtro.all">TODOS</button>
+        <button class="prt__cat-btn"           data-filter="ninos"   data-i18n="prt.filtro.ninos">INFANTIL</button>
+        <button class="prt__cat-btn"           data-filter="residencial" data-i18n="prt.filtro.residencial">RESIDENCIAL</button>
+        <button class="prt__cat-btn"           data-filter="comercial"   data-i18n="prt.filtro.comercial">COMERCIAL</button>
       </nav>
     </header>
   </div>
@@ -135,7 +89,7 @@ const categorias = [
           <div class="prt__img-wrapper">
             <img src={cat.cover} alt={cat.label} class="prt__img" loading="lazy" />
             <div class="prt__overlay">
-              <span class="prt__view-btn">EXPLORAR CATÁLOGO</span>
+              <span class="prt__view-btn" data-i18n="prt.explorar">EXPLORAR CATÁLOGO</span>
             </div>
           </div>
           <div class="prt__info">
@@ -149,19 +103,18 @@ const categorias = [
 
   <div class="prt__lb" id="prtLightbox">
     <div class="prt__lb-controls">
-        <button class="prt__lb-close" aria-label="Cerrar">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M18 6L6 18M6 6l12 12"></path>
-          </svg>
-        </button>
-        <div class="prt__lb-title-box">
-            <h4 id="lbProjectTitle">PROYECTO</h4>
-            <span>Desliza para ver más</span>
-        </div>
+      <button class="prt__lb-close" aria-label="Cerrar">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+      <div class="prt__lb-title-box">
+        <h4 id="lbProjectTitle">PROYECTO</h4>
+        <span data-i18n="prt.desliza">Desliza para ver más</span>
+      </div>
     </div>
 
-    <div class="prt__lb-content" id="lbScrollArea" data-lenis-prevent>
-    </div>
+    <div class="prt__lb-content" id="lbScrollArea" data-lenis-prevent></div>
   </div>
 </section>
 
@@ -169,57 +122,42 @@ const categorias = [
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap');
 
   .prt { background: #f5f2ee; padding: 6rem 0 0; color: #0a0a08; overflow: hidden; }
-  
   .prt__header-container { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
-
   .prt__header { margin-bottom: 4rem; text-align: center; }
-  .prt__mask { overflow: hidden; } 
-  
+  .prt__mask { overflow: hidden; }
+
   .prt__heading {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Alineación a la izquierda para el escalón */
-  margin: 0 auto 2.5rem;
-  width: fit-content;      /* Centra el bloque entero en la pantalla */
-  text-align: left;
-  line-height: 1;
-}
-
-.prt__heading-normal {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.5rem, 4.5vw, 4.5rem); /* Igual a Esencia */
-  font-weight: 300;
-  color: #0a0a08;
-  text-transform: none;    /* Quitamos las mayúsculas para que sea igual */
-  letter-spacing: -0.02em; /* Letras juntas como pediste */
-  display: block;
-  align-self: flex-start;
-}
-
-.prt__heading-italic {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 5.5vw, 5.5rem); /* Un poco más grande */
-  font-weight: 300;
-  font-style: italic;
-  color: #a07846;
-  display: block;
-  letter-spacing: -0.02em;
-  
-  /* EL ESCALÓN (Igual que en Esencia y Servicios) */
-  padding-left: 4rem;      
-  margin-top: -0.5rem;     /* Se entrelaza un poco con la de arriba */
-}
-
-@media (max-width: 768px) {
-  .prt__heading-italic {
-    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 auto 2.5rem;
+    width: fit-content;
+    text-align: left;
+    line-height: 1;
   }
-}
-
-  /* La palabra en cursiva toma el color acento */
-  .prt__heading em {
+  .prt__heading-normal {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+    font-weight: 300;
+    color: #0a0a08;
+    text-transform: none;
+    letter-spacing: -0.02em;
+    display: block;
+    align-self: flex-start;
+  }
+  .prt__heading-italic {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5.5vw, 5.5rem);
+    font-weight: 300;
     font-style: italic;
     color: #a07846;
+    display: block;
+    letter-spacing: -0.02em;
+    padding-left: 4rem;
+    margin-top: -0.5rem;
+  }
+  @media (max-width: 768px) {
+    .prt__heading-italic { padding-left: 2rem; }
   }
 
   .prt__nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; margin-bottom: 2rem; }
@@ -235,39 +173,24 @@ const categorias = [
     border-radius: 50px;
     letter-spacing: 0.05em;
   }
+  .prt__cat-btn:hover { background: rgba(160,120,70,0.08); color: #a07846; border-color: rgba(160,120,70,0.4); }
+  .prt__cat-btn.is-active { background: #a07846; color: #fff; border-color: #a07846; }
 
-  /* Hover: acento cálido en lugar de negro */
-  .prt__cat-btn:hover {
-    background: rgba(160, 120, 70, 0.08);
-    color: #a07846;
-    border-color: rgba(160, 120, 70, 0.4);
-  }
-
-  /* Activo: fondo acento sólido */
-  .prt__cat-btn.is-active {
-    background: #a07846;
-    color: #fff;
-    border-color: #a07846;
-  }
-
-  .prt__grid { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
+  .prt__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
-    gap: 2px; 
+    gap: 2px;
     background: #f5f2ee;
   }
-
   @media (max-width: 1024px) { .prt__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .prt__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px)  { .prt__grid { grid-template-columns: 1fr; } }
 
   .prt__item { cursor: pointer; position: relative; }
   .prt__img-wrapper { position: relative; aspect-ratio: 1/1; overflow: hidden; }
-  .prt__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-  
+  .prt__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.16,1,0.3,1); }
   .prt__item:hover .prt__img { transform: scale(1.05); }
 
-  /* Capa base permanente para legibilidad del título */
   .prt__img-wrapper::after {
     content: '';
     position: absolute;
@@ -278,8 +201,8 @@ const categorias = [
     z-index: 1;
   }
 
-  .prt__overlay { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+  .prt__overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.3);
     display: flex; align-items: center; justify-content: center;
     opacity: 0; transition: opacity 0.4s ease;
@@ -287,49 +210,24 @@ const categorias = [
   }
   .prt__item:hover .prt__overlay { opacity: 1; }
 
-  /* Botón explorar con acento al hover */
-  .prt__view-btn { 
-    background: #fff;
-    color: #000;
+  .prt__view-btn {
+    background: #fff; color: #000;
     padding: 14px 28px;
-    font-size: 0.75rem; 
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    border-radius: 2px;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.15em; border-radius: 2px;
     transition: background 0.3s ease, color 0.3s ease;
   }
-  .prt__item:hover .prt__view-btn:hover {
-    background: #a07846;
-    color: #fff;
-  }
+  .prt__item:hover .prt__view-btn:hover { background: #a07846; color: #fff; }
 
-  .prt__info { 
+  .prt__info {
     position: absolute; bottom: 30px; left: 30px; z-index: 3;
     pointer-events: none; transition: transform 0.4s ease;
   }
   .prt__item:hover .prt__info { transform: translateY(-10px); }
-  
-  .prt__project-type { 
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.75);
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    display: block;
-    margin-bottom: 0.2rem;
-  }
-  .prt__project-label { 
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem; 
-    font-weight: 400;
-    color: #fff;
-    line-height: 1.1;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
-  }
+  .prt__project-type { font-size: 0.7rem; color: rgba(255,255,255,0.75); font-weight: 500; letter-spacing: 0.15em; display: block; margin-bottom: 0.2rem; }
+  .prt__project-label { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 400; color: #fff; line-height: 1.1; text-shadow: 0 2px 12px rgba(0,0,0,0.4); }
 
-  /* =============================================
-     LIGHTBOX
-     ============================================= */
-
+  /* ── LIGHTBOX ── */
   .prt__lb {
     position: fixed;
     top: 0; left: 0;
@@ -342,13 +240,13 @@ const categorias = [
   .prt__lb.is-open { display: block; }
 
   .prt__lb-controls {
-    position: absolute; top: 0; left: 0;
-    width: 100%; height: 100px;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 80px;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 4vw;
-    z-index: 100;
-    background: linear-gradient(to bottom, rgba(10,10,8,0.9), transparent);
-    pointer-events: none;
+    z-index: 10001;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.95), transparent);
     box-sizing: border-box;
   }
   .prt__lb-close {
@@ -357,16 +255,17 @@ const categorias = [
     width: 50px; height: 50px; border-radius: 50%;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    pointer-events: auto;
     transition: all 0.3s;
     flex-shrink: 0;
+    z-index: 10002;
   }
-  .prt__lb-close:hover { background: #a07846; border-color: #a07846; color: #fff; }
+  .prt__lb-close:hover { background: #a07846; border-color: #a07846; }
 
   .prt__lb-title-box { text-align: right; color: #fff; }
   .prt__lb-title-box h4 { font-family: 'Playfair Display', serif; font-size: 2rem; margin: 0; font-weight: 400; color: #a07846; }
   .prt__lb-title-box span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; font-weight: 600; }
 
+  /* ── SCROLL AREA: scroll vertical, imagen full width ── */
   .prt__lb-content {
     position: absolute;
     top: 0; left: 0;
@@ -374,81 +273,68 @@ const categorias = [
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
     box-sizing: border-box;
   }
 
+  /* Cada imagen ocupa su propio bloque, full width */
   .prt__lb-img-wrapper {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 110px 6vw 40px;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
+  width: 100%;
+  box-sizing: border-box;
+}
+.prt__lb-img-wrapper:first-child {
+  padding-top: 80px;
+}
+.prt__lb-img-wrapper:last-child {
+  padding-bottom: 40px;
+}
 
-  .prt__lb-img {
-    display: block;
-    max-width: 100%;
-    max-height: 85vh;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-  }
-
-  @media (max-width: 768px) {
-    .prt__lb-img-wrapper { padding: 100px 4vw 30px; }
-    .prt__lb-img { max-height: 82vh; }
-  }
-
-  @media (max-width: 480px) {
-    .prt__lb-img-wrapper { padding: 90px 3vw 20px; }
-    .prt__lb-img { max-height: 80vh; }
-  }
+.prt__lb-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
 </style>
 
 <script>
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
   gsap.registerPlugin(ScrollTrigger);
 
   function initPortafolio() {
-    gsap.fromTo('.prt__heading', 
+    gsap.fromTo('.prt__heading',
       { y: 80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.prt__header-container', start: 'top 85%' } }
+      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+        scrollTrigger: { trigger: '.prt__header-container', start: 'top 85%' } }
     );
-
-    gsap.fromTo('.prt__cat-btn', 
+    gsap.fromTo('.prt__cat-btn',
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: '.prt__header-container', start: 'top 85%' } }
+      { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.prt__header-container', start: 'top 85%' } }
     );
-
-    gsap.fromTo('.prt__item', 
+    gsap.fromTo('.prt__item',
       { y: 60, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: '#prtGrid', start: 'top 80%' } }
+      { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: '#prtGrid', start: 'top 80%' } }
     );
 
-    const items = document.querySelectorAll('.prt__item');
-    const btns = document.querySelectorAll('.prt__cat-btn');
-    const lb = document.getElementById('prtLightbox');
-    const lbScrollArea = document.getElementById('lbScrollArea');
-    const lbTitle = document.getElementById('lbProjectTitle');
-    const lbClose = document.querySelector('.prt__lb-close');
+    const items    = document.querySelectorAll('.prt__item');
+    const btns     = document.querySelectorAll('.prt__cat-btn');
+    const lb       = document.getElementById('prtLightbox');
+    const lbScroll = document.getElementById('lbScrollArea');
+    const lbTitle  = document.getElementById('lbProjectTitle');
+    const lbClose  = document.querySelector('.prt__lb-close');
 
+    // Filtros
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         btns.forEach(b => b.classList.remove('is-active'));
         btn.classList.add('is-active');
-        
         const filter = btn.getAttribute('data-filter');
-        
         items.forEach(item => {
           if (filter === 'all' || item.getAttribute('data-filtro') === filter) {
             (item as HTMLElement).style.display = 'block';
-            gsap.fromTo(item, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
+            gsap.fromTo(item, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
           } else {
             (item as HTMLElement).style.display = 'none';
           }
@@ -457,45 +343,42 @@ const categorias = [
       });
     });
 
-    if (!lb || !lbScrollArea || !lbTitle || !lbClose) return;
+    if (!lb || !lbScroll || !lbTitle || !lbClose) return;
 
-    function openCatalog(item) {
+    function openCatalog(item: Element) {
       const imagenes = JSON.parse(item.getAttribute('data-imagenes') || '[]');
-      const label = item.getAttribute('data-label') || '';
+      const label    = item.getAttribute('data-label') || '';
 
-      (lbTitle as HTMLElement).innerText = label.toUpperCase();
-      lbScrollArea!.innerHTML = '';
+      lbTitle.innerText = label.toUpperCase();
+      lbScroll.innerHTML = '';
 
-      imagenes.forEach((src) => {
+      imagenes.forEach((src: string, idx: number) => {
         const wrapper = document.createElement('div');
         wrapper.className = 'prt__lb-img-wrapper';
         const img = document.createElement('img');
         img.src = src;
         img.className = 'prt__lb-img';
-        img.alt = 'Proyecto Studio2810';
-        img.loading = 'lazy';
+        img.alt = label;
+        img.loading = idx === 0 ? 'eager' : 'lazy';
         wrapper.appendChild(img);
-        lbScrollArea!.appendChild(wrapper);
+        lbScroll.appendChild(wrapper);
       });
 
-      lb!.classList.add('is-open');
+      lb.classList.add('is-open');
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-      lbScrollArea!.scrollTop = 0;
+      lbScroll.scrollTop = 0;
     }
 
     function closeLb() {
-      lb!.classList.remove('is-open');
+      lb.classList.remove('is-open');
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     }
 
-    items.forEach(item => {
-      item.addEventListener('click', () => openCatalog(item));
-    });
-
+    items.forEach(item => item.addEventListener('click', () => openCatalog(item)));
     lbClose.addEventListener('click', closeLb);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
   }
 
   initPortafolio();
