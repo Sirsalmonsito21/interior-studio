@@ -160,6 +160,13 @@ const conectores = [
     overflow: hidden;
   }
 
+  @media (max-width: 1024px) {
+    .srv {
+      overflow: visible;
+      padding-bottom: 4rem;
+    }
+  }
+
   .srv__intro {
     max-width: 1300px;
     margin: 0 auto 5rem;
@@ -339,6 +346,10 @@ const conectores = [
       margin-bottom: 5rem;
     }
 
+    .srv__item-wrap:last-child .srv__item {
+      margin-bottom: 0;
+    }
+
     .srv__text-col { display: contents; }
 
     .srv__item .srv__mask-title { order: 2; text-align: center; padding: 0 5vw; margin-bottom: 0.5rem; }
@@ -430,7 +441,7 @@ const conectores = [
           })
         } else {
           gsap.to(img, {
-            y: 60, ease: "none",
+            y: 30, ease: "none",
             scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
           })
         }
