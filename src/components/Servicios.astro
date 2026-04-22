@@ -351,22 +351,22 @@ const conectores = [
     .srv__item--reverse .srv__image-col {
       order: 5;
       width: 100%;
-      height: 320px;      /* altura fija necesaria para que el parallax tenga espacio */
+      height: auto;
       min-height: auto;
     }
 
     .srv__parallax-inner {
-      position: absolute;
-      top: -15%;
+      position: relative;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 130%;
+      height: auto;
     }
 
     .srv__image {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      object-fit: contain;
       display: block;
     }
     /* ── FIN FIX ── */
@@ -422,11 +422,18 @@ const conectores = [
             scrollTrigger: { trigger: item, start: "top 75%" } }
         )
 
-        /* ── FIX: parallax activo en TODOS los tamaños, incluido móvil ── */
-        gsap.to(img, {
-          yPercent: 25, ease: "none",
-          scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
-        })
+        /* ── FIX: parallax en desktop con yPercent, en móvil con y en px (sin zoom) ── */
+        if (window.innerWidth > 1024) {
+          gsap.to(img, {
+            yPercent: 25, ease: "none",
+            scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
+          })
+        } else {
+          gsap.to(img, {
+            y: 30, ease: "none",
+            scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
+          })
+        }
         /* ── FIN FIX ── */
       }
     })
