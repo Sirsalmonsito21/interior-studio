@@ -346,27 +346,30 @@ const conectores = [
     .srv__item .srv__mask-desc  { order: 4; text-align: center; padding: 0 5vw; }
     .srv__desc { margin-left: auto; margin-right: auto; text-align: center; }
 
+    /* ── FIX PARALLAX MÓVIL ── */
     .srv__item .srv__image-col,
     .srv__item--reverse .srv__image-col {
       order: 5;
       width: 100%;
-      height: auto;
+      height: 320px;      /* altura fija necesaria para que el parallax tenga espacio */
       min-height: auto;
     }
 
     .srv__parallax-inner {
-      position: relative;
-      top: 0;
-      height: auto;
+      position: absolute;
+      top: -15%;
+      left: 0;
       width: 100%;
+      height: 130%;
     }
 
     .srv__image {
       width: 100%;
-      height: auto;
-      object-fit: contain;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
+    /* ── FIN FIX ── */
 
     .srv__num-overlay { display: none; }
 
@@ -418,12 +421,13 @@ const conectores = [
           { clipPath: "inset(0% 0 0 0)", duration: 1.5, ease: "power3.inOut",
             scrollTrigger: { trigger: item, start: "top 75%" } }
         )
-        if (window.innerWidth > 1024) {
-          gsap.to(img, {
-            yPercent: 25, ease: "none",
-            scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
-          })
-        }
+
+        /* ── FIX: parallax activo en TODOS los tamaños, incluido móvil ── */
+        gsap.to(img, {
+          yPercent: 25, ease: "none",
+          scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: true }
+        })
+        /* ── FIN FIX ── */
       }
     })
 
